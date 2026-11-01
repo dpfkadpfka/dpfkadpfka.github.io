@@ -719,14 +719,14 @@ button.card{font:inherit;text-align:left;cursor:pointer;width:100%;padding:0;bor
 }
 .hero.hero-wm{display:none!important}
 @media (min-width:901px){
-body.is-home{--H:min(58vh,580px);--cy:calc(100vh - 11vh - var(--H) * .5);--rx:calc(var(--H) * .78);--ry:calc(var(--H) * .6)}
+body.is-home{--H:min(56vh,500px);--cy:calc(100vh - 11vh - var(--H) * .5);--rx:calc(var(--H) * .78);--ry:calc(var(--H) * .6)}
 body.is-home .char-wrap{height:var(--H)!important;bottom:11vh!important}
 body.is-home .floor{bottom:calc(11vh + 2px)!important}
-body.is-home .obj[data-go="train"]{left:calc(50% + -0.978 * var(--rx))!important;top:calc(var(--cy) - 0.208 * var(--ry))!important}
-body.is-home .obj[data-go="video"]{left:calc(50% + -0.719 * var(--rx))!important;top:calc(var(--cy) - 0.695 * var(--ry))!important}
-body.is-home .obj[data-go="about"]{left:calc(50% + -0.242 * var(--rx))!important;top:calc(var(--cy) - 0.970 * var(--ry))!important}
-body.is-home .obj[data-go="promo"]{left:calc(50% + 0.242 * var(--rx))!important;top:calc(var(--cy) - 0.970 * var(--ry))!important}
-body.is-home .obj[data-go="webapp"]{left:calc(50% + 0.719 * var(--rx))!important;top:calc(var(--cy) - 0.695 * var(--ry))!important}
+body.is-home .obj[data-go="train"]{left:calc(50% + 0.719 * var(--rx))!important;top:calc(var(--cy) - 0.695 * var(--ry))!important}
+body.is-home .obj[data-go="video"]{left:calc(50% + -0.242 * var(--rx))!important;top:calc(var(--cy) - 0.970 * var(--ry))!important}
+body.is-home .obj[data-go="about"]{left:calc(50% + -0.978 * var(--rx))!important;top:calc(var(--cy) - 0.208 * var(--ry))!important}
+body.is-home .obj[data-go="promo"]{left:calc(50% + -0.719 * var(--rx))!important;top:calc(var(--cy) - 0.695 * var(--ry))!important}
+body.is-home .obj[data-go="webapp"]{left:calc(50% + 0.242 * var(--rx))!important;top:calc(var(--cy) - 0.970 * var(--ry))!important}
 body.is-home .obj[data-go="class"]{left:calc(50% + 0.978 * var(--rx))!important;top:calc(var(--cy) - 0.208 * var(--ry))!important}
 body.is-home .obj-ic{width:clamp(76px,9vh,100px)!important;height:clamp(76px,9vh,100px)!important}
 }
@@ -740,16 +740,27 @@ body.is-home .obj-ic{width:clamp(76px,9vh,100px)!important;height:clamp(76px,9vh
 .boss-bar i::before{content:"";position:absolute;left:0;right:0;top:0;height:42%;background:rgba(255,255,255,.25)}
 .boss-bar i::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 calc(10% - 2px),#2B1712 calc(10% - 2px) 10%)}
 body:not(.is-home) .boss{display:none}
-.band{background:var(--pink)!important;border-top:0!important}
-.band b{color:#fff!important}
-.band small{color:rgba(255,255,255,.86)!important}
-.band span+span{border-left-color:rgba(255,255,255,.35)!important}
 @media (max-width:700px){
  .boss{top:calc(env(safe-area-inset-top,0px) + 64px);width:calc(100% - 120px);left:auto;right:16px;transform:none}
  .boss-top{padding-bottom:4px}.boss-top b{font-size:18px}.boss-top em{font-size:11px}.boss-top span{font-size:10px}
  .boss-bar{height:16px;padding:2px}
  html body.is-home .objs{top:calc(env(safe-area-inset-top,0px) + 132px)!important}
 }
+@media (min-width:901px){ body.is-home .topnav-in{max-width:none!important;padding-inline:clamp(16px,2.2vw,40px)!important} }
+.boss{width:auto!important}
+.boss-top{justify-content:center;padding:0!important}
+.boss-top b{font-size:clamp(30px,2.6vw,40px)!important}
+@media (max-width:700px){.boss{right:auto!important;left:50%!important;transform:translateX(-50%)!important;top:calc(env(safe-area-inset-top,0px) + 74px)!important}.boss-top b{font-size:26px!important}}
+.boss{display:none!important}
+.hero-e{position:absolute;left:clamp(24px,5vw,110px);bottom:calc(72px + 6vh);z-index:4;text-align:left}
+.hero-e small{display:block;font-size:15px;font-weight:800;color:var(--pink-deep);letter-spacing:.14em;margin-bottom:8px}
+.hero-e h1{margin:0;font-family:"Black Han Sans","Freesentation",sans-serif;font-weight:400;font-size:clamp(64px,6.8vw,108px);line-height:.95;color:var(--ink);letter-spacing:.02em}
+.hero-e h1 span{display:inline-block;transition:color .2s,transform .25s cubic-bezier(.3,1.6,.5,1)}
+.hero-e h1 span:hover{color:var(--pink);transform:translateY(-5px)}
+.hero-e p{margin:14px 0 0;font-size:16px;color:var(--ink-soft);font-weight:600;line-height:1.55}
+body:not(.is-home) .hero-e{display:none}
+@media (max-width:700px){.hero-e{display:none}html body.is-home .hero.hero-wm{display:block!important}html body.is-home .objs{top:calc(env(safe-area-inset-top,0px) + 132px)!important}}
+@media (max-width:700px){html body.is-home .obj[data-go="about"]{order:0}html body.is-home .obj[data-go="promo"]{order:1}html body.is-home .obj[data-go="video"]{order:2}html body.is-home .obj[data-go="webapp"]{order:3}html body.is-home .obj[data-go="train"]{order:4}html body.is-home .obj[data-go="class"]{order:5}}
 </style>
 
 <div class="frame" aria-hidden="true"></div>
@@ -802,7 +813,7 @@ body:not(.is-home) .boss{display:none}
     <a class="obj" href="#class" data-go="class" style="--f:1;top:68%"><span class="obj-in"><span class="obj-card"><span class="obj-ic"><img src="obj/class.webp?v=2" alt=""></span><span class="obj-tx"><b>수업 자료</b></span></span></span></a>
   </nav>
   <div class="tagline"><h1>김예람</h1><p>AI 교육 콘텐츠를 만들고 가르치는 초등교사</p></div>
-  <div class="hero hero-wm"><h1>김예람</h1></div><div class="boss" role="img" aria-label="김예람"><div class="boss-top"><b>김예람</b><em>Lv.99</em><span>9,999 / 9,999</span></div><div class="boss-bar"><i></i></div></div>
+  <div class="hero hero-wm"><h1>김예람</h1></div><div class="hero-e"><small>AI · 교육 콘텐츠 · 연수</small><h1 aria-label="김예람"><span aria-hidden="true">김</span><span aria-hidden="true">예</span><span aria-hidden="true">람</span></h1><p>AI로 교육 콘텐츠를 만들고<br>그 방법을 선생님들과 나눕니다.</p></div>
   <div class="band"><span><b>교육 콘텐츠 비평·자문</b><small>EBS 시청자평가원 · EBS 〈처음 배우는 AI〉 자문교사</small></span><span><b>AI 콘텐츠 제작</b><small>EBS 이솦 공식 크리에이터</small></span><span><b>AI·SW 교육</b><small>AIEDAP 마스터교원 · 영재교육원 지도교사</small></span><span><b>미디어·디지털 리터러시</b><small>미디어교육사 · 디지털 토론 D'talks</small></span></div>
 </main>
 <canvas class="lights" id="lights" aria-hidden="true"></canvas>
