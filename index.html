@@ -641,6 +641,18 @@ body.admin .page .cards .card{cursor:grab;outline:1.5px dashed var(--pink-light)
 @media (max-width:600px){.press-l li{grid-template-columns:minmax(0,1fr)!important}.pr-im{order:-1}}
 .press-l li:not(:has(.pr-im)){grid-template-columns:110px minmax(0,1fr)!important}
 @media (max-width:600px){.press-l li:not(:has(.pr-im)){grid-template-columns:minmax(0,1fr)!important}}
+.ytv{position:fixed;inset:0;z-index:90;background:rgba(30,12,10,.78);display:grid;place-items:center;padding:20px}
+.ytv[hidden]{display:none}
+.ytv-box{width:min(1100px,100%,calc((100vh - 120px)*16/9));background:#111;border-radius:18px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.4)}
+.ytv-box.sh{width:min(420px,100%,calc((100vh - 120px)*9/16))}
+.ytv-bar{display:flex;align-items:center;gap:12px;padding:10px 12px 10px 18px;background:#fff}
+.ytv-bar b{flex:1;min-width:0;font-size:15px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ytv-bar a{font-size:13px;font-weight:700;color:var(--pink-deep);text-decoration:none;white-space:nowrap}
+.ytv-x{width:36px;height:36px;flex:none;border:0;border-radius:50%;background:var(--soft);color:var(--pink-deep);font-size:15px;cursor:pointer}
+.ytv-fr{aspect-ratio:16/9}
+.ytv-box.sh .ytv-fr{aspect-ratio:9/16}
+.ytv-fr iframe{width:100%;height:100%;border:0;display:block}
+@media (max-width:600px){.ytv{padding:10px}.ytv-bar a{display:none}}
 </style>
 
 <div class="frame" aria-hidden="true"></div>
@@ -876,7 +888,7 @@ document.getElementById('cvBody').innerHTML=DATA.CV.map(([n,a],i)=>`<section cla
 /* 영상: 예람쌤 AI 영상 제작소와 같은 분류·카드 */
 let ytF='all';
 function ytCard(v){const sh=v[2]==="short";const url=(sh?'https://www.youtube.com/shorts/':'https://youtu.be/')+v[0];
-  return `<a class="ytc" href="${url}" target="_blank" rel="noopener"><span class="ytc-im">${v[3]?`<span class="ytc-n">${v[3]}${v[2]==="ar"?"차시":"강"}</span>`:""}<img src="https://i.ytimg.com/vi/${v[0]}/${sh?"oar2":"hqdefault"}.jpg" alt="" loading="lazy" data-fb="thumbs/${v[0]}.jpg" onerror="if(this.dataset.fb){this.src=this.dataset.fb;this.dataset.fb=''}else{this.replaceWith(Object.assign(document.createElement('span'),{className:'ph',textContent:'영상'}))}"></span><b>${esc(v[1])}</b></a>`}
+  return `<a class="ytc" href="${url}" target="_blank" rel="noopener" data-yt="${v[0]}" data-sh="${sh?1:0}" data-title="${esc(v[1])}"><span class="ytc-im">${v[3]?`<span class="ytc-n">${v[3]}${v[2]==="ar"?"차시":"강"}</span>`:""}<img src="https://i.ytimg.com/vi/${v[0]}/${sh?"oar2":"hqdefault"}.jpg" alt="" loading="lazy" data-fb="thumbs/${v[0]}.jpg" onerror="if(this.dataset.fb){this.src=this.dataset.fb;this.dataset.fb=''}else{this.replaceWith(Object.assign(document.createElement('span'),{className:'ph',textContent:'영상'}))}"></span><b>${esc(v[1])}</b></a>`}
 function renderYT(){const V=DATA.YTV,n=k=>V.filter(x=>x[2]===k).length;
   document.getElementById('ytFil').innerHTML=[["all","전체",V.length],["edu","교육 콘텐츠",n("edu")],["mv","AI 뮤직비디오",n("mv")],["lec","강의",n("ar")+n("esop")],["short","숏폼",n("short")]].filter(([k,t,c])=>k==="all"||c).map(([k,t,c])=>`<button type="button" data-ytf="${k}" aria-pressed="${ytF===k}">${t}<i>${c}</i></button>`).join("");
   const keys=ytF==="all"?DATA.YTC.map(x=>x[0]):ytF==="lec"?["ar","esop"]:[ytF];
@@ -1263,5 +1275,19 @@ function closeGuide(){ gv.hidden=true; gv.innerHTML=''; }
 gv.addEventListener('click',e=>{ if(e.target===gv||e.target.closest('.gv-x')) closeGuide(); });
 addEventListener('keydown',e=>{ if(e.key!=='Escape') return; if(!gv.hidden) closeGuide(); else if(!wm.hidden) closeWin(); });
 document.addEventListener('click',e=>{ const c=e.target.closest('#webapp .cards .card, #train .cards .card'); if(!c||document.body.classList.contains('admin')) return; if(WINAPP[c.dataset.key]){ e.preventDefault(); openWin(c.dataset.key); } });
+</script>
+<script>
+(function(){
+ const yv=document.createElement('div'); yv.className='ytv'; yv.hidden=true; document.body.appendChild(yv);
+ function close(){ yv.hidden=true; yv.innerHTML=''; document.body.style.overflow=''; }
+ document.addEventListener('click',e=>{
+  const a=e.target.closest('a.ytc[data-yt]'); if(!a||document.body.classList.contains('admin')) return;
+  e.preventDefault(); const id=a.dataset.yt, sh=a.dataset.sh==='1';
+  yv.innerHTML=`<div class="ytv-box${sh?' sh':''}" role="dialog" aria-modal="true" aria-label="${a.dataset.title}"><div class="ytv-bar"><b>${a.dataset.title}</b><a href="${a.href}" target="_blank" rel="noopener">유튜브에서 보기</a><button type="button" class="ytv-x" aria-label="닫기">✕</button></div><div class="ytv-fr"><iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&playsinline=1" title="${a.dataset.title}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div></div>`;
+  yv.hidden=false; document.body.style.overflow='hidden'; yv.querySelector('.ytv-x').focus();
+ });
+ yv.addEventListener('click',e=>{ if(e.target===yv||e.target.closest('.ytv-x')) close(); });
+ addEventListener('keydown',e=>{ if(e.key==='Escape'&&!yv.hidden) close(); });
+})();
 </script>
 </html>
