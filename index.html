@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
-<script>(function(){var B="1793540670";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
+<script>(function(){var B="1793540948";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
 <meta name="color-scheme" content="light only">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="초등교사 김예람(예람쌤) — AI 영상·교육 콘텐츠 제작 연수, 영상·웹앱 콘텐츠, 연수 교안과 수업 자료">
@@ -696,6 +696,27 @@ body.editing .page .cards .card{cursor:grab;outline:1.5px dashed var(--pink-ligh
 .pvw-fr:fullscreen{aspect-ratio:auto}
 .pvw-fr iframe{width:100%;height:100%;border:0;display:block}
 button.card{font:inherit;text-align:left;cursor:pointer;width:100%;padding:0;border:0;color:inherit}
+/* 카드 썸네일: 은은한 빛 지나감 + 반짝이 */
+.page .cards .card .thumb{position:relative;overflow:hidden}
+.page .cards .card .thumb::after{content:"";position:absolute;inset:-20% auto -20% -60%;width:45%;z-index:2;pointer-events:none;background:linear-gradient(105deg,rgba(255,255,255,0) 0%,rgba(255,255,255,.55) 40%,rgba(255,255,255,.95) 50%,rgba(255,255,255,.55) 60%,rgba(255,255,255,0) 100%);transform:skewX(-18deg);animation:th-shine 4.5s ease-in-out infinite;animation-delay:calc(var(--i,0) * .7s)}
+.page .cards .card .thumb::before{content:"";position:absolute;right:10px;top:9px;z-index:3;width:20px;height:20px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 0C13 7 17 11 24 12C17 13 13 17 12 24C11 17 7 13 0 12C7 11 11 7 12 0Z' fill='%23fff' stroke='%23FF4791' stroke-width='1.2'/%3E%3C/svg%3E") center/contain no-repeat;filter:drop-shadow(0 0 4px rgba(255,71,145,.7));pointer-events:none;animation:th-twinkle 2.6s ease-in-out infinite;animation-delay:calc(var(--i,0) * .45s)}
+@keyframes th-shine{0%,62%{left:-60%}88%,100%{left:130%}}
+@keyframes th-twinkle{0%,100%{opacity:0;transform:scale(.4) rotate(0)}45%{opacity:1;transform:scale(1) rotate(20deg)}70%{opacity:.2;transform:scale(.7) rotate(40deg)}}
+.page .cards .card{transition:transform .25s cubic-bezier(.3,1.4,.5,1),box-shadow .25s}
+@media (hover:hover){.page .cards .card:hover{box-shadow:0 0 0 1.5px var(--pink),0 10px 26px rgba(255,71,145,.22)!important}.page .cards .card:hover .thumb::after{animation-duration:1.4s;animation-delay:0s}}
+body.editing .page .cards .card .thumb::after,body.editing .page .cards .card .thumb::before{display:none}
+@media (prefers-reduced-motion:reduce){.page .cards .card .thumb::after,.page .cards .card .thumb::before{animation:none;display:none}}
+.prw .pvw-box:has(.prw-card){width:min(760px,100%)}
+.prw .pvw-bar b{font-size:14.5px}.prw-o{display:inline-block;font-size:12px;font-weight:800;color:var(--pink-deep);background:var(--soft);border-radius:99px;padding:1px 9px;margin-right:4px;vertical-align:1px}
+.prw-new{flex:none;font-size:13px;font-weight:700;color:var(--ink-soft);text-decoration:none;padding:6px 10px;border-radius:10px;background:#F7F1F3}
+.prw-new:hover{color:var(--pink-deep)}
+.prw-v{aspect-ratio:16/9!important;background:#000}
+.prw-a{aspect-ratio:auto!important;height:min(78vh,900px)}
+.prw-card{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:22px;align-items:center;padding:24px}
+.prw-card img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:14px}
+.prw-card h3{margin:8px 0 6px;font-size:19px;line-height:1.4}.prw-card p{margin:0 0 14px;color:var(--ink-soft);font-size:13.5px}
+.prw-card .pl-go{display:inline-block;text-decoration:none}
+@media (max-width:600px){.prw-card{grid-template-columns:1fr;padding:16px}.prw-a{height:74vh}.prw-new{display:none}}
 .pvw-login{width:min(440px,100%)}
 .pl-in{padding:30px 28px 26px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px}
 .pl-in img{width:76px;height:76px;object-fit:contain}
@@ -1314,9 +1335,9 @@ function renderArchive(id){
   const draw=()=>{
     let n=0;
     const list=ARCHIVE[id]; if(document.body.classList.contains('editing')&&!NOALL) cur='전체';
-    const card=i=>{
+    let ix=0; const card=i=>{
       const tag=i.url?'a':((i.pv||i.dl)?'button':'div'), href=i.url?` href="${esc(i.url)}" target="_blank" rel="noopener"`:(i.pv?` type="button" data-pv="${i.pv}"`:(i.dl?` type="button" data-dl="${esc(i.dl)}"`:''));
-      return `<${tag} class="card tone-0"${href} data-key="${esc(i.t)}"><div class="thumb">${thumb(i)}${i.st?`<span class="st${i.st==='종료'?' end':''}">${esc(i.st)}</span>`:''}</div>
+      return `<${tag} class="card tone-0"${href} data-key="${esc(i.t)}" style="--i:${(ix++)%7}"><div class="thumb">${thumb(i)}${i.st?`<span class="st${i.st==='종료'?' end':''}">${esc(i.st)}</span>`:''}</div>
         <div class="card-body"><div class="card-meta"><span>${esc(i.tag)}</span><span>${esc(i.y)}</span></div><h3>${esc(i.t)}</h3>${i.d?`<p>${esc(i.d)}</p>`:''}
         <span class="go${i.url||i.pv||i.dl?'':' soon'}">${i.dl?'내려받기 →':i.pv?'자료 보기 →':i.url?(i.yt?'영상 보기 →':(id==='webapp')?'자세히 보기 →':'열어 보기 →'):'링크 준비 중'}</span></div></${tag}>`;
     };
@@ -1616,11 +1637,14 @@ hit.addEventListener('pointermove',e=>{
   const z=zoneAt(e); if(z&&z!==lastZ){ burst(e.clientX,e.clientY,5); loadSet(z.k); } lastZ=z||null;
 });
 hit.addEventListener('pointerleave',()=>lastZ=null);
+const CLICK_ACTS=['react_head','react_horn','react_wing','react_shoe','react_belly','idle_phone','idle_mirror','idle_stretch','idle_yawn','idle_hum']; let lastAct=null;
 hit.addEventListener('click',e=>{
   if(mode!=='live'||(clip&&clip.startsWith('menu_'))) return;
-  const r=hit.getBoundingClientRect(), y=(e.clientY-r.top)/r.height;
-  const k=(zoneAt(e)||{k:y<.4?'react_head':'react_horn'}).k;
-  burst(e.clientX,e.clientY,14); loadSet(k);
+  // 누를 때마다 반응·평소 행동 중 하나를 무작위로 (방금 한 동작은 빼고, 준비된 동작 우선)
+  const pool=CLICK_ACTS.filter(n=>n!==lastAct), rd=pool.filter(n=>ready(n));
+  const arr=(rd.length&&Math.random()<.75)?rd:pool, k=arr[Math.floor(Math.random()*arr.length)];
+  lastAct=k; burst(e.clientX,e.clientY,14); loadSet(k);
+  const nx=pool.filter(n=>n!==k&&!ready(n)); if(nx.length) setTimeout(()=>loadSet(nx[Math.floor(Math.random()*nx.length)]),600);
   // 반응 중에 또 누르면 그 자리에서 바로 다시 시작
   if(clip && ready(k)){ startClip(k,performance.now()); } else clipQ=k;
 });
@@ -1906,7 +1930,7 @@ document.addEventListener('click',e=>{ const c=e.target.closest('#webapp .cards 
 </script>
 <script>
 (function(){
- const sel=['.gview','.pvw','.ytv','.wmodal'];
+ const sel=['.gview','.pvw','.ytv','.wmodal','.prw'];
  let depth=0, fromPop=false;
  const els=()=>sel.map(q=>document.querySelector(q)).filter(Boolean);
  const mo=new MutationObserver(ms=>ms.forEach(m=>{ const el=m.target, open=!el.hidden, was=el._open||false; if(open===was) return; el._open=open;
@@ -1921,7 +1945,26 @@ document.addEventListener('click',e=>{ const c=e.target.closest('#webapp .cards 
    setTimeout(()=>{fromPop=false;},0);
  },true);
 })();
-</script><button type="button" class="askme" id="askBtn" aria-label="예람쌤에게 물어보기"><span class="ask-bub">예람쌤에게<br>물어보세요!</span><span class="ask-x" role="button" tabindex="0" aria-label="챗봇 캐릭터 닫기">✕</span></button><script>(function(){ const b=document.getElementById('askBtn'), x=b.querySelector('.ask-x'); try{ if(sessionStorage.getItem('askOff')) document.body.classList.add('ask-off'); }catch{}
+</script><div class="pvw prw" id="prw" hidden></div>
+<script>(function(){
+ const W=document.getElementById('prw'), FRAME=/(^|\.)etnews\.com$|(^|\.)hkbs\.co\.kr$|(^|\.)news1\.kr$/;
+ const e=x=>String(x??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+ function close(){ W.hidden=true; W.innerHTML=''; document.body.style.overflow=''; }
+ function open(a){
+  const li=a.closest('li'), link=a.classList.contains('pr-im')?li.querySelector('.pr-s a'):a; if(!link) return;
+  const u=new URL(link.href), out=link.textContent.trim(), t=li.querySelector('.pr-b b')?.textContent||'', img=li.querySelector('.pr-im img')?.getAttribute('src')||'';
+  const yt=/youtube\.com|youtu\.be/.test(u.hostname)?(u.searchParams.get('v')||u.pathname.split('/').pop()):null;
+  let body;
+  if(yt) body=`<div class="pvw-fr prw-v"><iframe src="https://www.youtube.com/embed/${e(yt)}?autoplay=1&rel=0" title="${e(t)}" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe></div>`;
+  else if(FRAME.test(u.hostname)&&u.protocol==='https:') body=`<div class="pvw-fr prw-a"><iframe src="${e(u.href)}" title="${e(t)}" referrerpolicy="no-referrer-when-downgrade"></iframe></div>`;
+  else body=`<div class="prw-card">${img?`<img src="${e(img)}" alt="" referrerpolicy="no-referrer">`:''}<div><span class="prw-o">${e(out)}</span><h3>${e(t)}</h3><p>이 언론사는 다른 사이트 안에서 기사를 바로 보여 주지 않아요.</p><a class="pl-go" href="${e(u.href)}" target="_blank" rel="noopener">기사 원문 보기 ↗</a></div></div>`;
+  W.innerHTML=`<div class="pvw-box" role="dialog" aria-modal="true" aria-label="${e(t)}"><div class="pvw-bar"><b><span class="prw-o">${e(out)}</span> ${e(t)}</b><a class="prw-new" href="${e(u.href)}" target="_blank" rel="noopener">새 창 ↗</a><button type="button" class="pvw-x" aria-label="닫기">✕</button></div>${body}</div>`;
+  W.hidden=false; document.body.style.overflow='hidden';
+ }
+ document.addEventListener('click',ev=>{ const a=ev.target.closest('.press-l a'); if(!a||document.body.classList.contains('editing')) return; ev.preventDefault(); open(a); });
+ W.addEventListener('click',ev=>{ if(ev.target===W||ev.target.closest('.pvw-x')) close(); });
+ addEventListener('keydown',ev=>{ if(ev.key==='Escape'&&!W.hidden) close(); });
+})();</script><button type="button" class="askme" id="askBtn" aria-label="예람쌤에게 물어보기"><span class="ask-bub">예람쌤에게<br>물어보세요!</span><span class="ask-x" role="button" tabindex="0" aria-label="챗봇 캐릭터 닫기">✕</span></button><script>(function(){ const b=document.getElementById('askBtn'), x=b.querySelector('.ask-x'); try{ if(sessionStorage.getItem('askOff')) document.body.classList.add('ask-off'); }catch{}
  const off=e=>{ e.preventDefault(); e.stopPropagation(); document.body.classList.add('ask-off'); const c=document.getElementById('chat'); if(c) c.hidden=true; try{ sessionStorage.setItem('askOff','1'); }catch{} };
  x.addEventListener('click',off); x.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' ') off(e); }); })();</script>
 <div class="chat" id="chat" hidden role="dialog" aria-label="예람쌤 챗봇">
