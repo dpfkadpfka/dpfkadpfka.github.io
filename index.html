@@ -701,6 +701,17 @@ button.card{font:inherit;text-align:left;cursor:pointer;width:100%;padding:0;bor
 #webapp .chip small{font-size:.85em;opacity:.75;margin-left:2px}
 @media (max-width:700px){html body.is-home .hero.hero-wm{top:calc(env(safe-area-inset-top,0px) + 62px)!important;bottom:auto!important;transform:none!important;z-index:4!important}html body.is-home .hero.hero-wm h1{font-size:42px!important;color:var(--ink)!important;text-shadow:3px 3px 0 #FFD1E3!important}}
 @media (min-width:1101px){.page .page-head p{max-width:none!important;white-space:nowrap}}
+@media (min-width:901px){
+  body.is-home .char-wrap{height:min(70vh,700px)!important;bottom:13vh!important}
+  body.is-home .floor{bottom:calc(13vh + 2px)!important;width:min(26vh,30vw)}
+  body.is-home .obj{left:calc(50% + var(--f) * min(25vw,46vh))!important}
+  body.is-home .obj[data-go="about"],body.is-home .obj[data-go="promo"]{top:30%!important}
+  body.is-home .obj[data-go="video"],body.is-home .obj[data-go="webapp"]{top:50%!important}
+  body.is-home .obj[data-go="train"],body.is-home .obj[data-go="class"]{top:70%!important}
+  body.is-home .obj-ic{width:clamp(84px,10vh,112px);height:clamp(84px,10vh,112px)}
+  .hero.hero-wm{transform:translateY(-58%)!important}
+  .hero.hero-wm h1{font-size:min(38vh,25vw)!important}
+}
 </style>
 
 <div class="frame" aria-hidden="true"></div>
