@@ -707,13 +707,13 @@ button.card{font:inherit;text-align:left;cursor:pointer;width:100%;padding:0;bor
   body.is-home .obj{left:calc(var(--cx,50%) + var(--f) * min(25vw,46vh))!important}
   body.is-home .obj[data-go="about"],body.is-home .obj[data-go="promo"]{top:30%!important}
   body.is-home .obj[data-go="video"],body.is-home .obj[data-go="webapp"]{top:50%!important}
-  body.is-home .obj[data-go="train"],body.is-home .obj[data-go="class"]{top:70%!important}
+  html body.is-home .obj[data-go="train"],html body.is-home .obj[data-go="class"]{top:70%!important}
   body.is-home .obj-ic{width:clamp(84px,10vh,112px);height:clamp(84px,10vh,112px)}
   .hero.hero-wm{top:calc(var(--nav-h) - 2vh)!important;transform:none!important}
   .hero.hero-wm h1{font-size:min(19vh,15vw)!important;letter-spacing:.08em!important}
   body.is-home .char-wrap{height:min(64vh,640px)!important;bottom:12vh!important}
   body.is-home .floor{bottom:calc(12vh + 2px)!important}
-  body.is-home .obj[data-go="about"],body.is-home .obj[data-go="promo"]{top:34%!important}
+  html body.is-home .obj[data-go="about"],html body.is-home .obj[data-go="promo"]{top:34%!important}
   body.is-home .obj[data-go="video"],body.is-home .obj[data-go="webapp"]{top:53%!important}
   body.is-home .obj[data-go="train"],body.is-home .obj[data-go="class"]{top:72%!important}
 }
@@ -785,6 +785,22 @@ body.is-home .char-wrap{left:var(--cx)!important;bottom:auto!important;top:calc(
 body.is-home .floor{left:var(--cx)!important;bottom:auto!important;top:calc(50% + 4vh + var(--H) * .5 - 1.1vh)!important}
 .hero-e{left:max(48px,calc(var(--cx) - var(--H) * .92 - 470px))!important;bottom:auto!important;top:calc(50% + 4vh);transform:translateY(-50%)}
 }
+@media (min-width:901px){
+body.is-home{--H:min(58vh,520px)!important}
+.hero-e{display:none!important}
+body.is-home .char-wrap{left:50%!important;top:auto!important;bottom:calc(72px + 4vh)!important;transform:translateX(-50%)!important;height:var(--H)!important}
+body.is-home .floor{left:50%!important;top:auto!important;bottom:calc(72px + 4vh + 2px)!important}
+html body.is-home .obj[data-go="about"]{left:calc(50% + -1 * min(23vw,40vh))!important}html body.is-home .obj[data-go="video"]{left:calc(50% + -1.22 * min(23vw,40vh))!important}html body.is-home .obj[data-go="train"]{left:calc(50% + -1 * min(23vw,40vh))!important}html body.is-home .obj[data-go="promo"]{left:calc(50% + 1 * min(23vw,40vh))!important}html body.is-home .obj[data-go="webapp"]{left:calc(50% + 1.22 * min(23vw,40vh))!important}html body.is-home .obj[data-go="class"]{left:calc(50% + 1 * min(23vw,40vh))!important}
+html body.is-home .obj[data-go="about"],html body.is-home .obj[data-go="promo"]{top:34%!important}
+html body.is-home .obj[data-go="video"],html body.is-home .obj[data-go="webapp"]{top:52%!important}
+html body.is-home .obj[data-go="train"],html body.is-home .obj[data-go="class"]{top:70%!important}
+body.is-home .obj-ic{width:clamp(84px,10vh,108px)!important;height:clamp(84px,10vh,108px)!important}
+.hero-d{position:absolute;left:50%;top:calc(100vh - 72px - 4vh - var(--H) - 64px);transform:translateX(-50%);z-index:5;pointer-events:none}
+.hero-d .bub{display:inline-block;position:relative;white-space:nowrap;background:#fff;border-radius:22px;padding:11px 24px 10px;box-shadow:0 0 0 2px var(--pink),0 6px 0 #F3C9D9;font-family:"Freesentation",sans-serif;font-weight:800;font-size:clamp(24px,2vw,30px);color:var(--ink);letter-spacing:-.02em}
+.hero-d .bub b{color:var(--pink);font-weight:800}
+.hero-d .bub::after{content:"";position:absolute;left:50%;bottom:-11px;width:18px;height:18px;background:#fff;transform:translateX(-50%) rotate(45deg);box-shadow:2px 2px 0 0 var(--pink);border-radius:0 0 4px 0}
+}
+@media (max-width:900px){.hero-d{display:none}}
 </style>
 
 <div class="frame" aria-hidden="true"></div>
@@ -837,7 +853,7 @@ body.is-home .floor{left:var(--cx)!important;bottom:auto!important;top:calc(50% 
     <a class="obj" href="#class" data-go="class" style="--f:1;top:68%"><span class="obj-in"><span class="obj-card"><span class="obj-ic"><img src="obj/class.webp?v=2" alt=""></span><span class="obj-tx"><b>수업 자료</b></span></span></span></a>
   </nav>
   <div class="tagline"><h1>김예람</h1><p>AI 교육 콘텐츠를 만들고 가르치는 초등교사</p></div>
-  <div class="hero hero-wm"><h1>김예람</h1></div><div class="hero-e"><small>AI · 교육 콘텐츠 · 연수</small><h1 aria-label="김예람"><span aria-hidden="true">김</span><span aria-hidden="true">예</span><span aria-hidden="true">람</span></h1><p>AI로 교육 콘텐츠를 만들고<br>그 방법을 선생님들과 나눕니다.</p></div>
+  <div class="hero hero-wm"><h1>김예람</h1></div><div class="hero-d" aria-label="안녕하세요, 김예람입니다!"><span class="bub">안녕하세요, <b>김예람</b>입니다!</span></div><div class="hero-e"><small>AI · 교육 콘텐츠 · 연수</small><h1 aria-label="김예람"><span aria-hidden="true">김</span><span aria-hidden="true">예</span><span aria-hidden="true">람</span></h1><p>AI로 교육 콘텐츠를 만들고<br>그 방법을 선생님들과 나눕니다.</p></div>
   <div class="band"><span><b>교육 콘텐츠 비평·자문</b><small>EBS 시청자평가원 · EBS 〈처음 배우는 AI〉 자문교사</small></span><span><b>AI 콘텐츠 제작</b><small>EBS 이솦 공식 크리에이터</small></span><span><b>AI·SW 교육</b><small>AIEDAP 마스터교원 · 영재교육원 지도교사</small></span><span><b>미디어·디지털 리터러시</b><small>미디어교육사 · 디지털 토론 D'talks</small></span></div>
 </main>
 <canvas class="lights" id="lights" aria-hidden="true"></canvas>
