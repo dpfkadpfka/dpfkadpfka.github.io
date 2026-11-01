@@ -709,8 +709,13 @@ button.card{font:inherit;text-align:left;cursor:pointer;width:100%;padding:0;bor
   body.is-home .obj[data-go="video"],body.is-home .obj[data-go="webapp"]{top:50%!important}
   body.is-home .obj[data-go="train"],body.is-home .obj[data-go="class"]{top:70%!important}
   body.is-home .obj-ic{width:clamp(84px,10vh,112px);height:clamp(84px,10vh,112px)}
-  .hero.hero-wm{transform:translateY(-58%)!important}
-  .hero.hero-wm h1{font-size:min(38vh,25vw)!important}
+  .hero.hero-wm{top:calc(var(--nav-h) - 2vh)!important;transform:none!important}
+  .hero.hero-wm h1{font-size:min(19vh,15vw)!important;letter-spacing:.08em!important}
+  body.is-home .char-wrap{height:min(64vh,640px)!important;bottom:12vh!important}
+  body.is-home .floor{bottom:calc(12vh + 2px)!important}
+  body.is-home .obj[data-go="about"],body.is-home .obj[data-go="promo"]{top:34%!important}
+  body.is-home .obj[data-go="video"],body.is-home .obj[data-go="webapp"]{top:53%!important}
+  body.is-home .obj[data-go="train"],body.is-home .obj[data-go="class"]{top:72%!important}
 }
 </style>
 
