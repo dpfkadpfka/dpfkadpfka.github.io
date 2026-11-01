@@ -424,6 +424,7 @@ body.admin .page .cards .card{cursor:grab;outline:1.5px dashed var(--pink-light)
 .obj[data-go="train"]:hover .obj-ic img{animation:o-rise .8s cubic-bezier(.3,1.4,.5,1) infinite}
 .obj[data-go="class"]:hover .obj-ic img{animation:o-swing .8s ease-in-out infinite}
 @media (prefers-reduced-motion:reduce){.obj:hover .obj-ic img{animation:none!important}}
+.objs{z-index:5}
 </style>
 
 <div class="frame" aria-hidden="true"></div>
@@ -715,16 +716,15 @@ function frame(now){
   requestAnimationFrame(frame);
   if(mode==='loading'||!isHome()) return;
   cx2.clearRect(0,0,cv.width,cv.height);
-  if(mode==='intro'){   // 바닥에서 쏙 소환
-    if(!ready('idle')) return;
-    const t=(now-introStart)/1000, FOOT=686, p=Math.max(0,Math.min(1,(t-.18)/.62));
-    const c1=1.9, e=p<1?1+(c1+1)*Math.pow(p-1,3)+c1*Math.pow(p-1,2):1;
-    const r=cv.getBoundingClientRect(), k=r.width/cv.width, sx=r.left+(META.box[0]+META.box[2]/2)*k, sy=r.top+FOOT*k;
-    if(t<.5 && now-spT>40){ spT=now; for(let j=0;j<3;j++) addMote(sx+(Math.random()-.5)*META.box[2]*.55*k, sy-Math.random()*8, .8+Math.random()*1.6); }
-    if(!introPop && p>.55){ introPop=true; burst(sx,sy-r.height*.35,22); }
-    if(t<1.05){
-      cx2.save(); cx2.beginPath(); cx2.rect(0,0,cv.width,FOOT); cx2.clip();
-      cx2.translate(0,Math.max(0,1-e)*FOOT*.92); draw('idle',0); cx2.restore(); return;
+  if(mode==='intro'){   // 바닥 구멍에서 쏙 올라오는 영상
+    if(!ready('intro_pop')){ if(now-introStart>2500){ mode='live'; goIdle(now); } return; }
+    if(!introPop){ introPop=true; introStart=now; }
+    const s=META.sets.intro_pop, i=Math.floor((now-introStart)/1000*s.fps);
+    if(i<s.count){
+      draw('intro_pop',i);
+      if(i>=5&&i<=20&&now-spT>50){ spT=now; const r=cv.getBoundingClientRect(), k=r.width/cv.width, sx=r.left+(META.box[0]+META.box[2]/2)*k, sy=r.top+690*k;
+        for(let j=0;j<3;j++) addMote(sx+(Math.random()-.5)*META.box[2]*.5*k, sy-Math.random()*r.height*.6, .7+Math.random()*1.4); }
+      return;
     }
     mode='live'; goIdle(now); vert='mid'; trans=null; lx=0;
   }
@@ -813,9 +813,9 @@ async function boot(){
   CORE=coarse?['idle','turn_mid']:['idle','turn_mid','turn_up','turn_down',...['up','down'].flatMap(v=>['left','center','right'].map(c=>`look_${v}_${c}`))];
   cv.width=META.vw; cv.height=META.box[3]; cx2.imageSmoothingEnabled=true; cx2.imageSmoothingQuality='high';
   hit.style.left=(META.box[0]/META.vw*100)+'%'; hit.style.width=(META.box[2]/META.vw*100)+'%';
-  await loadSet('idle');
+  await Promise.all([loadSet('idle'),loadSet('intro_pop')]);
   $('#loading').hidden=true;
-  (async()=>{ for(const k of CORE) await loadSet(k); if(!coarse) for(const k of ['career','video','webapp','train','class','contact']) await loadSet('menu_'+k); })();
+  (async()=>{ for(const k of CORE) await loadSet(k); if(!coarse) for(const k of ['career','promo','video','webapp','lecture','class']) await loadSet('menu_'+k); })();
   if(reduce){ mode='live'; goIdle(performance.now()); } else { mode='intro'; introPop=false; introStart=performance.now(); }
   requestAnimationFrame(frame);
 }
@@ -824,9 +824,9 @@ boot();
 /* 부위 클릭 반응 */
 function say(){}
 const ZONES=[
-  {x0:.12,x1:.40,y0:0,y1:.13,k:'react_shoe'},
-  {x0:.60,x1:.88,y0:0,y1:.13,k:'react_shoe'},
-  {x0:.22,x1:.78,y0:.03,y1:.40,k:'react_belly'},
+  {x0:.12,x1:.40,y0:0,y1:.13,k:'react_horn'},
+  {x0:.60,x1:.88,y0:0,y1:.13,k:'react_horn'},
+  {x0:.22,x1:.78,y0:.03,y1:.40,k:'react_head'},
   {x0:.12,x1:.41,y0:.37,y1:.58,k:'react_wing'},
   {x0:.57,x1:.80,y0:.37,y1:.58,k:'react_wing'},
   {x0:.25,x1:.75,y0:.40,y1:.80,k:'react_belly'},
@@ -842,13 +842,13 @@ hit.addEventListener('pointerleave',()=>lastZ=null);
 hit.addEventListener('click',e=>{
   if(mode!=='live'||(clip&&clip.startsWith('menu_'))) return;
   const r=hit.getBoundingClientRect(), y=(e.clientY-r.top)/r.height;
-  const k=(zoneAt(e)||{k:y<.4?'react_wing':'react_belly'}).k;
+  const k=(zoneAt(e)||{k:y<.4?'react_head':'react_belly'}).k;
   burst(e.clientX,e.clientY,14); loadSet(k);
   // 반응 중에 또 누르면 그 자리에서 바로 다시 시작
   if(clip && ready(k)){ startClip(k,performance.now()); } else clipQ=k;
 });
 document.querySelectorAll('.obj').forEach(a=>{
-  const n=({about:'career',promo:'contact'})[a.dataset.go]||a.dataset.go;
+  const n=({about:'career',train:'lecture'})[a.dataset.go]||a.dataset.go;
   a.addEventListener('pointerenter',()=>{ if(mode==='live'&&isHome()&&fine){ poseWant=n; loadSet('menu_'+n); } });
   a.addEventListener('pointerleave',()=>{ poseWant=null; });
 });
@@ -908,8 +908,8 @@ function render(){
 }
 
 /* 메뉴 페이지: 왼쪽 판의 캐릭터가 그 페이지 자세를 함 */
-const sc=document.getElementById('sideCv'), sx2=sc.getContext('2d'), SIDE_X=330, SIDE_W=630;
-const POSE_OF={about:'career',promo:'contact',video:'video',webapp:'webapp',train:'train',class:'class'};
+const sc=document.getElementById('sideCv'), sx2=sc.getContext('2d'), SIDE_X=300, SIDE_W=980;
+const POSE_OF={about:'career',promo:'promo',video:'video',webapp:'webapp',train:'lecture',class:'class'};
 let sidePage=null, sideWant=null, sideCur=null, sPh='in', sF=0, sLast=0, sUntil=0, sAct=null;
 function sideStart(id){ const p=POSE_OF[id]; if(!p||!META) return; sidePage=sideWant=sideCur='menu_'+p; sPh='in'; sF=0; sLast=performance.now(); loadSet(sideCur); }
 function drawSide(n,i){ const s=SETS[n]; if(!s||!s.ready) return false; s.used=performance.now(); i=Math.max(0,Math.min(s.count-1,Math.round(i))); const c=i%s.cols, r=(i/s.cols)|0;
