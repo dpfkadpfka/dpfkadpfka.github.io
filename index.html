@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
-<script>(function(){var B="1793546157";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
+<script>(function(){var B="1793546232";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
 <meta name="color-scheme" content="light only">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="초등교사 김예람(예람쌤) — AI 영상·교육 콘텐츠 제작 연수, 영상·웹앱 콘텐츠, 연수 교안과 수업 자료">
@@ -755,13 +755,8 @@ body.editing .page .cards .card{cursor:grab;outline:1.5px dashed var(--pink-ligh
 button.card{font:inherit;text-align:left;cursor:pointer;width:100%;padding:0;border:0;color:inherit}
 /* 카드 썸네일: 은은한 빛 지나감 + 반짝이 */
 .page .cards .card .thumb{position:relative;overflow:hidden}
-.page .cards .card .thumb::after{content:"";position:absolute;inset:-20% auto -20% 0;width:45%;will-change:transform;transform:translateX(-140%) skewX(-18deg);z-index:2;pointer-events:none;background:linear-gradient(105deg,rgba(255,150,195,0) 0%,rgba(255,150,195,.38) 32%,rgba(255,255,255,.95) 50%,rgba(255,150,195,.38) 68%,rgba(255,150,195,0) 100%);animation:th-shine 4.5s ease-in-out infinite;animation-delay:calc(var(--i,0) * .18s + .15s)}
-@keyframes th-shine{0%{transform:translateX(-140%) skewX(-18deg)}22%,100%{transform:translateX(300%) skewX(-18deg)}}
 @keyframes th-twinkle{0%,100%{opacity:0;transform:scale(.4) rotate(0)}45%{opacity:1;transform:scale(1) rotate(20deg)}70%{opacity:.2;transform:scale(.7) rotate(40deg)}}
 .page .cards .card{transition:transform .25s cubic-bezier(.3,1.4,.5,1),box-shadow .25s}
-@media (hover:hover){.page .cards .card:hover{box-shadow:0 0 0 1.5px var(--pink),0 10px 26px rgba(255,71,145,.22)!important}.page .cards .card:hover .thumb::after{animation-duration:1.4s;animation-delay:0s}}
-body.editing .page .cards .card .thumb::after,body.editing .page .cards .card .thumb::before{display:none}
-@media (prefers-reduced-motion:reduce){.page .cards .card .thumb::after,.page .cards .card .thumb::before{animation:none;display:none}}
 .prw .pvw-box:has(.prw-card){width:min(760px,100%)}
 /* 홈 오브젝트: 가만히 있을 때 살짝살짝 통통 펌핑 */
 body.is-home .obj .obj-ic img{animation:ob-pump 4.2s ease-in-out infinite;animation-delay:calc(var(--pd,0) * .7s);transform-origin:50% 60%}
@@ -1873,10 +1868,10 @@ document.querySelectorAll('.obj').forEach(a=>{
 
 /* 마우스 빛: 커서에서 작은 빛 알갱이가 퍼지며 사라짐 (메인에서만) */
 const lc=$('#lights'), lx2=lc.getContext('2d'); let motes=[], ldpr=1, lastP=null;
-function sizeL(){ ldpr=Math.min(2,devicePixelRatio||1); lc.width=innerWidth*ldpr; lc.height=innerHeight*ldpr; lc.style.width=innerWidth+'px'; lc.style.height=innerHeight+'px'; }
+function sizeL(){ ldpr=Math.min(1.5,devicePixelRatio||1); lc.width=innerWidth*ldpr; lc.height=innerHeight*ldpr; lc.style.width=innerWidth+'px'; lc.style.height=innerHeight+'px'; }
 sizeL(); addEventListener('resize',sizeL);
 function burst(x,y,n=10){ for(let i=0;i<n;i++) addMote(x,y,1.2+Math.random()*2.2); }
-function addMote(x,y,sp){
+function addMote(x,y,sp){ kickL();
   const a=Math.random()*Math.PI*2, s=sp*(.3+Math.random());
   motes.push({x,y,vx:Math.cos(a)*s*.7,vy:Math.sin(a)*s*.5-.3,r:4.5+Math.random()*4,life:1,decay:.012+Math.random()*.018,
     hue:(q=>q<.5?'255,71,145':q<.85?'255,150,190':'255,255,255')(Math.random()),tw:Math.random()*6.28,rot:Math.random()*1.6,spin:(Math.random()-.5)*.08});
@@ -1894,8 +1889,9 @@ function pop(x,y){ const n=14, base=Math.random()*6.28;
     motes.push({x,y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp-1.2,r:6+Math.random()*6,life:1,decay:.018+Math.random()*.012,hue:(q=>q<.55?'255,71,145':q<.85?'255,150,190':'255,255,255')(Math.random()),tw:Math.random()*6.28,rot:Math.random()*1.6,spin:(Math.random()-.5)*.12}); }
   for(let i=0;i<6;i++) addMote(x,y,.8+Math.random()*1.4); }
 addEventListener('pointerdown',e=>{ if(reduce||e.button>0) return; if(e.target.closest('input,textarea,.chat,.pvw,.ytv,.gview,.wmodal,.logw,.adminbar')) return; if(!isHome()&&e.target.closest('a,button')) return; pop(e.clientX,e.clientY); },{passive:true});
-let lDirty=false;
-(function loop(){
+let lDirty=false, lRun=false;
+function kickL(){ if(!lRun){ lRun=true; requestAnimationFrame(loop); } }
+function loop(){
   if(lDirty||motes.length){ lx2.clearRect(0,0,lc.width,lc.height); lDirty=false; }
   if(motes.length){ lDirty=true; if(motes.length>140) motes=motes.slice(-140);
     motes=motes.filter(m=>m.life>0);
@@ -1910,8 +1906,8 @@ let lDirty=false;
       lx2.restore();
     }
   }
-  requestAnimationFrame(loop);
-})();
+  if(motes.length||lDirty) requestAnimationFrame(loop); else lRun=false;
+}
 
 
 /* 페이지 이동 */
@@ -2238,6 +2234,11 @@ document.addEventListener('click',e=>{ const c=e.target.closest('#webapp .cards 
  let v=100; try{ v=+localStorage.getItem('fz')||100; }catch(_){} set(v);
  R.addEventListener('input',()=>set(R.value));
  document.getElementById('fz').addEventListener('click',e=>{ const b=e.target.closest('[data-d]'); if(b) set(+R.value+(+b.dataset.d)*5); });
+})();</script>
+<script>(function(){ if(!('IntersectionObserver' in window)) return; const io=new IntersectionObserver(es=>es.forEach(en=>{ const v=en.target; if(en.isIntersecting&&!document.hidden){ const p=v.play(); p&&p.catch(()=>{}); } else v.pause(); }),{threshold:.15});
+ const watch=()=>document.querySelectorAll('.thumb video').forEach(v=>{ if(!v._io){ v._io=1; v.removeAttribute('autoplay'); io.observe(v); } });
+ new MutationObserver(watch).observe(document.body,{childList:true,subtree:true}); watch();
+ document.addEventListener('visibilitychange',()=>{ if(document.hidden) document.querySelectorAll('.thumb video').forEach(v=>v.pause()); });
 })();</script>
 <div class="pvw prw" id="prw" hidden></div>
 <script>(function(){
