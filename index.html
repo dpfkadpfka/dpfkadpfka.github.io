@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
-<script>(function(){var B="1793547844";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
+<script>(function(){var B="1793547996";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
 <meta name="color-scheme" content="light only">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="초등교사 김예람(예람쌤) — AI 영상·교육 콘텐츠 제작 연수, 영상·웹앱 콘텐츠, 연수 교안과 수업 자료">
@@ -1313,7 +1313,9 @@ html,body{background-color:#FFFAFC}
  html body:not(.is-home) #promo .cards::-webkit-scrollbar{display:none}
  html body:not(.is-home) #promo .cards .card{flex:0 0 100%!important;min-width:0!important;max-width:100%!important;box-sizing:border-box!important;scroll-snap-align:start}
  html body:not(.is-home) #promo .cards .card h3{font-size:14.5px!important}
+ html body:not(.is-home) .pm-wrap .bl-nav{top:calc(50% - 46px)!important}
 }
+@media (hover:none),(max-width:700px){html body .page .cards .card:hover,html body .ytc:hover,html body .blogs .bl:hover,html body .feature article:hover,html body a.card:hover{transform:none!important;box-shadow:0 0 0 1px var(--line)!important}}
 </style>
 
 <div class="frame" aria-hidden="true"></div>
@@ -2158,6 +2160,21 @@ document.addEventListener('click',e=>{ const c=e.target.closest('#webapp .cards 
   g.addEventListener('scroll',upd,{passive:true}); addEventListener('resize',upd); upd();
   w.addEventListener('click',e=>{ const b=e.target.closest('.bl-nav'); if(!b) return; const step=(cards[1]?cards[1].offsetLeft-cards[0].offsetLeft:g.clientWidth*.8); g.scrollBy({left:(b.classList.contains('next')?1:-1)*step,behavior:'smooth'}); });
  }).catch(()=>{});
+})();
+(function(){
+ const g=document.querySelector('#promo .cards'); if(!g) return;
+ const w=document.createElement('div'); w.className='bl-wrap pm-wrap'; g.parentNode.insertBefore(w,g); w.appendChild(g);
+ w.insertAdjacentHTML('beforeend','<button type="button" class="bl-nav prev" aria-label="이전">‹</button><button type="button" class="bl-nav next" aria-label="다음">›</button>');
+ const dots=document.createElement('div'); dots.className='bl-dots'; w.after(dots);
+ const upd=()=>{ const cards=[...g.querySelectorAll(':scope > .card')]; const over=g.scrollWidth>g.clientWidth+4; w.classList.toggle('scroll',over); dots.hidden=!over;
+  if(dots.children.length!==cards.length) dots.innerHTML=cards.map(()=>'<i></i>').join('');
+  let k=0,best=1e9; cards.forEach((c,j)=>{const d=Math.abs(c.offsetLeft-g.offsetLeft-g.scrollLeft); if(d<best){best=d;k=j;}});
+  [...dots.children].forEach((d,j)=>d.classList.toggle('on',j===k));
+  w.querySelector('.prev').disabled=g.scrollLeft<4; w.querySelector('.next').disabled=g.scrollLeft+g.clientWidth>=g.scrollWidth-4; };
+ g.addEventListener('scroll',upd,{passive:true}); addEventListener('resize',upd);
+ new MutationObserver(()=>requestAnimationFrame(upd)).observe(g,{childList:true});
+ new ResizeObserver(upd).observe(g); upd();
+ w.addEventListener('click',e=>{ const b=e.target.closest('.bl-nav'); if(!b) return; e.preventDefault(); g.scrollBy({left:(b.classList.contains('next')?1:-1)*(g.clientWidth+10),behavior:'smooth'}); });
 })();
 (function(){
  const b=document.querySelector('.hero-d .bub'); if(!b) return;
