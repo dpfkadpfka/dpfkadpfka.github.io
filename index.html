@@ -1850,8 +1850,9 @@ document.addEventListener('click',e=>{ const c=e.target.closest('#webapp .cards 
 ${kb()}`;
  let AI=null, mi=0;
  async function getAIx(){ if(AI) return AI;
-  const [{initializeApp,getApps},{getAI,getGenerativeModel,GoogleAIBackend}]=await Promise.all([import('https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js'),import('https://www.gstatic.com/firebasejs/12.4.0/firebase-ai.js')]);
-  const app=getApps().find(a=>a.name==='chat')||initializeApp(FB,'chat');
+  const [{initializeApp,getApps},{getAI,getGenerativeModel,GoogleAIBackend},AC]=await Promise.all([import('https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js'),import('https://www.gstatic.com/firebasejs/12.4.0/firebase-ai.js'),import('https://www.gstatic.com/firebasejs/12.4.0/firebase-app-check.js')]);
+  let app=getApps().find(a=>a.name==='chat');
+  if(!app){ app=initializeApp(FB,'chat'); AC.initializeAppCheck(app,{provider:new AC.ReCaptchaEnterpriseProvider('6LdwSAsuAAAAAEMCh8RUjUWUwp5WfyxV6c5ZQg7h'),isTokenAutoRefreshEnabled:true}); }
   AI={ai:getAI(app,{backend:new GoogleAIBackend()}),getGenerativeModel}; return AI; }
  async function getChat(){
   if(aiChat) return aiChat;
