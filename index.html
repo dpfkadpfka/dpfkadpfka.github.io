@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
-<script>(function(){var B="1793544902";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
+<script>(function(){var B="1793545125";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
 <meta name="color-scheme" content="light only">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="초등교사 김예람(예람쌤) — AI 영상·교육 콘텐츠 제작 연수, 영상·웹앱 콘텐츠, 연수 교안과 수업 자료">
@@ -436,6 +436,8 @@ body.editing .page .cards .card,body.editing #ytBody .ytc,body.editing .press-l 
 .st-ip{font-family:ui-monospace,Consolas,monospace;font-size:12.5px;color:var(--ink)}
 .st-k{font-size:11px;font-weight:800;color:var(--pink-deep);background:var(--soft);border-radius:99px;padding:0 7px}
 .st-m{margin-top:3px;color:var(--ink-soft);max-width:340px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.st-add2 input[type=date]{flex:0 0 150px}
+.st-cd{flex:0 0 96px!important;font-variant-numeric:tabular-nums;color:var(--pink-deep);font-size:13px}
 .st-ban{border:1px solid #F0C9CF;background:#fff;color:#D23B4E;border-radius:8px;padding:5px 11px;font:inherit;font-size:12.5px;font-weight:800;cursor:pointer;white-space:nowrap}
 .st-ban.on{background:#FDECEE}
 @media (max-width:760px){ .sx{grid-template-columns:1fr;grid-template-rows:auto minmax(0,1fr);height:calc(100vh - 24px)} .sx-nav{display:flex;gap:4px;overflow-x:auto;padding:10px;border-right:0;border-bottom:1px solid #F0E3E9} .sx-brand,.sx-g{display:none} .sx-i{width:auto;white-space:nowrap;flex:none} .sx-hd,.sx-body{padding-left:16px;padding-right:16px} }
@@ -1580,7 +1582,7 @@ async function openSettings(first){
              ['기록',[['train','자료 열람·다운로드','M12 4v11M7 10l5 5 5-5M5 20h14'],['chat','챗봇 질문','M4 5h16v10H9l-5 4z']]]];
   const TITLE={menu:['메뉴 표시','끈 메뉴는 홈 화면, 위쪽 탭, 휴대폰 아래 메뉴에서 모두 숨겨져요.'],course:['연수명 관리','방명록에서 수강 후기를 고를 때 나오는 연수 목록이에요.'],gb:['방명록 작성 기록','포스트잇을 붙인 시간, 내용, 접속 IP, 로그인 이메일이에요. 문제가 있는 IP는 바로 차단할 수 있어요.'],ban:['차단 목록','차단한 IP에서는 방명록을 붙일 수 없어요.'],train:['자료 열람·다운로드 기록','연수 자료와 수업 자료를 연 사람과 시간이에요.'],chat:['챗봇 질문 기록','방문자가 챗봇에 물어본 질문이에요.']};
   const {F,db}=await fbLoad();
-  let tab=first||'menu', D={}, hidden=[...(window.MENU_HIDE||[])], courses=[...(window.GB?GB.getCourses():[])], bans=null, note='', dirty=false;
+  let tab=first||'menu', D={}, hidden=[...(window.MENU_HIDE||[])], courses=(window.GB?GB.getCourses():[]).map(c=>typeof c==='string'?{d:'',t:c}:{...c}), bans=null, note='', dirty=false;
   const get=async(col,key)=>{ try{ return (await F.getDocs(F.query(F.collection(db,col),F.orderBy(key,'desc'),F.limit(500)))).docs.map(d=>({_id:d.id,...d.data()})); }catch(x){ return {err:x.code||x.message}; } };
   async function need(){
     if(tab==='train'&&!D.train){ D.train=await get('train_log','at'); draw(); }
@@ -1591,7 +1593,7 @@ async function openSettings(first){
   const wait=x=>!x?'<p class="lg-empty">불러오는 중…</p>':x.err?`<p class="lg-empty">불러오지 못했어요 (${e(x.err)})</p>`:!x.length?'<p class="lg-empty">아직 기록이 없어요.</p>':'';
   function body(){
     if(tab==='menu') return `<div class="st-list">${MENUS.map(([k,t])=>`<label class="st-row"><span>${t}</span><input type="checkbox" class="st-sw" data-m="${k}" ${hidden.includes(k)?'':'checked'}><i class="st-tg"></i></label>`).join('')}</div>`;
-    if(tab==='course') return `<div class="st-add"><input id="stCIn" maxlength="80" placeholder="연수명 입력 (예: 2026 브루 AI 영상 연수)"><button type="button" data-act="cadd">추가</button></div><div class="st-list">${courses.length?courses.map((c,i)=>`<div class="st-row"><span>${e(c)}</span><button type="button" class="st-x" data-ci="${i}" aria-label="삭제">✕</button></div>`).join(''):'<p class="lg-empty">아직 등록한 연수가 없어요.</p>'}</div>`;
+    if(tab==='course') return `<div class="st-add st-add2"><input type="date" id="stCD" aria-label="연수 날짜"><input id="stCIn" maxlength="70" placeholder="연수명 (예: 브루 AI 영상 연수)"><button type="button" data-act="cadd">추가</button></div><div class="st-list">${courses.length?courses.map((c,i)=>`<div class="st-row"><span class="st-cd">${e(c.d||'날짜 없음')}</span><span>${e(c.t)}</span><button type="button" class="st-x" data-ci="${i}" aria-label="삭제">✕</button></div>`).join(''):'<p class="lg-empty">아직 등록한 연수가 없어요.</p>'}</div>`;
     if(tab==='train'){ const r=D.train; return wait(r)||`<div class="lg-sum">${Object.entries(r.reduce((m,x)=>(m[x.t]=(m[x.t]||0)+1,m),{})).sort((a,b)=>b[1]-a[1]).map(([k,n])=>`<span>${e(k)} <b>${n}</b></span>`).join('')}</div><table><thead><tr><th>시간</th><th>이름</th><th>이메일</th><th>자료</th></tr></thead><tbody>${r.map(x=>`<tr><td>${fmt(x.at)}</td><td>${e(x.name)}</td><td>${e(x.email)}</td><td>${e(x.t)}</td></tr>`).join('')}</tbody></table>`; }
     if(tab==='chat'){ const r=D.chat; return wait(r)||`<table><thead><tr><th>시간</th><th>보던 화면</th><th>질문</th></tr></thead><tbody>${r.map(x=>`<tr><td>${fmt(x.t)}</td><td>${e(PG[x.p]??x.p)}</td><td>${e(x.q)}</td></tr>`).join('')}</tbody></table>`; }
     if(tab==='gb'){ const r=D.ip; if(wait(r)) return wait(r); const G={}; (D.gb&&!D.gb.err?D.gb:[]).forEach(x=>G[x._id]=x); const L={}; (D.gl&&!D.gl.err?D.gl:[]).forEach(x=>L[x.gid]=x);
@@ -1617,7 +1619,7 @@ async function openSettings(first){
     const bn=t.closest('.st-ban'); if(bn){ const h=bn.dataset.h; bans=bans||[]; bans=bans.includes(h)?bans.filter(v=>v!==h):[...bans,h];
       try{ await F.setDoc(F.doc(db,'config','hv_ban'),{json:JSON.stringify(bans),at:F.serverTimestamp()}); note=bans.includes(h)?'차단했어요. 이 IP에서는 방명록을 붙일 수 없어요.':'차단을 풀었어요.'; }catch(err){ note='저장하지 못했어요 ('+(err.code||err.message)+')'; } draw(); return; }
     const a=t.closest('[data-act]'); if(!a) return;
-    if(a.dataset.act==='cadd'){ const v=(w.querySelector('#stCIn').value||'').trim(); if(v&&!courses.includes(v)){ courses.push(v); note='저장을 눌러야 반영돼요.'; draw(); w.querySelector('#stCIn')?.focus(); } return; }
+    if(a.dataset.act==='cadd'){ const v=(w.querySelector('#stCIn').value||'').trim(), dv=(w.querySelector('#stCD').value||'').replace(/-/g,'.'); if(v&&!courses.some(c=>c.t===v&&c.d===dv)){ courses.push({d:dv,t:v}); courses.sort((x,y)=>(y.d||'').localeCompare(x.d||'')); note='저장을 눌러야 반영돼요.'; draw(); w.querySelector('#stCIn')?.focus(); } return; }
     if(a.dataset.act==='menu'){ hidden=[...w.querySelectorAll('.st-sw')].filter(c=>!c.checked).map(c=>c.dataset.m);
       try{ await F.setDoc(F.doc(db,'config','hv_menu'),{json:JSON.stringify({hidden}),at:F.serverTimestamp()}); window.applyMenu(hidden); note='저장했어요. 모든 방문자에게 바로 반영돼요.'; }catch(err){ note='저장하지 못했어요 ('+(err.code||err.message)+')'; } draw(); }
     if(a.dataset.act==='course'){ try{ await F.setDoc(F.doc(db,'config','hv_courses'),{json:JSON.stringify(courses),at:F.serverTimestamp()}); window.GB&&GB.setCourses(courses); note='저장했어요.'; }catch(err){ note='저장하지 못했어요 ('+(err.code||err.message)+')'; } draw(); }
@@ -2170,7 +2172,8 @@ document.addEventListener('click',e=>{ const c=e.target.closest('#webapp .cards 
  function drawColors(){ $g('gbColors').innerHTML=Array.from({length:NC},(_,i)=>`<button type="button" role="radio" aria-label="포스트잇 ${i+1}" aria-checked="${i===color}" data-c="${i}"></button>`).join(''); prev.dataset.c=color; }
  function drawStk(){ $g('gbStks').innerHTML=`<button type="button" class="gb-none" role="radio" aria-checked="${!stk}" data-s="">없음</button>`+STK.map(n=>`<button type="button" role="radio" aria-checked="${stk===n}" data-s="${n}"><img src="stk/${n}.webp" alt="" loading="lazy"></button>`).join(''); const im=$g('gbPvStk'); im.hidden=!stk; if(stk) im.src='stk/'+stk+'.webp'; }
  $g('gbStks').addEventListener('click',ev=>{ const b=ev.target.closest('[data-s]'); if(b){ stk=b.dataset.s; drawStk(); } });
- function drawSel(){ sel.innerHTML='<option value="">연수를 골라 주세요</option>'+courses.map(c=>`<option>${e(c)}</option>`).join('')+'<option value="기타">기타</option>'; }
+ const cLabel=c=>typeof c==='string'?c:((c.d?c.d+' ':'')+c.t);
+ function drawSel(){ sel.innerHTML='<option value="">연수를 골라 주세요</option>'+courses.map(c=>`<option>${e(cLabel(c))}</option>`).join('')+'<option value="기타">기타</option>'; }
  const ADJ=['반짝이는','수줍은','신나는','졸린','용감한','다정한','호기심 많은','느긋한','씩씩한','말랑말랑한','꼼꼼한','상냥한','배고픈','행복한','엉뚱한','조용한','부지런한','명랑한','포근한','깜찍한'];
  const ANI=['수달','펭귄','고양이','강아지','토끼','다람쥐','판다','코알라','햄스터','고슴도치','여우','부엉이','돌고래','알파카','쿼카','아기곰','병아리','오리','라쿤','사슴'];
  let rnd=''; const roll=()=>{ rnd=ADJ[Math.floor(Math.random()*ADJ.length)]+' '+ANI[Math.floor(Math.random()*ANI.length)]; const lc=rnd.charCodeAt(rnd.length-1)-0xAC00, jb=lc%28; nm.placeholder=`비워 두면 '${rnd}'${jb===0||jb===8?'로':'으로'} 붙어요`; };
