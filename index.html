@@ -667,6 +667,14 @@ body.admin .page .cards .card{cursor:grab;outline:1.5px dashed var(--pink-light)
 .pvw-fr:fullscreen{aspect-ratio:auto}
 .pvw-fr iframe{width:100%;height:100%;border:0;display:block}
 button.card{font:inherit;text-align:left;cursor:pointer;width:100%;padding:0;border:0;color:inherit}
+.pvw-login{width:min(440px,100%)}
+.pl-in{padding:30px 28px 26px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px}
+.pl-in img{width:76px;height:76px;object-fit:contain}
+.pl-in h3{margin:4px 0 0;font-size:19px;font-weight:800}
+.pl-in p{margin:0;color:var(--ink-soft);font-size:14px}
+.pl-go{margin-top:10px;border:0;border-radius:999px;background:var(--pink);color:#fff;font:inherit;font-weight:800;font-size:15px;padding:12px 26px;cursor:pointer}
+.pl-go:disabled{opacity:.6;cursor:default}
+.pl-in small{margin-top:6px;color:var(--ink-soft);font-size:12px}
 @media (max-width:600px){.pvw{padding:8px}.pvw-fr{aspect-ratio:4/5}}
 .sec-hd{margin:8px 0 0}
 #promo .press{margin-top:52px}
@@ -1233,10 +1241,10 @@ function renderArchive(id){
     let n=0;
     const list=ARCHIVE[id]; if(document.body.classList.contains('admin')&&!NOALL) cur='전체';
     const card=i=>{
-      const tag=i.url?'a':(i.pv?'button':'div'), href=i.url?` href="${esc(i.url)}" target="_blank" rel="noopener"`:(i.pv?` type="button" data-pv="${i.pv}"`:'');
+      const tag=i.url?'a':((i.pv||i.dl)?'button':'div'), href=i.url?` href="${esc(i.url)}" target="_blank" rel="noopener"`:(i.pv?` type="button" data-pv="${i.pv}"`:(i.dl?` type="button" data-dl="${esc(i.dl)}"`:''));
       return `<${tag} class="card tone-0"${href} data-key="${esc(i.t)}"><div class="thumb">${thumb(i)}${i.st?`<span class="st${i.st==='종료'?' end':''}">${esc(i.st)}</span>`:''}</div>
         <div class="card-body"><div class="card-meta"><span>${esc(i.tag)}</span><span>${esc(i.y)}</span></div><h3>${esc(i.t)}</h3>${i.d?`<p>${esc(i.d)}</p>`:''}
-        <span class="go${i.url||i.pv?'':' soon'}">${i.pv?'자료 보기 →':i.url?(i.yt?'영상 보기 →':(id==='webapp')?'자세히 보기 →':'열어 보기 →'):'링크 준비 중'}</span></div></${tag}>`;
+        <span class="go${i.url||i.pv||i.dl?'':' soon'}">${i.dl?'내려받기 →':i.pv?'자료 보기 →':i.url?(i.yt?'영상 보기 →':(id==='webapp')?'자세히 보기 →':'열어 보기 →'):'링크 준비 중'}</span></div></${tag}>`;
     };
     const grouped=GROUP&&cur==='전체'&&!document.body.classList.contains('admin');
     box.classList.toggle('grouped',grouped);
@@ -1555,6 +1563,7 @@ function go(id){ // 화면 전환 효과 없이 바로 이동
 function render(){
   const id=location.hash.slice(1), home=!pages.includes(id);
   const wasHome=document.body.classList.contains('is-home');
+  if(home){ const ch=document.getElementById('chat'); if(ch) ch.hidden=true; }
   // 하위 페이지에서 메인으로 돌아오면 등장 장면을 다시 재생
   if(home && !wasHome && mode!=='loading' && !reduce){ mode='intro'; introPop=false; introFrom=6; introStart=performance.now(); clip=null; clipQ=null; trans=null; vert='mid'; shown=-1; poseWant=null; idle=false; lx=0; tx=0; }
   document.body.classList.toggle('is-home',home); stage.hidden=!home;
@@ -1710,12 +1719,31 @@ document.addEventListener('click',e=>{ const c=e.target.closest('#webapp .cards 
  const dec=x=>atob(x).split('').reverse().join('');
  function close(){ pv.hidden=true; pv.innerHTML=''; document.body.style.overflow=''; }
  document.addEventListener('click',e=>{
-  const b=e.target.closest('[data-pv]'); if(!b||document.body.classList.contains('admin')) return;
+  const b=e.target.closest('[data-pv],[data-dl]'); if(!b||document.body.classList.contains('admin')) return;
   e.preventDefault(); const t=b.querySelector('h3')?.textContent||'자료';
+  if(b.dataset.dl) return gate(b,'[수업 자료] '+t,()=>{ const a=document.createElement('a'); a.href=b.dataset.dl; a.download=''; document.body.appendChild(a); a.click(); a.remove(); });
+  if(b.closest('#train')) return gate(b,t);
+  show(b,t);
+ });
+ // 연수 자료: 구글 로그인 후 열기 + 열람 기록
+ let U=null;
+ const fbReady=()=>fbLoad().then(f=>{ if(!f._w){ f._w=new Promise(r=>{ const off=f.Au.onAuthStateChanged(f.auth,u=>{ U=u; off(); r(); }); }); } return f._w.then(()=>f); });
+ async function logOpen(t){ try{ const {F,db}=await fbLoad(); await F.addDoc(F.collection(db,'train_log'),{uid:U.uid,email:U.email||'',name:U.displayName||'',t:String(t).slice(0,80),at:F.serverTimestamp()}); }catch(x){ console.warn('log',x&&x.message); } }
+ function gate(b,t,act){
+  const go=()=>{ logOpen(t); if(act){ close(); act(); } else show(b,t); };
+  if(U) return go();
+  pv.innerHTML=`<div class="pvw-box pvw-login" role="dialog" aria-modal="true" aria-label="로그인"><div class="pvw-bar"><b>${t.replace(/^\[수업 자료\] /,'')}</b><button type="button" class="pvw-x" aria-label="닫기">✕</button></div><div class="pl-in"><img src="obj/lecture.webp" alt=""><h3>${act?'자료는 로그인 후 내려받을 수 있어요':'연수 자료는 로그인 후 볼 수 있어요'}</h3><p>구글 계정으로 로그인해 주세요.</p><button type="button" class="pl-go" disabled>Google 계정으로 로그인</button><small>로그인하면 자료 ${act?'다운로드':'열람'} 기록(이름·이메일·시간)이 남아요.</small></div></div>`;
+  pv.hidden=false; document.body.style.overflow='hidden';
+  const btn=pv.querySelector('.pl-go');
+  fbReady().then(f=>{ if(U){ go(); return; } btn.disabled=false;
+   btn.onclick=()=>{ btn.disabled=true; btn.textContent='로그인 중…'; f.Au.signInWithPopup(f.auth,new f.Au.GoogleAuthProvider()).then(r=>{ U=r.user; go(); }).catch(x=>{ btn.disabled=false; btn.textContent='Google 계정으로 로그인'; if(!/popup-closed|cancelled/.test(x.code||'')) alertBox('로그인하지 못했어요 ('+(x.code||x.message)+')'); }); };
+  }).catch(()=>{ btn.textContent='잠시 후 다시 시도해 주세요'; });
+ }
+ function show(b,t){
   pv.innerHTML=`<div class="pvw-box" role="dialog" aria-modal="true" aria-label="${t}"><div class="pvw-bar"><b>${t}</b><button type="button" class="pvw-fs">전체 화면</button><button type="button" class="pvw-x" aria-label="닫기">✕</button></div><div class="pvw-fr"><iframe title="${t}" allow="fullscreen; clipboard-write" allowfullscreen referrerpolicy="no-referrer"></iframe></div></div>`;
   pv.querySelector('iframe').src=dec(b.dataset.pv);
   pv.hidden=false; document.body.style.overflow='hidden'; pv.querySelector('.pvw-x').focus();
- });
+ }
  pv.addEventListener('click',e=>{ if(e.target===pv||e.target.closest('.pvw-x')) close(); else if(e.target.closest('.pvw-fs')){ const f=pv.querySelector('.pvw-fr'); (f.requestFullscreen||f.webkitRequestFullscreen).call(f); } });
  pv.addEventListener('contextmenu',e=>e.preventDefault());
  addEventListener('keydown',e=>{ if(e.key==='Escape'&&!pv.hidden&&!document.fullscreenElement) close(); });
