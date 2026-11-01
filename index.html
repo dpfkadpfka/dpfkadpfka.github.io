@@ -1,0 +1,872 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="초등교사 김예람(예람쌤) — AI 영상·교육 콘텐츠 제작 연수, 영상·웹앱 콘텐츠, 연수 교안과 수업 자료">
+<meta property="og:title" content="예람쌤 홈">
+<meta property="og:description" content="AI 영상·교육 콘텐츠 제작 연수와 수업 자료를 나누는 초등교사 김예람">
+<meta property="og:image" content="https://dpfkadpfka.github.io/avatar.jpg">
+<title>예람쌤 홈</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Poppins:wght@600;700;800;900&family=Gaegu:wght@700&display=swap">
+<style>
+@font-face{font-family:"Freesentation";font-weight:400;font-display:swap;src:url(fonts/freesentation-400.woff2) format("woff2")}
+@font-face{font-family:"Freesentation";font-weight:600;font-display:swap;src:url(fonts/freesentation-600.woff2) format("woff2")}
+@font-face{font-family:"Freesentation";font-weight:700;font-display:swap;src:url(fonts/freesentation-700.woff2) format("woff2")}
+@font-face{font-family:"Freesentation";font-weight:800;font-display:swap;src:url(fonts/freesentation-800.woff2) format("woff2")}
+/* Layout: 분홍 바탕 위 흰 판(프레임) 하나. 위쪽 알약 메뉴 고정, 메인은 큰 YERAM SSAM 글자 앞에 영상 캐릭터, 하위 페이지는 3색 카드 아카이브 */
+:root{
+  --page:#FCD3E3;        /* 바깥 분홍 바탕 */
+  --bg:#FFFFFF;          /* 안쪽 흰 판 */
+  --soft:#FFE4EF;        /* 연분홍 카드 */
+  --surface:#FFFFFF;
+  --ink:#4A1C14;         /* 캐릭터 머리카락 갈색 */
+  --ink-soft:#8C5E55;
+  --pink:#FF4791;        /* 캐릭터 원피스·뿔 분홍 */
+  --pink-deep:#EE2F7C;
+  --pink-light:#FFB0CE;
+  --peach:#FBD3C2;       /* 캐릭터 피부톤 */
+  --spark:#F7B500;
+  --line:#F8D4E2;
+  --halo:#FFE6F0;
+  --halo-strong:#FFC4DC;
+  --grid:rgba(255,71,145,.16);
+  --grid-strong:rgba(255,71,145,.30);
+  --on-dark:#FFFFFF;
+  --nav-h:76px;
+  --font:"Freesentation","Malgun Gothic","Apple SD Gothic Neo",system-ui,sans-serif;
+  --display:"Poppins","Freesentation","Malgun Gothic",system-ui,sans-serif;
+  --hand:"Gaegu","Freesentation",cursive;
+  --logo:"Black Han Sans","Freesentation",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --page:#24131A;--bg:#1C1116;--soft:#3D1D2A;--surface:#2A1820;--ink:#FCEFF3;--ink-soft:#D1AEB8;--pink:#FF5C9A;--pink-deep:#FF4A8C;--spark:#FFC83D;--line:#41232F;--halo:#3A1A27;--halo-strong:#5A2038;--grid:rgba(255,92,154,.16);--grid-strong:rgba(255,92,154,.32);--on-dark:#1C1116;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --page:#24131A;--bg:#1C1116;--soft:#3D1D2A;--surface:#2A1820;--ink:#FCEFF3;--ink-soft:#D1AEB8;--pink:#FF5C9A;--pink-deep:#FF4A8C;--spark:#FFC83D;--line:#41232F;--halo:#3A1A27;--halo-strong:#5A2038;--grid:rgba(255,92,154,.16);--grid-strong:rgba(255,92,154,.32);--on-dark:#1C1116;color-scheme:dark}
+
+html,body{height:100%}
+body{background:var(--page);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased}
+body.is-home{overflow:hidden}
+:focus-visible{outline:3px solid var(--pink);outline-offset:3px;border-radius:8px}
+
+/* 흰 판 */
+.frame{position:fixed;inset:calc(14px + env(safe-area-inset-top,0px)) max(14px,env(safe-area-inset-right,0px)) calc(14px + env(safe-area-inset-bottom,0px)) max(14px,env(safe-area-inset-left,0px));
+  background:var(--bg);border-radius:22px;box-shadow:0 20px 60px -30px rgba(200,40,110,.28);pointer-events:none;z-index:0}
+body:not(.is-home) .frame{display:none}
+.page-bg-word{position:fixed;left:0;right:0;top:-2vh;text-align:center;font-family:var(--display);font-weight:900;font-size:24vw;line-height:.9;color:var(--pink);opacity:.12;pointer-events:none;z-index:0;letter-spacing:-.04em}
+body:not(.is-home) .page-bg-word{display:none}
+
+/* ───── 고정 상단 메뉴 ───── */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--page)}
+.topnav{position:fixed;top:calc(14px + env(safe-area-inset-top,0px));left:max(14px,env(safe-area-inset-left,0px));right:max(14px,env(safe-area-inset-right,0px));z-index:20;border-radius:22px 22px 0 0}
+body:not(.is-home) .topnav{top:env(safe-area-inset-top,0px);left:0;right:0;border-radius:0;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.topnav-in{max-width:1180px;margin:0 auto;min-height:var(--nav-h);display:flex;align-items:center;gap:14px;padding-inline:22px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-family:var(--display);font-weight:800;font-size:19px;flex:none;letter-spacing:-.01em}
+/* 인스타 프로필처럼: 링 두른 캐릭터 얼굴 + 아이디 */
+.logo .ava{display:block;box-sizing:border-box;width:50px;height:50px;border-radius:50%;padding:2.5px;background:linear-gradient(45deg,#FFD600 0%,#FF7A00 28%,#FF0069 62%,#D300C5 100%);flex:none;transition:transform .35s cubic-bezier(.3,1.6,.5,1)}
+.logo .face{display:block;box-sizing:border-box;width:100%;height:100%;border-radius:50%;border:2.5px solid var(--bg);background:var(--soft) url(avatar.jpg) center/cover no-repeat}
+.logo:hover .ava{transform:rotate(-10deg) scale(1.06)}
+.logo .id{display:flex;flex-direction:column;line-height:1.15;font-size:17px}
+.logo .id small{font-family:var(--font);font-weight:600;font-size:12px;color:var(--ink-soft);letter-spacing:0}
+.menu{display:flex;gap:4px;margin-inline:auto}
+/* 상단 메뉴: 아이콘 없이 글자만, 크고 또렷하게 */
+.menu a{position:relative;display:flex;align-items:center;justify-content:center;text-decoration:none;padding:4px 8px 8px;flex:none}
+.menu .icon{display:block;width:44px;height:44px;transition:transform .35s cubic-bezier(.3,1.6,.5,1)}
+.menu .icon img,.menu .icon svg{width:100%;height:100%;object-fit:contain;display:block}
+.menu a::before{content:"";position:absolute;left:50%;bottom:0;width:22px;margin-left:-11px;height:3px;border-radius:3px;background:var(--pink);transform:scaleX(0);transition:transform .25s cubic-bezier(.3,1.4,.5,1)}
+.menu a:hover .icon,.menu a:focus-visible .icon{transform:translateY(-2px) rotate(-8deg) scale(1.1)}
+.menu a[aria-current="page"]::before{transform:scaleX(1)}
+.menu .label{position:absolute;left:50%;top:100%;transform:translate(-88%,0);white-space:nowrap;padding:6px 12px;border-radius:10px;background:var(--pink);color:#fff;font-weight:800;font-size:14px;opacity:0;pointer-events:none;z-index:5;transition:opacity .2s,transform .3s cubic-bezier(.3,1.5,.5,1)}
+.menu a:hover .label,.menu a:focus-visible .label{opacity:1;transform:translate(-88%,8px)}
+body:not(.is-home) .contact-btn{display:none}
+body.is-home .menu .home-link{display:none}
+
+body.is-home .menu{visibility:hidden}
+.contact-btn{flex:none;text-decoration:none;background:var(--pink);color:#fff;font-weight:700;font-size:14.5px;padding:8px 18px;border-radius:99px;transition:transform .25s cubic-bezier(.3,1.6,.5,1),background .2s}
+.contact-btn:hover{transform:translateY(-2px) rotate(-2deg);background:var(--pink-deep)}
+
+/* ───── 메인 무대 ───── */
+.stage{position:fixed;inset:0;overflow:hidden;z-index:1}
+/* 예람쌤 로고 글자(포인트 색으로 바꾼 것) */
+.bigtype{position:absolute;left:50%;top:calc(var(--nav-h) + 2vh);height:min(58vh,560px);transform:translateX(-50%);pointer-events:none;z-index:1;will-change:transform}
+.bigtype img{height:100%;width:auto;display:block}
+.ribbon{position:absolute;left:0;right:0;top:44%;width:100%;height:30vh;z-index:2;pointer-events:none;opacity:.55}
+.ribbon path{fill:none;stroke:var(--pink);stroke-width:26;stroke-linecap:round;opacity:.45}
+/* 가상공간: 플랫 — 흰 벽 + 연분홍 바닥 + 캐릭터가 서는 둥근 무대 */
+.space{position:absolute;inset:calc(14px + env(safe-area-inset-top,0px)) max(14px,env(safe-area-inset-right,0px)) calc(14px + env(safe-area-inset-bottom,0px)) max(14px,env(safe-area-inset-left,0px));z-index:0;pointer-events:none;overflow:hidden;border-radius:22px}
+.space .ground{position:absolute;left:0;right:0;bottom:0;top:64%;background:var(--soft)}
+.space .ground::before{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:var(--pink-light);opacity:.6}
+/* 캐릭터 선택 화면 느낌: 위에서 떨어지는 조명 + 얇은 링 받침대 + 가는 모서리 표시 */
+.beam{position:absolute;left:50%;top:calc(var(--nav-h) + 10px);bottom:calc(15vh - 1vh);width:min(56vh,74vw);transform:translateX(-50%);z-index:1;pointer-events:none;
+  clip-path:polygon(40% 0,60% 0,100% 100%,0 100%);-webkit-mask:linear-gradient(to bottom,#000 70%,transparent 100%);mask:linear-gradient(to bottom,#000 70%,transparent 100%);background:linear-gradient(to bottom,rgba(255,71,145,0) 0%,rgba(255,71,145,.07) 45%,rgba(255,71,145,.14) 100%)}
+.platform{position:absolute;left:50%;bottom:calc(15vh - 4.2vh);width:min(50vh,66vw);height:8.6vh;transform:translateX(-50%);z-index:2;pointer-events:none;overflow:visible}
+.platform ellipse{vector-effect:non-scaling-stroke}
+.platform .p-base{fill:#FFE6EF}
+.platform .p-top{fill:#FFD4E4}
+.platform .p-l1{fill:none;stroke:#fff;stroke-width:1.5}
+.platform .p-l2{fill:none;stroke:var(--pink);stroke-width:1.2;opacity:.45}
+.platform .p-l3{fill:none;stroke:var(--pink);stroke-width:1;opacity:.22}
+.brk{position:absolute;width:22px;height:22px;z-index:3;pointer-events:none;border-color:var(--pink);opacity:.55;border-style:solid;border-width:0}
+.brk.tl{top:calc(var(--nav-h) + 22px);left:calc(14px + 2.4vw);border-top-width:1.5px;border-left-width:1.5px}
+.brk.tr{top:calc(var(--nav-h) + 22px);right:calc(14px + 2.4vw);border-top-width:1.5px;border-right-width:1.5px}
+.brk.bl{bottom:calc(30px + 2.4vh);left:calc(14px + 2.4vw);border-bottom-width:1.5px;border-left-width:1.5px}
+.brk.br{bottom:calc(30px + 2.4vh);right:calc(14px + 2.4vw);border-bottom-width:1.5px;border-right-width:1.5px}
+.halo{position:absolute;left:50%;top:50%;width:min(80vh,100vw);aspect-ratio:1;border-radius:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,var(--halo-strong) 0%,var(--halo) 32%,transparent 66%);pointer-events:none;z-index:1}
+.floor{position:absolute;left:50%;bottom:calc(15vh + 2px);width:min(22vh,30vw);height:2.2vh;border-radius:50%;transform:translateX(-50%);background:var(--pink);opacity:.28;filter:blur(7px);pointer-events:none;z-index:2}
+.char-wrap{position:absolute;left:50%;bottom:15vh;height:min(60vh,535px);transform:translateX(-50%);z-index:3}
+.char-anim{height:100%;transform-origin:50% 100%}
+#charCanvas{height:100%;display:block;transition:filter 1.4s ease}
+
+.hit{position:absolute;top:0;height:100%;cursor:pointer}
+.char-anim.react-wiggle{animation:wiggle .5s ease-in-out}
+.char-anim.react-hop{animation:hop .55s cubic-bezier(.3,1.6,.5,1)}
+.char-anim.react-jump{animation:jump .7s cubic-bezier(.3,1.5,.5,1)}
+@keyframes wiggle{0%,100%{transform:rotate(0)}25%{transform:rotate(-2.5deg)}50%{transform:rotate(2deg)}75%{transform:rotate(-1deg)}}
+@keyframes hop{0%,100%{transform:translateY(0) scale(1)}15%{transform:scale(1.03,.96)}45%{transform:translateY(-3%) scale(.98,1.02)}}
+@keyframes jump{0%,100%{transform:translateY(0)}12%{transform:scale(1.05,.93)}45%{transform:translateY(-8%) scale(.97,1.04)}80%{transform:translateY(0) scale(1.03,.97)}}
+.badge{position:absolute;right:calc(14px + 4vw);top:calc(14px + var(--nav-h) + 3vh);z-index:5;display:flex;align-items:center;gap:10px;background:color-mix(in srgb,var(--soft) 80%,transparent);
+  backdrop-filter:blur(6px);padding:8px 16px 8px 8px;border-radius:16px;transition:transform .3s cubic-bezier(.3,1.6,.5,1)}
+.badge:hover{transform:rotate(-3deg) scale(1.04)}
+.badge .face{width:38px;height:38px;border-radius:50%;background:var(--bg) url(character.png) 50% 8% / 220% auto no-repeat;border:2px solid var(--pink)}
+.badge b{display:block;font-family:var(--display);font-weight:700;font-size:15px;line-height:1.2}
+.badge small{font-size:12.5px;color:var(--ink-soft)}
+.tagline{position:absolute;left:calc(14px + 4vw + 26px);bottom:calc(14px + 4.5vh + env(safe-area-inset-bottom,0px));z-index:5;font-size:17px;color:var(--ink-soft);max-width:34vw}
+.tagline h1{font-family:var(--display);font-size:clamp(26px,2.6vw,36px);font-weight:800;letter-spacing:-.02em;line-height:1.1;color:var(--ink);margin:0 0 6px}
+.tagline p{margin:0}
+.hello{position:absolute;right:calc(14px + 4vw);bottom:calc(14px + 4vh + env(safe-area-inset-bottom,0px));z-index:5;font-family:var(--hand);font-size:24px;color:var(--pink-deep);transform:rotate(-4deg)}
+.sticker{position:fixed;z-index:4;font-family:var(--display);font-weight:800;font-size:12px;letter-spacing:.08em;color:var(--pink-deep);background:var(--bg);padding:5px 14px;border-radius:99px;
+  pointer-events:auto;border:1.5px solid var(--pink-light);transition:transform .3s cubic-bezier(.3,1.6,.5,1)}
+.sticker:hover{transform:rotate(0) scale(1.1)!important}
+.sticker.s1{left:6px;top:52%;transform:rotate(-14deg)}
+.sticker.s2{right:6px;top:60%;transform:rotate(12deg)}
+body:not(.is-home) .sticker{display:none}
+/* 캐릭터 둘레 오브젝트 메뉴 */
+.objs{position:absolute;inset:0;z-index:4;pointer-events:none}
+.obj{position:absolute;left:calc(50% + var(--f) * min(22vw,38vh));transform:translate(-50%,-50%);pointer-events:auto;text-decoration:none;color:var(--ink)}
+.obj-in{display:block;animation:bob var(--d,5s) ease-in-out infinite;animation-delay:var(--dl,0s)}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+/* 오브젝트만 보이고, 마우스를 올리면 뜻이 나옴 */
+.obj-card{position:relative;display:block;transition:transform .3s cubic-bezier(.3,1.5,.5,1)}
+.obj-ic{width:84px;height:84px;display:grid;place-items:center}
+.obj-ic img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 0 3px #fff) drop-shadow(0 0 10px rgba(255,255,255,.95)) drop-shadow(0 0 18px rgba(255,255,255,.8));transition:transform .35s cubic-bezier(.3,1.6,.5,1)}
+.obj-tx{position:absolute;left:50%;bottom:100%;transform:translate(-50%,0);display:flex;flex-direction:column;align-items:center;line-height:1.15;padding:7px 14px 6px;border-radius:12px;background:var(--pink);white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s,transform .3s cubic-bezier(.3,1.5,.5,1)}
+.obj-tx b{font-size:15px;font-weight:800;color:#fff}
+.obj-tx small{font-family:var(--display);font-size:10.5px;font-weight:700;letter-spacing:.08em;color:var(--soft);text-transform:uppercase;margin-top:2px}
+.obj:hover .obj-card,.obj:focus-visible .obj-card{transform:translateY(-4px)}
+.obj:hover .obj-ic img,.obj:focus-visible .obj-ic img{transform:rotate(-8deg) scale(1.12)}
+.obj:hover .obj-tx,.obj:focus-visible .obj-tx{opacity:1;transform:translate(-50%,-10px)}
+.loading{position:absolute;left:50%;top:60%;transform:translate(-50%,-50%);font-size:15px;color:var(--ink-soft);z-index:3}
+.lights{position:fixed;inset:0;pointer-events:none;z-index:2}
+body:not(.is-home) .lights{display:none}
+.wipe{position:fixed;inset:0;z-index:50;background:var(--pink);pointer-events:none;clip-path:circle(0 at var(--x,50%) var(--y,50%));transition:clip-path .5s cubic-bezier(.7,0,.3,1)}
+.wipe.on{clip-path:circle(150vmax at var(--x,50%) var(--y,50%))}
+
+/* ───── 하위 페이지 ───── */
+body:not(.is-home){background:var(--bg)}
+.wrap{max-width:1080px;margin:0 auto;padding-block:calc(var(--nav-h) + 48px) 96px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.page-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:20px;align-items:flex-end;margin-bottom:34px}
+.page-head h2{font-family:var(--font);font-weight:800;font-size:clamp(34px,4.6vw,52px);line-height:1.1;margin:0;letter-spacing:-.03em}
+.page-head h2 small{display:block;font-family:var(--font);font-size:.42em;letter-spacing:0;font-weight:800;color:var(--pink-deep);margin-top:10px}
+.page-head p{margin:12px 0 0;color:var(--ink-soft);max-width:56ch;font-size:17px}
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pill{font-size:13.5px;font-weight:700;padding:4px 13px;border-radius:99px;background:var(--soft);color:var(--pink-deep);transition:transform .2s}
+.pill:nth-child(2){background:var(--pink);color:#fff}
+.pill:nth-child(3){background:var(--ink);color:var(--on-dark)}
+.pill:hover{transform:translateY(-2px) rotate(-3deg)}
+.subhead{font-family:var(--font);font-size:24px;font-weight:800;margin:60px 0 16px;letter-spacing:-.02em}
+.subhead small{font-family:var(--font);font-size:15px;font-weight:700;color:var(--ink-soft);margin-left:8px}
+
+/* 3색 카드 */
+.tone-0{--c-bg:var(--bg);--c-fg:var(--ink);--c-sub:var(--ink-soft);--c-accent:var(--pink-deep)}
+.tone-1{--c-bg:var(--pink);--c-fg:#fff;--c-sub:rgba(255,255,255,.85);--c-accent:#fff}
+.tone-2{--c-bg:var(--ink);--c-fg:var(--on-dark);--c-sub:color-mix(in srgb,var(--on-dark) 75%,transparent);--c-accent:var(--pink)}
+.feature{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.feature article{background:var(--c-bg);color:var(--c-fg);border-radius:26px;padding:26px 28px;transition:transform .3s cubic-bezier(.3,1.5,.5,1)}
+.feature article:hover{transform:translateY(-6px) rotate(-.6deg)}
+.feature .tag{display:inline-block;font-size:13px;font-weight:700;color:var(--c-accent);margin-bottom:8px}
+.feature h3{margin:0 0 6px;font-size:22px;line-height:1.3;text-wrap:balance}
+.feature p{margin:0;color:var(--c-sub);font-size:16px}
+.groups{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:32px 44px}
+.group{min-width:0}
+.cv-sec .groups{grid-template-columns:1fr}
+.cv-cols{columns:2;column-gap:44px}
+.cv-cols li{break-inside:avoid}
+@media (max-width:700px){.cv-cols{columns:1}}
+.group h3{font-size:16px;margin:0 0 8px;padding-bottom:8px;border-bottom:2px solid var(--ink)}
+.group ul{list-style:none;margin:0;padding:0}
+.group li{display:grid;grid-template-columns:1fr auto;gap:16px;padding:9px 0;border-bottom:1px dashed var(--line);font-size:16px;transition:padding-left .2s,color .2s}
+.group li:hover{padding-left:6px;color:var(--pink-deep)}
+.group li span:last-child{color:var(--ink-soft);font-variant-numeric:tabular-nums;font-size:15px;white-space:nowrap}
+
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+.chip{border:1.5px solid var(--ink);background:var(--bg);color:var(--ink);font:inherit;font-weight:700;font-size:14px;padding:4px 14px;border-radius:99px;cursor:pointer;transition:background .2s,transform .2s}
+.chip:hover{transform:translateY(-2px)}
+.chip[aria-pressed="true"]{background:var(--pink);border-color:var(--pink);color:#fff}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}
+.card{display:flex;flex-direction:column;background:var(--c-bg);color:var(--c-fg);border-radius:26px;overflow:hidden;text-decoration:none;min-width:0;transition:transform .3s cubic-bezier(.3,1.5,.5,1)}
+a.card:hover{transform:translateY(-6px) rotate(-.6deg)}
+.thumb{aspect-ratio:16/10;margin:10px 10px 0;border-radius:18px;background:color-mix(in srgb,var(--c-fg) 10%,transparent);display:grid;place-items:center;overflow:hidden}
+.thumb img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+a.card:hover .thumb img{transform:scale(1.05)}
+.thumb .ph{font-family:var(--display);font-weight:800;font-size:15px;color:var(--c-accent);letter-spacing:.04em}
+.card-body{padding:14px 18px 18px;display:flex;flex-direction:column;gap:4px;flex:1}
+.card-meta{font-size:13px;font-weight:700;color:var(--c-accent);display:flex;gap:8px;justify-content:space-between}
+.card-meta span:last-child{color:var(--c-sub);font-variant-numeric:tabular-nums}
+.card h3{margin:0;font-size:19px;line-height:1.3}
+.card p{margin:0;font-size:15px;color:var(--c-sub)}
+.card .go{margin-top:auto;padding-top:10px;font-size:14px;font-weight:700}
+.card .go.soon{color:var(--c-sub);font-weight:600}
+
+.ct-lead{margin:0 0 14px;color:var(--ink-soft)}
+.ct-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;max-width:720px}
+.ct-tile{display:flex;align-items:center;gap:16px;padding:18px 20px;border:0;border-radius:20px;background:var(--soft);color:var(--ink);font:inherit;text-align:left;text-decoration:none;cursor:pointer;transition:transform .25s cubic-bezier(.3,1.5,.5,1),background .2s}
+.ct-tile:hover,.ct-tile:focus-visible{transform:translateY(-3px);background:#fff}
+.ct-logo{width:56px;height:56px;border-radius:16px;background:#fff;display:grid;place-items:center;flex:none;overflow:hidden}
+.ct-logo svg{width:34px}
+.ct-logo img{width:100%;height:100%;object-fit:cover}
+.ct-tx{display:flex;flex-direction:column;gap:2px;min-width:0}
+.ct-tx b{font-size:17px;font-weight:800}
+.ct-tx small{font-size:14px;color:var(--ink-soft);word-break:break-all}
+.ct-tx em{font-style:normal;font-size:12.5px;font-weight:700;color:var(--pink-deep);margin-top:2px}
+.ct-tile.done em{color:#fff;background:var(--pink);border-radius:99px;padding:1px 9px;align-self:flex-start}
+@media (max-width:600px){.ct-grid{grid-template-columns:1fr}}
+.contact-card{border-radius:26px;padding:26px 28px;max-width:560px;background:var(--c-bg);color:var(--c-fg)}
+.contact-row{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:6px}
+.contact-row code{font-family:var(--font);font-size:21px;font-weight:700;user-select:all;word-break:break-all}
+.btn{border:0;background:var(--pink);color:#fff;font:inherit;font-weight:700;font-size:14px;padding:8px 18px;border-radius:99px;cursor:pointer;transition:transform .2s,background .2s}
+.btn:hover{transform:translateY(-2px);background:var(--pink-deep)}
+.note{font-size:14px;color:var(--ink-soft);margin-top:40px}
+
+/* ── 이력·영상: 예람쌤 AI 영상 제작소와 같은 배치 ── */
+.ab-cv{display:grid;gap:10px;margin-top:40px}
+.cvsec{display:grid;grid-template-columns:220px minmax(0,1fr);gap:20px;background:var(--bg);border:1px solid var(--line);border-radius:18px;padding:18px 24px}
+.cvsec-h{align-self:start;position:sticky;top:calc(var(--nav-h) + 16px)}
+.cvsec-h .cvn{display:block;font-size:13px;font-weight:800;color:var(--pink-deep);letter-spacing:.3px;margin-bottom:6px}
+.cvsec-h h3{margin:0;font-size:19px;font-weight:800;letter-spacing:-.4px}
+.cvsec-h p{margin:3px 0 0;color:var(--ink-soft);font-size:13px}
+.cvl{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.cvl li{display:flex;align-items:flex-start;gap:12px;padding:6px 0;border-bottom:1px solid var(--line);font-size:14.5px;line-height:1.45;transition:background .15s}
+.cvl li:hover{background:var(--soft)}
+.cvl .cy{flex:0 0 96px;font-size:14px;font-weight:800;color:var(--pink-deep);white-space:nowrap;font-variant-numeric:tabular-nums}
+.ytfil{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:0 0 18px}
+.ytfil button{border:1.5px solid var(--line);background:var(--bg);border-radius:999px;padding:7px 14px;font:inherit;font-size:14px;font-weight:700;color:var(--ink-soft);cursor:pointer}
+.ytfil button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.ytfil button i{font-style:normal;font-size:12px;opacity:.7;margin-left:4px}
+.ytsec{margin:0 0 28px}
+.ytsec h4{font-size:17px;font-weight:800;margin:0 0 12px;display:flex;align-items:baseline;gap:8px}
+.ytsec h4 small{font-size:13px;color:var(--ink-soft);font-weight:600}
+.ytgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}
+.ytgrid.sh{grid-template-columns:repeat(auto-fill,minmax(170px,1fr))}
+.ytc{display:grid;gap:8px;text-decoration:none;color:var(--ink);min-width:0}
+.ytc-im{position:relative;border-radius:14px;overflow:hidden;aspect-ratio:16/9;background:#111;display:grid;place-items:center}
+.ytgrid.sh .ytc-im{aspect-ratio:9/16}
+.ytc-im img{width:100%;height:100%;object-fit:cover;transition:transform .3s}
+.ytc-im .ph{color:#fff;opacity:.6;font-weight:700;font-size:13px}
+.ytc:hover .ytc-im img{transform:scale(1.04)}
+.ytc-im::after{content:"";position:absolute;inset:auto auto 10px 10px;width:34px;height:24px;border-radius:7px;background:rgba(0,0,0,.65) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 7v10l8-5z' fill='white'/%3E%3C/svg%3E") center/18px no-repeat;transition:background-color .15s}
+.ytc:hover .ytc-im::after{background-color:#FF0033}
+.ytc-n{position:absolute;top:8px;right:8px;z-index:1;background:var(--pink);color:#fff;font-size:12px;font-weight:800;border-radius:999px;padding:2px 9px}
+.ytc b{font-size:14.5px;font-weight:700;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ytc:hover b{color:var(--pink-deep)}
+@media (max-width:900px){.cvsec{grid-template-columns:minmax(0,1fr);gap:14px;padding:22px 20px}.cvsec-h{position:static}.cvsec-h h3{font-size:20px}}
+@media (max-width:700px){.ytgrid{grid-template-columns:1fr 1fr;gap:12px}.ytgrid.sh{grid-template-columns:1fr 1fr}}
+
+
+/* ===== 바닥글 (예람쌤 AI 영상 제작소와 같은 구성) ===== */
+footer.ft{max-width:1080px;margin:0 auto;padding:32px max(16px,env(safe-area-inset-right,0px)) calc(28px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));font-size:14px;color:var(--ink-soft)}
+footer.ft .ft-in{border-top:1px solid var(--line);padding-top:32px}
+body.is-home footer.ft{display:none}
+.ft-top{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.ft-brand{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--ink)}
+.ft-brand img{width:64px;height:64px;display:block}
+.ft-brand b{display:block;font-family:var(--display);font-size:18px;font-weight:800}
+.ft-brand small{font-size:13px;color:var(--ink-soft)}
+.ftsns{display:flex;gap:8px;margin:0}
+.ftsns a{display:block;width:36px;height:36px;border-radius:10px;overflow:hidden;transition:transform .15s}
+.ftsns a:hover{transform:translateY(-2px)}
+.ftsns img{width:100%;height:100%;object-fit:cover;display:block}
+.ft-bot{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:20px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px}
+.ft-bot a{color:inherit;text-decoration:none}
+.ft-bot a:hover{color:var(--pink-deep)}
+
+/* ───── 메인 시안 A: 가운데 캐릭터 + 위 이름 + 아래 분야 띠 ───── */
+.stage{background:#FFFAFC}
+:root[data-theme="dark"] .stage{background:var(--bg)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .stage{background:var(--bg)}}
+.space,.halo,.beam,.platform,.brk,#floorCv,.tagline{display:none!important}
+.hero{position:absolute;left:0;right:0;top:calc(var(--nav-h) + 1.5vh);text-align:center;z-index:4;pointer-events:none}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:700;color:var(--pink-deep)}
+.hero-badge::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--pink)}
+.hero h1{margin:4px 0 0;font-size:clamp(40px,5.2vw,64px);font-weight:800;letter-spacing:-.03em;line-height:1.1;color:var(--ink)}
+.band{position:absolute;left:0;right:0;bottom:0;height:72px;display:flex;justify-content:center;align-items:center;background:var(--bg);border-top:1px solid var(--line);z-index:4}
+.band span{padding:0 30px;display:flex;flex-direction:column;align-items:center;line-height:1.35;white-space:nowrap}
+.band b{font-size:15.5px;font-weight:800;color:var(--ink)}
+.band small{font-size:12.5px;font-weight:600;color:var(--ink-soft)}
+.band span+span{border-left:1px solid var(--line)}
+.char-wrap{bottom:calc(72px + 4vh);height:min(54vh,520px)}
+.floor{bottom:calc(72px + 4vh + 2px);opacity:.18}
+.obj-in{animation:none}
+/* ───── 모바일 ───── */
+@media (max-width:860px){
+  .menu a{padding:4px 5px 8px}
+  .menu .icon{width:38px;height:38px}
+  .contact-btn{display:none}
+}
+@media (max-width:700px){
+  :root{--nav-h:132px}
+  .menu{justify-content:space-between}
+  .menu a{flex-direction:column;gap:3px;padding:2px 2px 7px}
+  .menu .icon{width:36px;height:36px}
+  .menu .label{position:static;transform:none!important;opacity:1;background:none;color:var(--ink-soft);padding:0;font-size:11.5px;font-weight:700}
+  .menu a[aria-current="page"] .label{color:var(--pink-deep)}
+  .topnav-in{flex-wrap:wrap;padding-block:10px 6px;padding-inline:14px;gap:8px}
+  .menu{order:3;width:100%;margin:0;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+  .menu::-webkit-scrollbar{display:none}
+  .contact-btn{display:inline-block;margin-left:auto;padding:6px 14px;font-size:13px}
+  body.is-home .menu{display:none}
+  body.is-home{--nav-h:72px}
+  .bigtype{height:min(44vh,92vw);top:calc(var(--nav-h) + 2vh)}
+  .badge{display:none}
+  .objs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;position:absolute;bottom:auto;align-content:start;left:16px;right:16px;top:calc(14px + 66px + 1vh);inset-inline:max(26px,env(safe-area-inset-left,0px))}
+  .obj{position:static;transform:none;top:auto!important}
+  .obj-in{animation:none}
+  .obj-card{display:flex;flex-direction:column;align-items:center;gap:4px;padding:6px 4px}
+  .obj-ic{width:56px;height:56px}
+  .obj-tx{position:static;transform:none!important;opacity:1;background:none;padding:0}
+  .obj-tx b{font-size:13.5px;color:var(--ink)}
+  .obj-tx small{display:none}
+  .sticker{display:none}
+  .char-wrap{bottom:15vh;height:min(49vh,428px)}
+  .floor{bottom:calc(15vh + 2px)}
+        .tagline{left:50%;transform:translateX(-50%);text-align:center;max-width:86vw;width:max-content;bottom:calc(14px + 5vh + env(safe-area-inset-bottom,0px))}
+  .hello{right:50%;transform:translateX(50%) rotate(-3deg);bottom:calc(14px + 1.4vh + env(safe-area-inset-bottom,0px));font-size:20px}
+  .feature,.groups{grid-template-columns:1fr}
+  .cards{grid-template-columns:1fr 1fr;gap:10px}
+  .card h3{font-size:16px}.card p{display:none}.card-body{padding:10px 12px 14px}
+}
+@media (max-width:380px){ .cards{grid-template-columns:1fr} .card p{display:block} }
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+@media (max-width:700px){
+  .hero{top:auto;bottom:calc(14px + 2vh + env(safe-area-inset-bottom,0px))}
+  .hero-badge{font-size:13px}.hero h1{font-size:34px}
+  .band{display:none}
+  .char-wrap{bottom:calc(96px + 3vh);height:min(46vh,400px)}
+  .floor{bottom:calc(96px + 3vh + 2px)}
+}
+@media (min-width:901px){
+  body:not(.is-home){--side:330px}
+  body:not(.is-home) .topnav{top:0;left:0;bottom:0;right:auto;width:var(--side);background:var(--soft);backdrop-filter:none;border-bottom:0;border-radius:0;overflow:hidden}
+  body:not(.is-home) .topnav-in{box-sizing:border-box;flex-direction:column;align-items:stretch;height:100%;max-width:none;margin:0;padding:28px 24px 0;gap:22px}
+  body:not(.is-home) .menu{flex-direction:column;margin:0;gap:4px;overflow:visible}
+  body:not(.is-home) .menu a{justify-content:flex-start;gap:12px;padding:8px 12px;border-radius:14px;transition:background .2s}
+  body:not(.is-home) .menu a::before{display:none}
+  body:not(.is-home) .menu .icon{width:34px;height:34px}
+  body:not(.is-home) .menu .label{position:static;transform:none!important;opacity:1;background:none;padding:0;color:var(--ink-soft);font-size:16.5px;font-weight:700}
+  body:not(.is-home) .menu a:hover{background:color-mix(in srgb,#fff 60%,transparent)}
+  body:not(.is-home) .menu a:hover .label{color:var(--ink)}
+  body:not(.is-home) .menu a[aria-current="page"]{background:var(--bg);box-shadow:0 0 0 1.5px var(--pink)}
+  body:not(.is-home) .menu a[aria-current="page"] .label{color:var(--ink)}
+  body:not(.is-home) > .page, body:not(.is-home) > footer.ft{margin-left:var(--side)}
+  body:not(.is-home) .wrap{padding-top:52px}
+  #sideCv{display:none}
+  body:not(.is-home) #sideCv{display:block;margin-top:auto;align-self:center;height:min(42vh,380px);width:auto;pointer-events:none}
+}
+@media (max-width:900px){ #sideCv{display:none} }
+.card.tone-0,.feature article.tone-0,.contact-card.tone-0{box-shadow:0 0 0 1px var(--line)}
+.card.tone-0:hover,.feature article.tone-0:hover{box-shadow:0 0 0 1.5px var(--pink)}
+.pill:nth-child(n){background:var(--soft);color:var(--pink-deep)}
+.card-meta span:first-child{display:inline-block;background:var(--soft);color:var(--pink-deep);border-radius:99px;padding:1px 10px;font-size:12.5px}
+</style>
+
+<div class="frame" aria-hidden="true"></div>
+
+<header class="topnav">
+  <div class="topnav-in">
+    <a class="logo" href="#" data-go=""><span class="ava"><span class="face"></span></span><span class="id">yeramssam</span></a>
+    <!-- 오브젝트 그림이 오면 .ph 대신 <img src="objects/파일명.png" alt=""> -->
+    <nav class="menu" aria-label="메뉴">
+      <a href="#" data-go="" class="home-link"><span class="icon"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 6 4 30h8v26h40V30h8z" fill="#FF4791"/><rect x="16" y="30" width="32" height="26" fill="#FFB0CE"/><path d="M32 48c-6-4-9-7-9-10.5a4.5 4.5 0 0 1 9-1 4.5 4.5 0 0 1 9 1C41 41 38 44 32 48z" fill="#fff"/></svg></span><span class="label">홈</span></a>
+      <a href="#about"   data-go="about"   data-line="제 소개부터 할게요!"><span class="icon"><img src="obj/career.webp" alt=""></span><span class="label">이력</span></a>
+      <a href="#promo"   data-go="promo"><span class="icon"><img src="obj/contact.webp" alt=""></span><span class="label">연수 홍보</span></a>
+      <a href="#video"   data-go="video"   data-line="제가 만든 영상이에요"><span class="icon"><img src="obj/video.webp" alt=""></span><span class="label">영상 콘텐츠</span></a>
+      <a href="#webapp"  data-go="webapp"  data-line="직접 만든 웹앱이에요!"><span class="icon"><img src="obj/webapp.webp" alt=""></span><span class="label">웹앱 콘텐츠</span></a>
+      <a href="#train"   data-go="train"   data-line="연수 자료 보러 갈래요?"><span class="icon"><img src="obj/train.webp" alt=""></span><span class="label">연수 교안</span></a>
+      <a href="#class"   data-go="class"   data-line="우리 반 수업 이야기예요"><span class="icon"><img src="obj/class.webp" alt=""></span><span class="label">수업 자료</span></a>
+    </nav>
+    <a class="contact-btn" href="#promo" data-go="promo" data-target="contact">연락하기</a>
+    <canvas id="sideCv" aria-hidden="true"></canvas>
+  </div>
+</header>
+
+<main class="stage" id="stage" aria-label="예람쌤 메인">
+  <div class="space" aria-hidden="true"><div class="ground"></div></div>
+  <div class="halo"></div>
+  <div class="beam" aria-hidden="true"></div>
+  <svg class="platform" viewBox="0 0 400 80" preserveAspectRatio="none" aria-hidden="true">
+    <ellipse class="p-l3" cx="200" cy="44" rx="198" ry="34"/>
+    <ellipse class="p-base" cx="200" cy="44" rx="176" ry="28"/>
+    <ellipse class="p-top" cx="200" cy="40" rx="150" ry="22"/>
+    <ellipse class="p-l1" cx="200" cy="40" rx="118" ry="16"/>
+    <ellipse class="p-l2" cx="200" cy="44" rx="176" ry="28"/>
+  </svg>
+  <span class="brk tl" aria-hidden="true"></span><span class="brk tr" aria-hidden="true"></span><span class="brk bl" aria-hidden="true"></span><span class="brk br" aria-hidden="true"></span>
+  <div class="floor"></div>
+  <canvas id="floorCv"></canvas>
+  <div class="loading" id="loading">예람쌤 오는 중…</div>
+  <div class="char-wrap" id="charWrap">
+    <div class="char-anim" id="charAnim">
+      <canvas id="charCanvas" role="img" aria-label="분홍 원피스에 악마 뿔과 천사 날개를 단 예람쌤 캐릭터"></canvas>
+    </div>
+    <div class="hit" id="hit"></div>
+  </div>
+  <!-- 오브젝트 그림이 오면 .ph 대신 <img src="objects/파일명.png" alt=""> -->
+  <nav class="objs" aria-label="오브젝트 메뉴">
+    <a class="obj" href="#about" data-go="about" style="--f:-1;top:36%"><span class="obj-in"><span class="obj-card"><span class="obj-ic"><img src="obj/career.webp" alt=""></span><span class="obj-tx"><b>이력</b></span></span></span></a>
+    <a class="obj" href="#video" data-go="video" style="--f:-1.22;top:52%"><span class="obj-in"><span class="obj-card"><span class="obj-ic"><img src="obj/video.webp" alt=""></span><span class="obj-tx"><b>영상 콘텐츠</b></span></span></span></a>
+    <a class="obj" href="#train" data-go="train" style="--f:-1;top:68%"><span class="obj-in"><span class="obj-card"><span class="obj-ic"><img src="obj/train.webp" alt=""></span><span class="obj-tx"><b>연수 교안</b></span></span></span></a>
+    <a class="obj" href="#promo" data-go="promo" style="--f:1;top:36%"><span class="obj-in"><span class="obj-card"><span class="obj-ic"><img src="obj/contact.webp" alt=""></span><span class="obj-tx"><b>연수 홍보</b></span></span></span></a>
+    <a class="obj" href="#webapp" data-go="webapp" style="--f:1.22;top:52%"><span class="obj-in"><span class="obj-card"><span class="obj-ic"><img src="obj/webapp.webp" alt=""></span><span class="obj-tx"><b>웹앱 콘텐츠</b></span></span></span></a>
+    <a class="obj" href="#class" data-go="class" style="--f:1;top:68%"><span class="obj-in"><span class="obj-card"><span class="obj-ic"><img src="obj/class.webp" alt=""></span><span class="obj-tx"><b>수업 자료</b></span></span></span></a>
+  </nav>
+  <div class="tagline"><h1>김예람</h1><p>AI 교육 콘텐츠를 만들고 가르치는 초등교사</p></div>
+  <div class="hero"><span class="hero-badge">초등교사</span><h1>김예람</h1></div>
+  <div class="band"><span><b>AI 영상 제작 연수</b><small>지식샘터 AI 영상 강사 · 경기도교육청 ‘나도 크리에이터’</small></span><span><b>교육 콘텐츠 제작 연수</b><small>T셀파 · 아이스크림 · 티처빌 원격연수 강사</small></span><span><b>AI 교육 콘텐츠 크리에이터</b><small>EBS 이솦 공식 크리에이터 · 경기도교육감상 4회</small></span><span><b>AI·미디어 교육 자문</b><small>EBS 〈처음 배우는 AI〉 자문 · EBS 시청자평가원</small></span></div>
+</main>
+<canvas class="lights" id="lights" aria-hidden="true"></canvas>
+
+<!-- 소개: 이력 · 수상 · 연락 -->
+<section class="page" id="about" hidden>
+  <div class="wrap">
+    <div class="page-head">
+      <div><h2>이력</h2>
+      <p>부천북초등학교 교사 김예람입니다. AI로 교육 콘텐츠를 만들고, 그 방법을 선생님들과 나누고 있습니다.</p></div>
+      <div class="pills"><span class="pill">#초등교사</span><span class="pill">#연수강사</span><span class="pill">#크리에이터</span></div>
+    </div>
+    <div class="feature">
+      <article class="tone-0"><span class="tag">EBS · 2026~</span><h3>EBS 시청자평가원</h3><p>교육 방송 콘텐츠를 검토하고 비평하는 법정 기구 위원으로, EBS1 방송 정기패널로 출연합니다.</p></article>
+      <article class="tone-0"><span class="tag">EBS · 2026~</span><h3>EBS 〈처음 배우는 AI〉 자문교사</h3><p>초등학생을 위한 첫 AI 교육 프로그램의 강의 내용을 감수하고 자문합니다.</p></article>
+    </div>
+    <div class="ab-cv" id="cvBody"></div>
+  </div>
+</section>
+
+<!-- 아카이브 4종: 카드 목록은 아래 script의 ARCHIVE에서 만듭니다 -->
+<section class="page" id="video" hidden><div class="wrap">
+  <div class="page-head"><div><h2>영상 콘텐츠</h2><p>AI로 만든 교육 영상과 강좌, 홍보 숏폼을 모았습니다.</p></div></div>
+  <div class="ytfil" id="ytFil"></div><div id="ytBody"></div></div></section>
+<section class="page archive" id="webapp" hidden><div class="wrap">
+  <div class="page-head"><div><h2>웹앱 콘텐츠</h2><p>수업과 연수에서 쓰려고 직접 만든 웹앱입니다. 눌러서 바로 써 볼 수 있어요.</p></div></div>
+  <div class="filters"></div><div class="cards"></div></div></section>
+<section class="page archive" id="promo" hidden><div class="wrap">
+  <div class="page-head"><div><h2>연수 홍보</h2><p>지금 신청할 수 있는 연수와 강의를 안내합니다.</p></div></div>
+  <div class="filters"></div><div class="cards"></div>
+    <h3 class="subhead" id="contact-anchor">연수·강의 문의</h3>
+    <p class="ct-lead">연수·강의 요청과 콘텐츠 제작, 자문 문의는 편한 방법으로 연락 주세요.</p>
+    <div class="ct-grid">
+      <button class="ct-tile" id="copyMail" type="button"><span class="ct-logo gm"><svg viewBox="52 42 88 66" aria-hidden="true"><path fill="#4285f4" d="M58 108h14V74L52 59v43c0 3.32 2.69 6 6 6"/><path fill="#34a853" d="M120 108h14c3.32 0 6-2.69 6-6V59l-20 15"/><path fill="#fbbc04" d="M120 48v26l20-15v-8c0-7.42-8.47-11.65-14.4-7.2"/><path fill="#ea4335" d="M72 74V48l24 18 24-18v26L96 92"/><path fill="#c5221f" d="M52 51v8l20 15V48l-5.6-4.2c-5.94-4.45-14.4-.22-14.4 7.2"/></svg></span><span class="ct-tx"><b>Gmail</b><small id="mail">dpfkadpfka@gmail.com</small><em>누르면 주소가 복사돼요</em></span></button>
+      <a class="ct-tile" href="https://open.kakao.com/o/sQjNnOnh" target="_blank" rel="noopener"><span class="ct-logo"><img src="sns/kakao.jpg" alt=""></span><span class="ct-tx"><b>카카오톡 오픈채팅</b><small>바로 대화하기</small><em>누르면 오픈채팅이 열려요</em></span></a>
+    </div>
+</div></section>
+<section class="page archive" id="train" hidden><div class="wrap">
+  <div class="page-head"><div><h2>연수 교안</h2><p>연수와 강의에서 쓴 교안을 나눕니다.</p></div></div>
+  <div class="filters"></div><div class="cards"></div></div></section>
+<section class="page archive" id="class" hidden><div class="wrap">
+  <div class="page-head"><div><h2>수업 자료</h2><p>웹앱·PPT·학습지까지 바로 쓸 수 있게 묶은 수업 꾸러미입니다.</p></div></div>
+  <div class="filters"></div><div class="cards"></div></div></section>
+
+
+<footer class="ft"><div class="ft-in">
+  <div class="ft-top">
+    <a class="ft-brand" href="#" data-go=""><img src="logo.png" alt="예람쌤 로고"><span><b>yeramssam</b><small>AI 교육 콘텐츠를 만들고 가르치는 초등교사 김예람</small></span></a>
+    <div class="ftsns">
+      <a href="https://open.kakao.com/o/sQjNnOnh" target="_blank" rel="noopener" title="카톡 오픈채팅" aria-label="카톡 오픈채팅"><img src="sns/kakao.jpg" alt=""></a>
+      <a href="https://blog.naver.com/dpfkadpfka2" target="_blank" rel="noopener" title="블로그" aria-label="블로그"><img src="sns/blog.png" alt=""></a>
+      <a href="https://www.youtube.com/@%EC%98%88%EB%9E%8C%EC%8C%A4" target="_blank" rel="noopener" title="유튜브" aria-label="유튜브"><img src="sns/youtube.png" alt=""></a>
+      <a href="https://ebssw.kr/dpfkadpfka2" target="_blank" rel="noopener" title="EBS 이솦" aria-label="EBS 이솦"><img src="sns/esop.jpg" alt=""></a>
+    </div>
+  </div>
+  <div class="ft-bot"><span>© 2026 예람쌤 · dpfkadpfka@gmail.com</span><span><a href="https://dpfkadpfka.github.io/yeram-ai-video/" target="_blank" rel="noopener">예람쌤 AI 영상 제작소</a></span></div>
+</div></footer>
+
+<script>
+/* ═══ 아카이브 목록 ═══
+   항목 추가: { t:'제목', d:'한 줄 설명', tag:'분류', y:'연도', url:'주소', img:'썸네일 경로' }
+   url이 비어 있으면 '준비 중'으로 표시됩니다. */
+const DATA={"YTV":[["FSPZeSVhlVo", "2026 에듀플러스위크 QUOKA 연구회 부스 홍보 영상", "short"], ["Za8LXbWtBDU", "배움한바퀴 | 경기공유학교 홍보 AI 숏폼", "short"], ["HQ6cUodb4ac", "경기도교육청「E-정책장터 팝업스토어」 홍보 영상", "short"], ["MBqL_ew2aSg", "경기도교육청 미디어교육센터「1인 크리에이터 수업」 홍보 숏폼", "short"], ["5fhQrTffAr0", "개학", "short"], ["OD4YgFoTfN4", "우리나라의 바다는 세계", "short"], ["YUx7EBj27AE", "Behind the Beat [AI MV]", "mv"], ["lLCQx4B0wzc", "걸리버 여행기로 알아보는 권력분립의 필요성 (헌법 교육)", "edu"], ["Pd_cgRjCXvE", "종이지식 | 컴포트뷰잉(Comfort Viewing)이란?", "edu"], ["ItmOTUFOIHs", "디톡스(D'TALKS) 디지털 토론수업", "edu"], ["ALrpC1dBvPg", "괜찮아, 하이러닝이 있잖아! | 2025 하이러닝 고도화", "edu"], ["PqN-gY8R-88", "2025 경기도교육청 디지털 시민교육 | 디지털 윤리와 안전 4역량", "edu"], ["E39-uZX-mjo", "2025 경기도교육청 안전한 학교생활을 위한 무지개 약속", "edu"], ["2G2ntfQvSFw", "2024 경기도교육청 에듀테크 진로교육 영상", "edu"], ["vQTBE_GjeKQ", "AR 체험! 증강현실 세상 만나기", "ar", 1], ["DHEQkfx8XWo", "나만의 첫 AR 콘텐츠 제작하기", "ar", 2], ["OM0bi3rn_Co", "AR 미래 명함 디자인하기", "ar", 3], ["05hfnltSlQk", "AR 미래 명함 완성하기", "ar", 4], ["QXSCqogm3GM", "AI로 AR 융합 업그레이드하기", "ar", 5], ["YpudMInPMAw", "메타버스란?", "esop", 1], ["YCP4lUgHYQI", "가상현실(VR)이란?", "esop", 2], ["g2oEGtq1hUE", "증강현실(AR)이란?", "esop", 3], ["UJ5mp-_qQrk", "코딩이란?", "esop", 4], ["-0gOU1dxR9U", "Delightex 시작하기", "esop", 5], ["7oPfIOwXylw", "나만의 가상 행성 만들기", "esop", 6], ["JPyHjXgRrFo", "행성에 생명을 불어넣기", "esop", 7], ["rH_S8gFOMTU", "코블록스 조작하기", "esop", 8], ["AzkSd2j6tOg", "이벤트가 일어나는 행성 만들기", "esop", 9], ["Uh2t5FfE_f4", "문제를 풀어야 작동하는 세계", "esop", 10], ["jWIPcfsPBmc", "지구와 연결된 나만의 행성", "esop", 11], ["cS_GaEyDVyU", "머지큐브AR 체험하기", "esop", 12]],"YTC":[["new", "새 영상"], ["edu", "교육 콘텐츠"], ["mv", "AI 뮤직비디오"], ["ar", "증강현실로 진로를 디자인하다", "5차시"], ["esop", "EBS 이솦 × 예람쌤", "메타버스·VR·AR·코딩 융합 · 12강"], ["short", "숏폼"]],"CV": [["기관 활동", [["EBS 시청자평가원 (EBS1 방송 정기패널 출연)", "2026~"], ["EBS 방송 <처음 배우는 AI> 자문 교사", "2026~"], ["EBS 초등 온라인 강의 검수 및 상담 교사", "2026~"], ["EBS 이솦 소프트웨어·인공지능 교육 공식 크리에이터", "2025~"], ["EBS X 교육부 함께학교 운영지원단", "2025~"], ["KERIS 어울림더하기 멘토강사단", "2026~"], ["KERIS 학습분석 서비스 구현/고도화 및 교육자료 유통 체계 신규 구축 추진을 위한 교사 자문협의체", "2026~"], ["인사혁신처 2026 적극행정 응원 챌린지 공모전 2차 심사 위원", "2026"], ["행정안전부 2026 어린이 안전 골든벨 출제 문제 검수 위원", "2026"], ["KERIS 예비교원 수업 아이디어 공모전 심사위원", "2025"], ["과학기술정보통신부 X 한국과학창의재단 디지털 콘텐츠 창작자 양성과정 수료", "2025"], ["교육부 X AIEDAP 마스터교원", "2025~"], ["교육부 X KERIS 교실혁명 선도교사", "2025~"], ["교육부 X KAIST 영재키움 프로젝트 멘토교사", "2025~"], ["경기도교육청 경기 교사 크리에이터(GT-Creator)", "2025"], ["경기도교육청 정책기획관 지원단 위촉", "2025~"], ["경기도교육청 홍보기획관 미래나래 교육기자단 위촉", "2025"], ["경기도교육청 교육역량과 하이러닝 AI 서·논술형 평가 원격 직무연수 콘텐츠 제작 지원단", "2026~"], ["경기도교육청 AI교육과 경기온라인학교 실시간강좌 강사, 콘텐츠강좌 강사", "2025~"], ["경기도교육청 벽깨기협력과 경기공유학교 홍보지원단", "2026~"], ["경기도교육청 남부연수원 원격 연수 지원단", "2025"], ["경기도교육청 미디어교육센터 미디어교육 지원단", "2026~"], ["경기도교육청 미디어교육센터 미디어교육 홍보지원단", "2025"], ["경기도교육청 미래과학교육원 경기미래교육 연계 교원주도 지역학습 콘텐츠 개발단", "2026~"], ["경기도교육청 미래과학교육원 2026 월간 융합교육 콘텐츠 제작 교사", "2026~"], ["부천교육지원청 부천 미래+클 공유학교 공유멘토 (AI·디지털 분과)", "2025~"], ["부천교육지원청 부천 미래+클 공유학교 지원단", "2025~"], ["부천교육지원청 정보교육활성화지원단 (부천 디지털 및 정보교육 활성화 지원 및 컨설팅)", "2026~"], ["부천교육지원청 에듀테크 활용수업 현장지원단", "2025"], ["부천교육지원청 부설영재교육원 지도 교사", "2025"], ["고양교육지원청 부설영재교육원 지도 교사", "2026~"], ["부천교육지원청 수북수북 토론교육 지원단", "2025"], ["부천교육지원청 하이러닝 교사 지원단", "2025"], ["부천교육지원청 IB연구회 리더십팀", "2026~"], ["통일부 제25기 평화통일교육위원", "2026~"]]], ["외부 기관", [["한국인공지능교육학회 소속", "2026~"], ["국가데이터처 국가데이터인재개발원 통계연구회 팀장", "2026~"], ["경기도교육청 경기수업탐구학습공동체 대표교사", "2026~"], ["한국과학창의재단 정보 교원 교사연구회 CORE LAB 소속", "2026~"]]], ["콘텐츠 개발", [["EBS 이솦 메타버스·VR·AR·코딩 융합 프로젝트 강의 제작 및 공모전 수상", "2025"], ["KERIS 인공지능(AI) 활용 초등수학수업 지원시스템 디지털 교구 사례집 집필진", "2025"], ["경기도교육청 - ‘디지털 시민 교재’ 영상 공동 제작", "2025"], ["경기도교육청 - ‘신규교사를 위한 마이크로러닝연수’ 영상 콘텐츠 제작 및 교육감 수상", "2024"], ["경기도교육청 - ‘함께해요, 안전 ON 콘텐츠’ 제작 및 교육감 수상", "2025"], ["경기도교육청 - ‘2025 하이러닝 고도화’ 마이크로러닝 연수 콘텐츠 제작", "2025"], ["경기도교육청 - ‘디톡스: 디지털 토론수업’ 마이크로러닝 연수 콘텐츠 제작", "2025"], ["경기도교육청 - ‘디지털 세상을 지키는 무지개 약속’ 하이랜드 탑재용 콘텐츠 제작", "2025"], ["경기도교육청 - ‘e정책장터 팝업스토어’ 경기도교육청 정책기획관 홍보 숏폼 제작", "2025"], ["경기도교육청 - ‘배움 한 바퀴’ 경기공유학교 홍보 숏폼 제작", "2026"], ["경기도교육청 온라인학교 - ‘증강현실로 진로를 디자인하다’ 온라인 학습 콘텐츠 제작", "2025"], ["경기도교육청 온라인학교 - ‘AI로 나만의 이모티콘을 디자인하다’ 온라인 학습 콘텐츠 촬영 및 제작", "2026"], ["경기도교육청 남부연수원 - ‘진로크래프트’ 교사 마이크로러닝 연수 콘텐츠 제작", "2025"], ["경기도교육청 미디어교육센터 - ‘미담행진’ 웹진 집필 참여 (2호, 3호)", "2025"], ["부천교육지원청 - ‘에듀테크 활용 수업 자료집’ 집필 참여", "2025"], ["부천교육지원청 - ‘하이러닝 수업 레시피’ 집필 참여", "2025"], ["찾아가는 학교 컨설팅 - 교안 집필 참여 (건국대 사업단)", "2025"], ["동아출판 - 두클래스 영상 콘텐츠 제작  (에듀테크 활용 수업)", "2025"], ["미래엔 - 엠티처 활용 영상 콘텐츠 제작 (AI클래스)", "2025"], ["해양수산부 X 한국해양재단 해양문화 콘텐츠 제작 및 입선", "2025"]]], ["수상", [["EBS 2025 이솦 크리에이터 공모전 수상", "2025"], ["한국인공지능교육학회 하계학술대회 최우수 논문상", "2026"], ["경기도교육청 교육감 수상 - ‘신규교사를 위한 마이크로러닝 콘텐츠’ 제작 및 수상", "2024"], ["경기도교육청 교육감 수상 - ‘함께해요, 안전 ON 안전교육 콘텐츠’ 개발 및 수상", "2025"], ["경기도교육청 교육감 수상 - ‘경기온라인학교 학습콘텐츠’ 제작 및 수상", "2025"], ["경기도교육청 교육감 수상 - ‘경기공유학교 홍보 숏폼’ 제작 및 수상", "2026"], ["경기도교육청 교육감 표창 - ‘교육기자단 활동 유공’ 표창", "2025"], ["경기도교육청 교육감 표창 - ‘에듀테크 활용 교육 활성화 유공’ 표창", "2025"], ["부천교육지원청 교육장 표창 - ‘부천교육 발전 유공’ 표창", "2024, 2025"]]], ["강사", [["한국과학창의재단 전국민 AI 경진대회 연계 AI 창작대회 강사", "2026"], ["KERIS 인공지능 활용 선도교사 연수 강사", "2026"], ["KERIS ‘똑똑! 수학 탐험대’ 연수 강사", "2025"], ["경기도교육청 '나도 크리에이터' 연수 강사", "2025, 2026"], ["경기도교육청 하이러닝 AI 서논술형 평가 리더교사 양성 과정 강사", "2026"], ["경기도교육청 학업중단숙려제 ‘이음교실’ 강사", "2026"], ["경기도교육청 미디어교육센터 미디어 교육 콘텐츠 제작 연수 강사", "2025"], ["경기도교육청 미디어교육센터 미소Dream 공유학교 강사", "2025"], ["부천교육지원청 토론교육 실천역량강화 교원 직무 연수 강사", "2025"], ["부천교육지원청 공유학교 강사 - 디지털 토론 교실 (D’talks)", "2025"], ["부천교육지원청 에듀테크 활용 수업 자료집 연수 강사", "2025"], ["부천교육지원청 학교로 찾아가는 하이러닝 강사", "2025"], ["부천교육지원청 수업을 바꾸는 시간25, 수업 사례 나눔 교사", "2025, 2026"], ["경인교육대학교 연구학교 경기교육정책이해 강사 초빙", "2026"], ["지식샘터 강사 (AI 영상 제작)", "2026~"], ["테크빌교육 티처빌연수원 연수 강사 (새 학기 첫인상, 교실 환경부터)", "2025"], ["천재교육 티셀파연수원 연수 강사 (캔바X캡컷X생성형 AI 교육콘텐츠 제작)", "2026"], ["미래엔 티처LIVE 연수 강사 (에듀테크 환경교육, 디지털 토론교육)", "2026"], ["아이스크림연수원 LIVE 연수 강사 (학교 수업·업무에 바로 쓰는 AI 활용법)", "2026"], ["아이스크림연수원 쌤클래스 연수 강사 (디지털드로잉)", "2026"], ["ZEP X 미리캔버스 에듀테크 여름캠프 연수 강사  (AI 활용 수업)", "2026"], ["찾아가는 학교 컨설팅 코디네이터, 강사", "2025~"]]]]};
+const ARCHIVE={
+  webapp:[
+    {t:"예람쌤 AI 영상 제작소",d:"캐릭터부터 대본·이미지·영상 프롬프트까지 대화하듯 만들어 주는 사이트",tag:"연수용",y:"2026",img:"apps/aivideo.webp",url:"https://dpfkadpfka.github.io/yeram-ai-video/"},
+    {t:"AI 모델 비교",d:"같은 캐릭터로 이미지·영상 AI 모델 결과를 나란히 비교",tag:"연수용",y:"2026",img:"apps/models.webp",url:"https://dpfkadpfka.github.io/yeram-ai-video/models/"},
+    {t:"AI 영상 5단계 실습",d:"기준 캐릭터부터 최종 영상까지 5단계를 직접 따라 해 보는 실습",tag:"연수용",y:"2026",img:"apps/studio.webp",url:"https://dpfkadpfka.github.io/yeram-ai-video/studio/"},
+    {t:"나도 장영실! 시계 발명가",d:"내가 그린 시계를 AI가 진짜 시계처럼 움직이게 만들어 주는 수업 앱",tag:"수업용",y:"2026",img:"apps/clock.webp",url:"https://dpfkadpfka.github.io/jangyeongsil-clock/"},
+    {t:"해시계 물시계 실험실",d:"그림자와 물로 시간을 재는 원리를 직접 움직여 보며 이해",tag:"수업용",y:"2026",img:"apps/sundial.webp",url:"https://dpfkadpfka.github.io/jangyeongsil-clock/sundial/"},
+    {t:"나도 발명가! 생활 발명 연구소",d:"생활 속 불편함을 AI 친구와 함께 발명 아이디어로",tag:"수업용",y:"2026",img:"apps/invent.webp",url:"https://dpfkadpfka.github.io/jangyeongsil-clock/invent/"},
+    {t:"피자로 배우는 삼권분립",d:"피자 나누기로 권력을 나누는 이유를 알아보는 사회 수업 앱",tag:"수업용",y:"2026",img:"apps/pizza.webp",url:"https://dpfkadpfka.github.io/pizza-samgwon/"},
+    {t:"글자 조합 놀이터",d:"친구들이 모은 낱말을 글자로 쪼개 새 낱말 만들기",tag:"수업용",y:"2026",img:"apps/jamo.webp",url:"https://dpfkadpfka.github.io/jamo-play/"},
+    {t:"자리 바꾸기 레이스",d:"태블릿을 연타해 동물이 도착한 순서대로 자리 고르기",tag:"학급 운영",y:"2026",img:"apps/seatrace.webp",url:"https://dpfkadpfka.github.io/yeram-ai-video/seat-race/"},
+    {t:"RamClock",d:"시간표·타이머·뽑기·주간학습안내를 한 화면에 띄우는 교실 시계 위젯",tag:"윈도우 앱",y:"2026",img:"apps/ramclock.webp",url:"https://github.com/dpfkadpfka/RamClock/releases/latest"},
+    {t:"RamSpirit",d:"ChatGPT·Gemini·Grok·Claude를 한 창에 띄우고 질문을 한 번에 보내는 프로그램",tag:"윈도우 앱",y:"2026",img:"apps/ramspirit.webp",url:"https://github.com/dpfkadpfka/ramspirit/releases/latest"},
+    {t:"Ram Calendar",d:"구글 캘린더와 실시간으로 이어지는 바탕화면 달력",tag:"윈도우 앱",y:"2026",img:"apps/calendar.webp",url:"https://github.com/dpfkadpfka/yeram-calendar/releases/latest"},
+  ],
+  promo:[
+    {"t": "AI 시대, 교사를 위한 디자인·영상 콘텐츠 제작 실전 과정", "d": "생성형 AI × 캔바 × 캡컷", "tag": "T셀파 원격교육연수원", "y": "직무연수 15시간 · 디지털역량", "url": "https://edu.tsherpa.co.kr/Product/Detail/2016?BoardDetail.BoardNo=&CourseType=0", "img": "https://edu.tsherpa.co.kr/Files/20261022124647/Course/20261022124628666.jpg"},
+    {"t": "맞춤형 AI 영상 제작 원데이 클래스", "d": "교실을 사로잡는 수업 영상 만들기 · 브루(Vrew) 실습", "tag": "천재 T셀파 × Q.U.O.K.A", "y": "오프라인 워크숍 · 2026.10.24(토)", "url": "https://ele.tsherpa.co.kr/event/2922710/index.html", "img": "https://dpfkadpfka.github.io/yeram-ai-video/assets/tr_oneday.jpg"},
+  ],
+  train:[
+    {t:'처음 만나는 클로드',d:'교사 대상 클로드 입문 연수',tag:'AI 활용',y:'2026'},
+    {t:'브루로 만드는 AI 영상',d:'교원 AI 영상 제작 강의',tag:'AI 영상',y:'2026'},
+    {t:'인공지능 활용 선도교사 연수 ⑬과정',d:'KERIS 선도교사 연수',tag:'AI 활용',y:'2026'},
+    {t:'위툰 활용 수업 사례',d:'댓글 예절 4컷 만화 수업 나눔',tag:'수업 나눔',y:'2026'},
+  ],
+  class:[
+    {t:'모두의 이모지',d:'이모지에 없는 사람들을 이모지로 만드는 다양성 수업',tag:'2학년',y:'2026'},
+    {t:'꼬마 장영실 시계 수업',d:'세종대왕·장영실 인물 수업과 시계 스케치',tag:'2학년',y:'2026'},
+    {t:'디폼블록 키링 만들기',d:'미니 마켓으로 배우는 금융교육',tag:'2학년',y:'2026'},
+    {t:'우리 마을 환경 탐정단',d:'데이터로 우리 마을 환경 살펴보기',tag:'통계교육',y:'2026'},
+  ],
+};
+function esc(s){return String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function thumb(i){
+  if(i.yt) return `<img src="https://i.ytimg.com/vi/${esc(i.yt)}/hqdefault.jpg" alt="" loading="lazy" data-fb="thumbs/${esc(i.yt)}.jpg" onerror="if(this.dataset.fb){this.src=this.dataset.fb;this.dataset.fb=''}else{this.replaceWith(Object.assign(document.createElement('span'),{className:'ph',textContent:'영상'}))}">`;
+  if(i.img) return `<img src="${esc(i.img)}" alt="" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'ph',textContent:'${esc(i.tag)}'}))">`;
+  return `<span class="ph">${esc(i.tag)}</span>`;
+}
+function renderArchive(id){
+  const sec=document.getElementById(id), list=ARCHIVE[id], fl=sec.querySelector('.filters'), box=sec.querySelector('.cards');
+  const tags=['전체',...new Set(list.map(i=>i.tag))]; let cur='전체';
+  const draw=()=>{
+    let n=0;
+    box.innerHTML=list.filter(i=>cur==='전체'||i.tag===cur).map(i=>{
+      const tag=i.url?'a':'div', href=i.url?` href="${esc(i.url)}" target="_blank" rel="noopener"`:'';
+      return `<${tag} class="card tone-0"${href}><div class="thumb">${thumb(i)}</div>
+        <div class="card-body"><div class="card-meta"><span>${esc(i.tag)}</span><span>${esc(i.y)}</span></div><h3>${esc(i.t)}</h3>${i.d?`<p>${esc(i.d)}</p>`:''}
+        <span class="go${i.url?'':' soon'}">${i.url?(i.yt?'영상 보기 →':i.tag==='윈도우 앱'?'내려받기 →':'열어 보기 →'):'링크 준비 중'}</span></div></${tag}>`;
+    }).join('');
+    fl.querySelectorAll('.chip').forEach(c=>c.setAttribute('aria-pressed',c.dataset.t===cur));
+  };
+  fl.innerHTML=tags.length>2?tags.map(t=>`<button class="chip" type="button" data-t="${esc(t)}">${esc(t)}</button>`).join(''):'';
+  fl.addEventListener('click',e=>{const c=e.target.closest('.chip'); if(c){cur=c.dataset.t; draw();}});
+  draw();
+}
+Object.keys(ARCHIVE).forEach(renderArchive);
+const CV_SUB={"기관 활동":"국가 기관 · 교육청 소속","외부 기관":"학회 · 연구 기관 · 교육청 공동체","콘텐츠 개발":"제작 · 집필 참여","수상":"표창 및 수상","강사":"연수 · 강의"};
+function cvBold(t){if(/<b>/.test(t))return t;let m=t.match(/^(.+?) - (.*)$/);if(m&&m[1].length<=30)return `<b>${m[1]}</b> - ${m[2]}`;
+  m=t.match(/^(\S+) X (\S+)(.*)$/);if(m)return `<b>${m[1]}</b> X <b>${m[2]}</b>${m[3]}`;
+  m=t.match(/^(\S+)(.*)$/);return m?`<b>${m[1]}</b>${m[2]}`:t}
+document.getElementById('cvBody').innerHTML=DATA.CV.map(([n,a],i)=>`<section class="cvsec"><div class="cvsec-h"><span class="cvn">${String(i+1).padStart(2,"0")}</span><h3>${n}</h3><p>${CV_SUB[n]||""}</p></div><ul class="cvl">${a.map(([t,y])=>`<li><span class="cy${/~$/.test(y)?" now":""}">${esc(y)}</span><span>${cvBold(esc(t))}</span></li>`).join("")}</ul></section>`).join("");
+/* 영상: 예람쌤 AI 영상 제작소와 같은 분류·카드 */
+let ytF='all';
+function ytCard(v){const sh=v[2]==="short";const url=(sh?'https://www.youtube.com/shorts/':'https://youtu.be/')+v[0];
+  return `<a class="ytc" href="${url}" target="_blank" rel="noopener"><span class="ytc-im">${v[3]?`<span class="ytc-n">${v[3]}${v[2]==="ar"?"차시":"강"}</span>`:""}<img src="https://i.ytimg.com/vi/${v[0]}/${sh?"oar2":"hqdefault"}.jpg" alt="" loading="lazy" data-fb="thumbs/${v[0]}.jpg" onerror="if(this.dataset.fb){this.src=this.dataset.fb;this.dataset.fb=''}else{this.replaceWith(Object.assign(document.createElement('span'),{className:'ph',textContent:'영상'}))}"></span><b>${esc(v[1])}</b></a>`}
+function renderYT(){const V=DATA.YTV,n=k=>V.filter(x=>x[2]===k).length;
+  document.getElementById('ytFil').innerHTML=[["all","전체",V.length],["edu","교육 콘텐츠",n("edu")],["mv","AI 뮤직비디오",n("mv")],["lec","강의",n("ar")+n("esop")],["short","숏폼",n("short")]].filter(([k,t,c])=>k==="all"||c).map(([k,t,c])=>`<button type="button" data-ytf="${k}" aria-pressed="${ytF===k}">${t}<i>${c}</i></button>`).join("");
+  const keys=ytF==="all"?DATA.YTC.map(x=>x[0]):ytF==="lec"?["ar","esop"]:[ytF];
+  document.getElementById('ytBody').innerHTML=keys.map(k=>{const c=DATA.YTC.find(x=>x[0]===k),L=V.filter(x=>x[2]===k);if(!L.length)return "";
+    return `<section class="ytsec"><h4>${c[1]}${c[2]?`<small>${c[2]}</small>`:""}</h4><div class="ytgrid${k==="short"?" sh":""}">${L.map(ytCard).join("")}</div></section>`}).join("");}
+document.getElementById('ytFil').addEventListener('click',e=>{const b=e.target.closest('[data-ytf]');if(b){ytF=b.dataset.ytf;renderYT();}});
+renderYT();
+
+const $=s=>document.querySelector(s);
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const fine=matchMedia('(pointer: fine)').matches;
+const stage=$('#stage'), cv=$('#charCanvas'), cx2=cv.getContext('2d'), anim=$('#charAnim'), hit=$('#hit');
+const isHome=()=>document.body.classList.contains('is-home');
+
+/* ═══ 영상 장면 캐릭터 (frames/meta.json) ═══ */
+const SETS={}; let META=null; const VW=1280;
+function loadSet(name){
+  if(SETS[name]) return SETS[name].p;
+  const s=META.sets[name]; if(!s) return Promise.resolve();
+  const img=new Image(); img.decoding='async';
+  const o=SETS[name]={...s,img,ready:false,used:performance.now()};
+  o.p=new Promise(res=>{ img.onload=()=>{ (img.decode?img.decode():Promise.resolve()).catch(()=>{}).then(()=>{ o.ready=true; res(); }); }; img.onerror=()=>res(); });
+  img.src=`frames2/${name}.webp?v=${META.v||1}`;
+  // 한 번에 쓰는 일이 드문 영상은 최대 6개만 메모리에 둠
+  const extra=Object.keys(SETS).filter(k=>!CORE.includes(k)&&!k.startsWith('menu_'));
+  if(extra.length>6){ extra.sort((a,b)=>SETS[a].used-SETS[b].used); for(const k of extra.slice(0,extra.length-6)) if(k!==clip&&k!==clipQ&&k!==name) delete SETS[k]; }
+  return o.p;
+}
+const ready=n=>SETS[n]?.ready;
+function draw(name,idx){
+  const s=SETS[name]; if(!s||!s.ready) return false;
+  s.used=performance.now();
+  const i=Math.max(0,Math.min(s.count-1,idx|0)), c=i%s.cols, r=(i/s.cols)|0;
+  cx2.drawImage(s.img,c*s.cw,r*s.ch,s.cw,s.ch,s.x,0,s.w,META.box[3]); return true;
+}
+let CORE=[];
+let mode='loading', introStart=0, lx=0,tx=0,ty=0,lastMove=-1e9, idle=false, idleT0=0, idleNext=0, nextIdle=null;
+let vert='mid', trans=null, shown=-1, vWant='none';
+let clip=null, clipQ=null, clipF=0, clipLast=0, clipStart=0, rewind=false;
+let poseWant=null;
+const IDLES=['idle_phone','idle_mirror','idle_stretch','idle_yawn','idle_hum'];
+function setTarget(px,py){
+  const r=cv.getBoundingClientRect(); const ox=r.left+r.width/2;
+  const nx=Math.max(-1,Math.min(1,(px-ox)/(innerWidth*.4)));
+  if(Math.abs(nx-tx)>.015) tx=nx;
+  if(py!==undefined){ const b=r.height; ty=(py-r.top)/b; }   // 0=머리끝 근처, 1=발끝
+  lastMove=performance.now();
+}
+addEventListener('pointermove',e=>{ if(isHome()) setTarget(e.clientX,e.clientY); },{passive:true});
+const colOf=x=>x<-.34?'left':x>.34?'right':'center';
+const colX={left:-1,center:0,right:1};
+function tIdx(set,x){ const s=META.sets[set], n=s.count, m=s.front??((n-1)>>1); return Math.round(x<0? m*(1+x) : m+(n-1-m)*x); }
+function planIdle(now){ idleNext=now+8000+Math.random()*7000; nextIdle=IDLES[Math.floor(Math.random()*IDLES.length)]; if(!coarse) loadSet(nextIdle); }
+function goIdle(now){ idle=true; idleT0=now; planIdle(now); }
+let spT=0, introPop=false;
+function introSpark(now){
+  if(reduce||now-spT<60) return; spT=now;
+  const w=cv.width,h=cv.height; if(!w) return;
+  const row=cx2.getImageData(0,Math.floor(h*.5),w,1).data; let x0=-1,x1=-1;
+  for(let x=0;x<w;x+=2){ if(row[x*4+3]>40){ if(x0<0)x0=x; x1=x; } }
+  if(x0<0) return;
+  const r=cv.getBoundingClientRect(), k=r.width/w;
+  for(let j=0;j<3;j++) addMote(r.left+(x0+Math.random()*(x1-x0))*k, r.top+r.height*(.08+Math.random()*.85), .5+Math.random()*1.3);
+}
+function frame(now){
+  requestAnimationFrame(frame);
+  if(mode==='loading'||!isHome()) return;
+  cx2.clearRect(0,0,cv.width,cv.height);
+  if(mode==='intro'){   // 바닥에서 쏙 소환
+    if(!ready('idle')) return;
+    const t=(now-introStart)/1000, FOOT=686, p=Math.max(0,Math.min(1,(t-.18)/.62));
+    const c1=1.9, e=p<1?1+(c1+1)*Math.pow(p-1,3)+c1*Math.pow(p-1,2):1;
+    const r=cv.getBoundingClientRect(), k=r.width/cv.width, sx=r.left+(META.box[0]+META.box[2]/2)*k, sy=r.top+FOOT*k;
+    if(t<.5 && now-spT>40){ spT=now; for(let j=0;j<3;j++) addMote(sx+(Math.random()-.5)*META.box[2]*.55*k, sy-Math.random()*8, .8+Math.random()*1.6); }
+    if(!introPop && p>.55){ introPop=true; burst(sx,sy-r.height*.35,22); }
+    if(t<1.05){
+      cx2.save(); cx2.beginPath(); cx2.rect(0,0,cv.width,FOOT); cx2.clip();
+      cx2.translate(0,(1-e)*FOOT*.92); draw('idle',0); cx2.restore(); return;
+    }
+    mode='live'; goIdle(now); vert='mid'; trans=null; lx=0;
+  }
+  const moving=now-lastMove<2200;
+  const want=poseWant?'menu_'+poseWant:clipQ;
+
+  /* 1) 영상 한 편(대기 동작·클릭 반응·메뉴 자세) 재생 중 */
+  if(clip){
+    const s=META.sets[clip], dt=Math.min(.1,(now-clipLast)/1000)*s.fps; clipLast=now;
+    if(clip.startsWith('menu_')){
+      if(want===clip) clipF=Math.min(s.count-1,clipF+dt*2);
+      else { clipF-=dt*2.5; if(clipF<=(s.start||0)){ clip=null; goIdle(now); draw('idle',0); return; } }
+    } else {
+      if(clip.startsWith('idle_') && (lastMove>clipStart || want)) rewind=true;   // 마우스가 움직이면 하던 동작을 되감아 바로 멈춤
+      if(rewind){ clipF-=dt*6; if(clipF<=(s.start||0)){ clip=null; rewind=false; goIdle(now); draw('idle',0); return; } }
+      else { clipF+=dt; if(clipF>=s.count-1){ clip=null; goIdle(now); draw('idle',0); return; } }
+    }
+    draw(clip,Math.round(clipF)); return;
+  }
+
+  /* 2) 고개 움직임: 영상을 시작해야 하면 먼저 정면으로 돌아옴 */
+  const pending = want && ready(want);
+  let eTx=pending?0:tx, eV=pending?'none':vWant;
+  if(!pending){
+    if(!moving){ tx=0; ty=.4; eTx=0; }
+    if(vWant==='none'){ if(ty<.06) vWant='up'; else if(ty>.68) vWant='down'; }
+    else if(vWant==='up'){ if(ty>.14) vWant='none'; }
+    else { if(ty<.6) vWant='none'; }
+    eV=moving?vWant:'none';
+  }
+  const fullOK=!coarse;
+  if(!fullOK) eV='none';
+
+  if(trans){   // 고개 드는/숙이는 중
+    const s=META.sets[trans.name], dt=Math.min(.1,(now-trans.last)/1000)*s.fps*3.4; trans.last=now;
+    if(trans.dir>0 && eV!==trans.v) trans.dir=-1;
+    else if(trans.dir<0 && eV===trans.v && ready('turn_'+trans.v)) trans.dir=1;
+    trans.f+=dt*trans.dir*(trans.dir<0?1.4:1);
+    if(trans.f>=s.count-1){ vert=trans.v; lx=colX[trans.col]; shown=tIdx('turn_'+vert,lx); trans=null; draw('turn_'+vert,shown); return; }
+    if(trans.f<=0){ vert='mid'; lx=colX[trans.col]; shown=tIdx('turn_mid',lx); trans=null; draw('turn_mid',shown); return; }
+    draw(trans.name,Math.round(trans.f)); return;
+  }
+
+  if(vert!=='mid'){   // 위·아래를 본 채로 좌우 따라가기 (turn_up / turn_down)
+    const set='turn_'+vert;
+    if(eV===vert){
+      lx+=Math.max(-.15,Math.min(.15,(eTx-lx)*.38));
+      const w=tIdx(set,lx); if(shown<0) shown=w;
+      if(Math.abs(w-shown)>=2) shown+=Math.sign(w-shown)*Math.min(4,Math.ceil(Math.abs(w-shown)/3));
+      draw(set,shown); return;
+    }
+    // 내려놓기: 가까운 좌·중·우로 맞춘 뒤 고개를 거꾸로
+    const col=colOf(lx), target=colX[col];
+    lx+=Math.max(-.22,Math.min(.22,(target-lx)*.6));
+    if(Math.abs(lx-target)<.15){ lx=target; const n='look_'+vert+'_'+col; trans={name:n,v:vert,col,f:META.sets[n].count-1,dir:-1,last:now}; vert='mid'; }
+    draw(set,tIdx(set,lx)); return;
+  }
+
+  const mid=META.sets.turn_mid.front;
+  if(idle){
+    if((moving&&Math.abs(eTx)>.03)||eV!=='none'){ if(ready('turn_mid')){ idle=false; lx=0; shown=mid; } }
+    else if(pending){ startClip(want,now); draw(want,clipF); return; }
+    else {
+      if(!moving && now>idleNext && nextIdle && ready(nextIdle)){ clipQ=nextIdle; nextIdle=null; }
+      const s=META.sets.idle; draw('idle',Math.floor((now-idleT0)/1000*s.fps)%s.count); return;
+    }
+  }
+  if(eV!=='none' && ready('look_'+eV+'_'+colOf(eTx)) && ready('turn_'+eV)){
+    const col=colOf(eTx), target=colX[col];
+    lx+=Math.max(-.22,Math.min(.22,(target-lx)*.6));
+    if(Math.abs(lx-target)<.25){ lx=target; trans={name:'look_'+eV+'_'+col,v:eV,col,f:0,dir:1,last:now}; }
+    shown=tIdx('turn_mid',lx); draw('turn_mid',shown); return;
+  }
+  lx+=Math.max(-.15,Math.min(.15,(eTx-lx)*.38));
+  const w=tIdx('turn_mid',lx);
+  if(shown<0) shown=w;
+  if(Math.abs(w-shown)>=2 || ((!moving||pending) && w!==shown)) shown+=Math.sign(w-shown)*Math.max(1,Math.min(4,Math.ceil(Math.abs(w-shown)/3)));
+  draw('turn_mid',shown);
+  if((!moving||pending) && shown===mid) goIdle(now);
+}
+function startClip(n,now){ clip=n; if(clipQ===n) clipQ=null; clipF=META.sets[n].start||0; clipLast=now; clipStart=now; rewind=false; idle=false; lx=0; shown=-1; }
+const coarse=!fine;
+async function boot(){
+  META=await fetch('frames2/meta.json?t='+Date.now()).then(r=>r.json());
+  if(!isHome()) sideStart(location.hash.slice(1));
+  CORE=coarse?['idle','turn_mid']:['idle','turn_mid','turn_up','turn_down',...['up','down'].flatMap(v=>['left','center','right'].map(c=>`look_${v}_${c}`))];
+  cv.width=META.vw; cv.height=META.box[3]; cx2.imageSmoothingEnabled=true; cx2.imageSmoothingQuality='high';
+  hit.style.left=(META.box[0]/META.vw*100)+'%'; hit.style.width=(META.box[2]/META.vw*100)+'%';
+  await loadSet('idle');
+  $('#loading').hidden=true;
+  (async()=>{ for(const k of CORE) await loadSet(k); if(!coarse) for(const k of ['career','video','webapp','train','class','contact']) await loadSet('menu_'+k); })();
+  if(reduce){ mode='live'; goIdle(performance.now()); } else { mode='intro'; introPop=false; introStart=performance.now(); }
+  requestAnimationFrame(frame);
+}
+boot();
+
+/* 부위 클릭 반응 */
+function say(){}
+const ZONES=[
+  {x0:.12,x1:.40,y0:0,y1:.13,k:'react_horn'},
+  {x0:.60,x1:.88,y0:0,y1:.13,k:'react_horn'},
+  {x0:.22,x1:.78,y0:.03,y1:.40,k:'react_head'},
+  {x0:.12,x1:.41,y0:.37,y1:.58,k:'react_wing'},
+  {x0:.57,x1:.80,y0:.37,y1:.58,k:'react_wing'},
+  {x0:.25,x1:.75,y0:.40,y1:.80,k:'react_belly'},
+  {x0:.1,x1:.9,y0:.84,y1:1,k:'react_shoe'},
+];
+const zoneAt=e=>{ const r=hit.getBoundingClientRect(), x=(e.clientX-r.left)/r.width, y=(e.clientY-r.top)/r.height; return ZONES.find(z=>x>=z.x0&&x<=z.x1&&y>=z.y0&&y<=z.y1); };
+let lastZ=null;
+hit.addEventListener('pointermove',e=>{
+  if(mode!=='live') return;
+  const z=zoneAt(e); if(z&&z!==lastZ){ burst(e.clientX,e.clientY,5); loadSet(z.k); } lastZ=z||null;
+});
+hit.addEventListener('pointerleave',()=>lastZ=null);
+hit.addEventListener('click',e=>{
+  if(mode!=='live'||clip) return;
+  const r=hit.getBoundingClientRect(), y=(e.clientY-r.top)/r.height;
+  const k=(zoneAt(e)||{k:y<.4?'react_head':'react_belly'}).k;
+  burst(e.clientX,e.clientY,14); clipQ=k; loadSet(k);
+});
+document.querySelectorAll('.obj').forEach(a=>{
+  const n=({about:'career',promo:'contact'})[a.dataset.go]||a.dataset.go;
+  a.addEventListener('pointerenter',()=>{ if(mode==='live'&&isHome()&&fine){ poseWant=n; loadSet('menu_'+n); } });
+  a.addEventListener('pointerleave',()=>{ poseWant=null; });
+});
+
+/* 마우스 빛: 커서에서 작은 빛 알갱이가 퍼지며 사라짐 (메인에서만) */
+const lc=$('#lights'), lx2=lc.getContext('2d'); let motes=[], ldpr=1, lastP=null;
+function sizeL(){ ldpr=Math.min(2,devicePixelRatio||1); lc.width=innerWidth*ldpr; lc.height=innerHeight*ldpr; lc.style.width=innerWidth+'px'; lc.style.height=innerHeight+'px'; }
+sizeL(); addEventListener('resize',sizeL);
+function burst(x,y,n=10){ for(let i=0;i<n;i++) addMote(x,y,1.2+Math.random()*2.2); }
+function addMote(x,y,sp){
+  const a=Math.random()*Math.PI*2, s=sp*(.3+Math.random());
+  motes.push({x,y,vx:Math.cos(a)*s*.7,vy:Math.sin(a)*s*.5-.3,r:2.6+Math.random()*3.6,life:1,decay:.012+Math.random()*.018,
+    hue:(q=>q<.5?'255,71,145':q<.85?'255,150,190':'255,255,255')(Math.random()),tw:Math.random()*6.28,rot:Math.random()*1.6,spin:(Math.random()-.5)*.08});
+}
+addEventListener('pointermove',e=>{
+  if(reduce||!fine||!isHome()) return;
+  const p={x:e.clientX,y:e.clientY};
+  const d=lastP?Math.hypot(p.x-lastP.x,p.y-lastP.y):0; lastP=p;
+  if(d<3) return; const n=Math.min(2,Math.floor(d/18)+(Math.random()<.5?1:0));
+  for(let i=0;i<n;i++) addMote(p.x+(Math.random()-.5)*6,p.y+(Math.random()-.5)*6,.4+d*.02);
+},{passive:true});
+(function loop(){
+  lx2.clearRect(0,0,lc.width,lc.height);
+  if(motes.length){
+    motes=motes.filter(m=>m.life>0);
+    for(const m of motes){
+      m.x+=m.vx; m.y+=m.vy; m.vx*=.96; m.vy=m.vy*.97+.045; m.life-=m.decay; m.tw+=.3; m.rot+=m.spin;
+      const al=Math.max(0,m.life)*(.55+.45*Math.sin(m.tw)), R=m.r*ldpr*(.5+m.life*.6), X=m.x*ldpr, Y=m.y*ldpr;
+      const g=lx2.createRadialGradient(X,Y,0,X,Y,R*2.2);
+      g.addColorStop(0,`rgba(255,176,206,${al*.45})`); g.addColorStop(1,'rgba(255,176,206,0)');
+      lx2.fillStyle=g; lx2.beginPath(); lx2.arc(X,Y,R*2.2,0,Math.PI*2); lx2.fill();
+      lx2.save(); lx2.translate(X,Y); lx2.rotate(m.rot); const c=R*.13;
+      lx2.beginPath(); lx2.moveTo(0,-R); lx2.quadraticCurveTo(c,-c,R,0); lx2.quadraticCurveTo(c,c,0,R); lx2.quadraticCurveTo(-c,c,-R,0); lx2.quadraticCurveTo(-c,-c,0,-R);
+      lx2.fillStyle=m.hue==='255,255,255'?`rgba(255,255,255,${al})`:`rgba(${m.hue},${al})`; lx2.fill();
+      if(m.hue==='255,255,255'){ lx2.strokeStyle=`rgba(255,71,145,${al*.5})`; lx2.lineWidth=ldpr; lx2.stroke(); }
+      lx2.restore();
+    }
+  }
+  requestAnimationFrame(loop);
+})();
+
+
+/* 페이지 이동 */
+const pages=['about','promo','video','webapp','train','class'];
+function go(id){ // 화면 전환 효과 없이 바로 이동
+  if(id) location.hash=id; else { history.pushState(null,'',location.pathname+location.search); render(); }
+}
+function render(){
+  const id=location.hash.slice(1), home=!pages.includes(id);
+  const wasHome=document.body.classList.contains('is-home');
+  // 하위 페이지에서 메인으로 돌아오면 등장 장면을 다시 재생
+  if(home && !wasHome && mode!=='loading' && !reduce){ mode='intro'; introPop=false; introStart=performance.now(); clip=null; clipQ=null; trans=null; vert='mid'; shown=-1; poseWant=null; idle=false; lx=0; tx=0; }
+  document.body.classList.toggle('is-home',home); stage.hidden=!home;
+  pages.forEach(p=>$('#'+p).hidden=p!==id);
+  document.querySelectorAll('.menu a').forEach(a=>{ if(a.dataset.go===id && !a.dataset.target) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current'); });
+  if(!home){ scrollTo(0,0); sideStart(id); }
+}
+
+/* 메뉴 페이지: 왼쪽 판의 캐릭터가 그 페이지 자세를 함 */
+const sc=document.getElementById('sideCv'), sx2=sc.getContext('2d'), SIDE_X=280, SIDE_W=730;
+const POSE_OF={about:'career',promo:'contact',video:'video',webapp:'webapp',train:'train',class:'class'};
+let sidePage=null, sideWant=null, sideCur=null, sPh='in', sF=0, sLast=0, sUntil=0, sAct=null;
+function sideStart(id){ const p=POSE_OF[id]; if(!p||!META) return; sidePage=sideWant=sideCur='menu_'+p; sPh='in'; sF=0; sLast=performance.now(); loadSet(sideCur); }
+function drawSide(n,i){ const s=SETS[n]; if(!s||!s.ready) return false; s.used=performance.now(); i=Math.max(0,Math.min(s.count-1,Math.round(i))); const c=i%s.cols, r=(i/s.cols)|0;
+  sx2.clearRect(0,0,sc.width,sc.height); sx2.drawImage(s.img,c*s.cw,r*s.ch,s.cw,s.ch,s.x-SIDE_X,0,s.w,META.box[3]); return true; }
+document.querySelectorAll('.menu a').forEach(a=>{
+  const p=POSE_OF[a.dataset.go];
+  a.addEventListener('pointerenter',()=>{ if(!isHome()&&p){ sideWant='menu_'+p; loadSet(sideWant); } });
+  a.addEventListener('pointerleave',()=>{ sideWant=sidePage; });
+});
+(function sideLoop(now){
+  requestAnimationFrame(sideLoop);
+  if(!sideCur||isHome()||!META||!sc.offsetParent) return;
+  if(sc.width!==SIDE_W){ sc.width=SIDE_W; sc.height=META.box[3]; }
+  const dt=Math.min(.1,(now-sLast)/1000)*12; sLast=now;
+  const S=n=>SETS[n]&&SETS[n].ready, cnt=n=>META.sets[n].count;
+  if(sPh==='in'){ if(!S(sideCur)) return; sF=Math.min(cnt(sideCur)-1,sF+dt*1.6); if(sF>=cnt(sideCur)-1){ sPh='hold'; sUntil=now+2600; } drawSide(sideCur,sF); }
+  else if(sPh==='hold'){ if(sideWant!==sideCur||now>sUntil) sPh='out'; drawSide(sideCur,sF); }
+  else if(sPh==='out'){ sF-=dt*2.4; if(sF<=0){ if(sideWant!==sideCur){ sideCur=sideWant; sPh='in'; sF=META.sets[sideCur].start||0; } else { sPh='idle'; sUntil=now+1800+Math.random()*1800; sAct=['idle_phone','idle_mirror','idle_stretch','idle_yawn','idle_hum'][Math.floor(Math.random()*5)]; loadSet(sAct); } } drawSide(sideCur,Math.max(0,sF)); }
+  else if(sPh==='idle'){
+    if(sideWant!==sideCur){ sideCur=sideWant; sPh='in'; sF=0; }
+    else if(now>sUntil){ if(Math.random()<.6&&S(sAct)){ sPh='act'; sF=0; } else { sPh='in'; sF=0; } }
+    drawSide('idle',Math.floor(now/1000*12)%cnt('idle'));
+  }
+  else if(sPh==='act'){
+    if(sideWant!==sideCur){ sF-=dt*5; if(sF<=0){ sideCur=sideWant; sPh='in'; sF=0; } }
+    else { sF+=dt; if(sF>=cnt(sAct)-1){ sPh='in'; sF=0; } }
+    drawSide(sAct,sF);
+  }
+})(0);
+addEventListener('hashchange',render); addEventListener('popstate',render);
+document.querySelectorAll('[data-go]').forEach(a=>a.addEventListener('click',e=>{
+  e.preventDefault(); const id=a.dataset.go;
+  if(id===location.hash.slice(1) || (!id && !pages.includes(location.hash.slice(1)))) return;
+  const r=a.getBoundingClientRect(); go(id,r.left+r.width/2,r.top+r.height/2);
+}));
+render();
+document.querySelectorAll('[data-target="contact"]').forEach(el=>el.addEventListener('click',()=>setTimeout(()=>document.getElementById('contact-anchor')?.scrollIntoView({behavior:'smooth'}),80)));
+
+$('#copyMail').addEventListener('click',async()=>{
+  const b=$('#copyMail'), em=b.querySelector('em'), t=$('#mail').textContent;
+  try{ await navigator.clipboard.writeText(t); em.textContent='복사됐어요!'; }
+  catch{ const g=getSelection(),r=document.createRange(); r.selectNodeContents($('#mail')); g.removeAllRanges(); g.addRange(r); em.textContent='선택됨 · Ctrl+C'; }
+  b.classList.add('done'); clearTimeout(b._t); b._t=setTimeout(()=>{ b.classList.remove('done'); em.textContent='누르면 주소가 복사돼요'; },1800);
+});
+</script>
+
+</html>
