@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
-<script>(function(){var B="1793546761";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
+<script>(function(){var B="1793546933";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
 <meta name="color-scheme" content="light only">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="초등교사 김예람(예람쌤) — AI 영상·교육 콘텐츠 제작 연수, 영상·웹앱 콘텐츠, 연수 교안과 수업 자료">
@@ -860,6 +860,11 @@ body.editing .page .cards .card:hover{transform:none!important}
 .prw-card h3{margin:8px 0 6px;font-size:19px;line-height:1.4}.prw-card p{margin:0 0 14px;color:var(--ink-soft);font-size:13.5px}
 .prw-card .pl-go{display:inline-block;text-decoration:none}
 @media (max-width:600px){.prw-card{grid-template-columns:1fr;padding:16px}.prw-a{height:74vh}.prw-new{display:none}}
+.pvw-fr{position:relative}
+.pvw-fr.ld::before{content:"자료를 불러오는 중…";position:absolute;inset:0;display:grid;place-items:center;font-size:14px;font-weight:700;color:var(--ink-soft);z-index:0}
+.pvw-fr.ld::after{content:"";position:absolute;left:50%;top:calc(50% - 44px);width:34px;height:34px;margin-left:-17px;border-radius:50%;border:3px solid #F3D3E0;border-top-color:var(--pink);animation:pv-spin .8s linear infinite}
+.pvw-fr iframe{position:relative;z-index:1}.pvw-fr.ld iframe{opacity:0}
+@keyframes pv-spin{to{transform:rotate(360deg)}}
 .pvw-login{width:min(440px,100%)}
 .pl-in{padding:30px 28px 26px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px}
 .pl-in img{width:76px;height:76px;object-fit:contain}
@@ -2096,6 +2101,12 @@ document.addEventListener('click',e=>{ const c=e.target.closest('#webapp .cards 
  // 연수 자료: 구글 로그인 후 열기 + 열람 기록
  let U=null;
  const fbReady=()=>fbLoad().then(f=>{ if(!f._w){ f._w=new Promise(r=>{ const off=f.Au.onAuthStateChanged(f.auth,u=>{ U=u; off(); r(); }); }); } return f._w.then(()=>f); });
+ // 연수·수업 자료 화면에 들어오면 미리 준비: 로그인 상태 확인 + 자료 사이트 미리 연결
+ const pre=()=>{ const id=location.hash.slice(1); if(id!=='train'&&id!=='class') return; fbReady().catch(()=>{});
+  document.querySelectorAll('#train [data-pv],#class [data-pv]').forEach(b=>{ try{ const o=new URL(dec(b.dataset.pv)).origin; if(!document.querySelector(`link[data-pc="${o}"]`)){ const l=document.createElement('link'); l.rel='preconnect'; l.href=o; l.dataset.pc=o; document.head.appendChild(l); } }catch(_){} }); };
+ addEventListener('hashchange',pre); setTimeout(pre,600);
+ // 카드에 마우스를 올리면 그 자료 페이지를 미리 받아 둠
+ document.addEventListener('pointerenter',e=>{ const b=e.target.closest&&e.target.closest('#train [data-pv],#class [data-pv]'); if(!b||b._pf) return; b._pf=1; try{ const l=document.createElement('link'); l.rel='prefetch'; l.href=dec(b.dataset.pv); document.head.appendChild(l); }catch(_){} },true);
  async function logOpen(t){ try{ const {F,db}=await fbLoad(); await F.addDoc(F.collection(db,'train_log'),{uid:U.uid,email:U.email||'',name:U.displayName||'',t:String(t).slice(0,80),at:F.serverTimestamp()}); }catch(x){ console.warn('log',x&&x.message); } }
  function gate(b,t,act){
   const go=()=>{ logOpen(t); if(act){ close(); act(); } else show(b,t); };
@@ -2109,7 +2120,7 @@ document.addEventListener('click',e=>{ const c=e.target.closest('#webapp .cards 
  }
  function show(b,t){
   pv.innerHTML=`<div class="pvw-box" role="dialog" aria-modal="true" aria-label="${t}"><div class="pvw-bar"><b>${t}</b><button type="button" class="pvw-fs">전체 화면</button><button type="button" class="pvw-x" aria-label="닫기">✕</button></div><div class="pvw-fr"><iframe title="${t}" allow="fullscreen; clipboard-write" allowfullscreen referrerpolicy="no-referrer"></iframe></div></div>`;
-  pv.querySelector('iframe').src=dec(b.dataset.pv);
+  const fr=pv.querySelector('.pvw-fr'); fr.classList.add('ld'); const ifr=pv.querySelector('iframe'); ifr.addEventListener('load',()=>fr.classList.remove('ld'),{once:true}); ifr.src=dec(b.dataset.pv);
   pv.hidden=false; document.body.style.overflow='hidden'; pv.querySelector('.pvw-x').focus();
  }
  pv.addEventListener('click',e=>{ if(e.target===pv||e.target.closest('.pvw-x')) close(); else if(e.target.closest('.pvw-fs')){ const f=pv.querySelector('.pvw-fr'); (f.requestFullscreen||f.webkitRequestFullscreen).call(f); } });
