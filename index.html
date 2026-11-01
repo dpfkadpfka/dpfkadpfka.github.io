@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
-<script>(function(){var B="1793546590";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
+<script>(function(){var B="1793546761";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
 <meta name="color-scheme" content="light only">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="초등교사 김예람(예람쌤) — AI 영상·교육 콘텐츠 제작 연수, 영상·웹앱 콘텐츠, 연수 교안과 수업 자료">
@@ -842,6 +842,14 @@ body.admin .gb-board .gb-del{display:block}
  .gb-board{grid-template-columns:repeat(2,minmax(0,1fr));gap:26px 14px;padding-top:26px}
  .gb-board .gb-note{padding:22px 13px 12px;min-height:140px}.gb-txt{font-size:20px}.gb-by b{font-size:17px}
 }
+/* 카드 마우스 반응 통일: 모든 카드가 같은 '들썩' */
+html body .page .cards .card,html body .ytc,html body .blogs .bl{transition:transform .35s cubic-bezier(.3,1.6,.5,1),box-shadow .2s!important}
+@media (hover:hover){
+ html body .page .cards .card:hover,html body .ytc:hover,html body .blogs .bl:hover{transform:translateY(-6px) rotate(-.6deg)!important;box-shadow:0 0 0 1.5px var(--pink),0 12px 24px -10px rgba(255,71,145,.35)!important}
+ html body .page .cards .card:hover .thumb img,html body .page .cards .card:hover .thumb video,html body .ytc:hover .ytc-im img,html body .blogs .bl:hover .bl-im img{transform:scale(1.05)}
+ html body .blogs .bl .bl-im img{transition:transform .4s}
+}
+body.editing .page .cards .card:hover{transform:none!important}
 .prw .pvw-bar b{font-size:14.5px}.prw-o{display:inline-block;font-size:12px;font-weight:800;color:var(--pink-deep);background:var(--soft);border-radius:99px;padding:1px 9px;margin-right:4px;vertical-align:1px}
 .prw-new{flex:none;font-size:13px;font-weight:700;color:var(--ink-soft);text-decoration:none;padding:6px 10px;border-radius:10px;background:#F7F1F3}
 .prw-new:hover{color:var(--pink-deep)}
@@ -1467,11 +1475,11 @@ const ARCHIVE={
     {"st": "종료", "t": "맞춤형 AI 영상 제작 원데이 클래스", "d": "교실을 사로잡는 수업 영상 만들기 · 브루(Vrew) 실습", "tag": "천재 T셀파 × Q.U.O.K.A", "y": "오프라인 워크숍 · 2026.10.24(토)", "url": "https://ele.tsherpa.co.kr/event/2922710/index.html", "img": "apps/tr_oneday.jpg"},
   ],
   train:[
-    {t:"예람쌤 AI 영상 제작소",d:"캐릭터부터 대본·이미지·영상 프롬프트까지 대화하듯 만들어 주는 사이트",tag:"AI 영상",y:"2026",img:"apps/aivideo_v.webp",vid:"apps/aivideo.mp4",url:"https://dpfkadpfka.github.io/yeram-ai-video/"},
+    {t:"예람쌤 AI 영상 제작소",d:"캐릭터부터 대본·이미지·영상 프롬프트까지 대화하듯 만들어 주는 사이트",tag:"AI 영상",y:"2026",img:"apps/aivideo_v.webp",vid:"apps/aivideo.mp4",pv:"L29lZGl2LWlhLW1hcmV5L29pLmJ1aHRpZy5ha2ZwZGFrZnBkLy86c3B0dGg="},
     {t:'클로드 제대로 써먹기',d:'교사 대상 클로드 활용 연수 자료',tag:'AI 활용',y:'2026',img:'apps/tr_claude.webp',vid:'apps/tr_claude.mp4',pv:'MXMjL3BwYS55ZmlsdGVuLmVkdWFsYy1tYXJleS8vOnNwdHRo'},
     {t:'브루로 만드는 AI 영상',d:'교원 AI 영상 제작 강의',tag:'AI 영상',y:'2026',img:'apps/tr_vrew.webp',vid:'apps/tr_vrew.mp4',pv:'MXMjL3BwYS55ZmlsdGVuLndlcnYtbWFyZXkvLzpzcHR0aA=='},
     {t:'위툰 활용 수업 사례',d:'댓글 예절 4컷 만화 수업 나눔',tag:'수업 나눔',y:'2026',img:'apps/tr_wetoon.webp',vid:'apps/tr_wetoon.mp4',pv:'L3BwYS55ZmlsdGVuLm5vb3Rldy1tYXJleS8vOnNwdHRo'},
-    {t:'미리캔버스 X 젭퀴즈 AI 활용 수업',d:'미리캔버스로 시선을 잡고 젭 퀴즈로 참여를 이끄는 수업',tag:'AI 활용',y:'2026',img:'apps/tr_mirizep.webp',vid:'apps/tr_mirizep.mp4',url:'https://www.miricanvas.com/v2/ko/design2/v/4004abcf-40aa-410f-89cd-795746b8a468'},
+    {t:'미리캔버스 X 젭퀴즈 AI 활용 수업',d:'미리캔버스로 시선을 잡고 젭 퀴즈로 참여를 이끄는 수업',tag:'AI 활용',y:'2026',img:'apps/tr_mirizep.webp',vid:'apps/tr_mirizep.mp4',pv:'ODY0YThiNjQ3NTk3LWRjOTgtZjAxNC1hYTA0LWZjYmE0MDA0L3YvMm5naXNlZC9vay8ydi9tb2Muc2F2bmFjaXJpbS53d3cvLzpzcHR0aA=='},
   ],
   class:[
     {t:'모두의 이모지',d:'이모지에 없는 사람들을 이모지로 만드는 다양성 수업',tag:'2학년',y:'2026'},
