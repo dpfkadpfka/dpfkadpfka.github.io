@@ -980,6 +980,15 @@ html body.is-home .hero-d{top:calc(100svh - var(--mB) - var(--mH) - 72px)!import
  html body .logo .brand{width:52px!important;height:52px!important}
 }
 @media (min-width:701px){.tn-title{display:none!important}}
+.bl-wrap{position:relative}
+.bl-nav{display:none;position:absolute;top:calc(50% - 40px);z-index:3;width:38px;height:38px;border:0;border-radius:50%;background:rgba(255,255,255,.96);color:var(--pink-deep);font-size:24px;font-weight:800;line-height:1;padding-bottom:3px;cursor:pointer;box-shadow:0 4px 14px rgba(74,42,34,.2)}
+.bl-wrap.scroll .bl-nav{display:grid;place-items:center}
+.bl-nav:disabled{opacity:0;pointer-events:none}
+.bl-nav.prev{left:4px}.bl-nav.next{right:4px}
+.bl-dots{display:flex;justify-content:center;gap:6px;margin-top:12px}
+.bl-dots[hidden]{display:none}
+.bl-dots i{width:7px;height:7px;border-radius:50%;background:#EBD3DC;transition:all .2s}
+.bl-dots i.on{width:20px;border-radius:99px;background:var(--pink)}
 </style>
 
 <div class="frame" aria-hidden="true"></div>
@@ -1654,6 +1663,12 @@ document.addEventListener('click',e=>{ const c=e.target.closest('#webapp .cards 
   const tt=t=>t.replace(/^\d{6}(~\d{4})?\s*/,'').replace(/\s*예람쌤.*$/,'');
   box.querySelector('.bl-grid').innerHTML=it.map(i=>`<a class="bl" href="${e(i.u)}" target="_blank" rel="noopener"><span class="bl-im">${i.img?`<img src="${e(i.img)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`:''}</span><span class="bl-b"><span class="bl-m"><em>${e(i.c)}</em>${dt(i.d)}</span><b>${e(tt(i.t))}</b></span></a>`).join('');
   box.hidden=false;
+  const g=box.querySelector('.bl-grid'); const w=document.createElement('div'); w.className='bl-wrap'; g.parentNode.insertBefore(w,g); w.appendChild(g);
+  w.insertAdjacentHTML('beforeend','<button type="button" class="bl-nav prev" aria-label="이전 글">‹</button><button type="button" class="bl-nav next" aria-label="다음 글">›</button>');
+  const dots=document.createElement('div'); dots.className='bl-dots'; dots.innerHTML=it.map((_,k)=>`<i${k?'':' class="on"'}></i>`).join(''); w.after(dots);
+  const cards=[...g.children], upd=()=>{ const over=g.scrollWidth>g.clientWidth+4; w.classList.toggle('scroll',over); dots.hidden=!over; let k=0,best=1e9; cards.forEach((c,j)=>{const d=Math.abs(c.offsetLeft-g.offsetLeft-g.scrollLeft); if(d<best){best=d;k=j;}}); [...dots.children].forEach((d,j)=>d.classList.toggle('on',j===k)); w.querySelector('.prev').disabled=g.scrollLeft<4; w.querySelector('.next').disabled=g.scrollLeft+g.clientWidth>=g.scrollWidth-4; };
+  g.addEventListener('scroll',upd,{passive:true}); addEventListener('resize',upd); upd();
+  w.addEventListener('click',e=>{ const b=e.target.closest('.bl-nav'); if(!b) return; const step=(cards[1]?cards[1].offsetLeft-cards[0].offsetLeft:g.clientWidth*.8); g.scrollBy({left:(b.classList.contains('next')?1:-1)*step,behavior:'smooth'}); });
  }).catch(()=>{});
 })();
 (function(){
