@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
-<script>(function(){var B="1793539667";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
+<script>(function(){var B="1793539730";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
 <meta name="color-scheme" content="light only">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="초등교사 김예람(예람쌤) — AI 영상·교육 콘텐츠 제작 연수, 영상·웹앱 콘텐츠, 연수 교안과 수업 자료">
@@ -1620,10 +1620,16 @@ addEventListener('pointermove',e=>{
   if(d<3) return; const n=Math.min(2,Math.floor(d/18)+(Math.random()<.5?1:0));
   for(let i=0;i<n;i++) addMote(p.x+(Math.random()-.5)*6,p.y+(Math.random()-.5)*6,.4+d*.02);
 },{passive:true});
+// 홈 화면 클릭: 하트가 사방으로 팡!
+function pop(x,y){ const n=14, base=Math.random()*6.28;
+  for(let i=0;i<n;i++){ const a=base+i/n*Math.PI*2+(Math.random()-.5)*.3, sp=3.2+Math.random()*2.6;
+    motes.push({x,y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp-1.2,r:6+Math.random()*6,life:1,decay:.018+Math.random()*.012,hue:(q=>q<.55?'255,71,145':q<.85?'255,150,190':'255,255,255')(Math.random()),tw:Math.random()*6.28,rot:Math.random()*1.6,spin:(Math.random()-.5)*.12}); }
+  for(let i=0;i<6;i++) addMote(x,y,.8+Math.random()*1.4); }
+addEventListener('pointerdown',e=>{ if(reduce||!isHome()||e.button>0) return; if(e.target.closest('a,button,input,.chat,.topnav,.menu')) return; pop(e.clientX,e.clientY); },{passive:true});
 let lDirty=false;
 (function loop(){
   if(lDirty||motes.length){ lx2.clearRect(0,0,lc.width,lc.height); lDirty=false; }
-  if(motes.length){ lDirty=true; if(motes.length>70) motes=motes.slice(-70);
+  if(motes.length){ lDirty=true; if(motes.length>140) motes=motes.slice(-140);
     motes=motes.filter(m=>m.life>0);
     for(const m of motes){
       m.x+=m.vx; m.y+=m.vy; m.vx*=.96; m.vy=m.vy*.97+.045; m.life-=m.decay; m.tw+=.3; m.rot+=m.spin;
