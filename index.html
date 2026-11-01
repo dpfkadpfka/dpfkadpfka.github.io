@@ -615,6 +615,22 @@ body.admin .page .cards .card{cursor:grab;outline:1.5px dashed var(--pink-light)
 }
 @media (max-width:700px){ html body.is-home .char-wrap{height:min(52vh,calc(100svh - 370px),440px)!important} }
 @media (max-width:900px){ html body:not(.is-home) .page .card .thumb:has(.ph){aspect-ratio:16/5!important} }
+.press{margin:44px 0 8px}
+.press-hd h3{margin:0;font-size:22px;font-weight:800;letter-spacing:-.4px}
+.press-hd p{margin:4px 0 14px;color:var(--ink-soft);font-size:14.5px}
+.press-l{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.press-l li{display:grid;grid-template-columns:120px minmax(0,1fr);gap:16px;padding:16px 4px;border-bottom:1px solid var(--line)}
+.pr-m{display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+.pr-d{font-size:14px;font-weight:800;color:var(--pink-deep);font-variant-numeric:tabular-nums}
+.pr-k{font-size:12px;font-weight:800;background:var(--soft);color:var(--pink-deep);border-radius:99px;padding:1px 10px}
+.pr-b b{display:block;font-size:16.5px;font-weight:800;line-height:1.45}
+.pr-s{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.pr-s a{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:10px;background:#fff;box-shadow:inset 0 0 0 1.5px var(--line);color:var(--ink);font-size:13.5px;font-weight:700;text-decoration:none}
+.pr-s a::after{content:"↗";color:var(--pink-deep);font-weight:800}
+.pr-s a:hover{box-shadow:inset 0 0 0 1.5px var(--pink);color:var(--pink-deep)}
+@media (max-width:600px){.press-l li{grid-template-columns:minmax(0,1fr);gap:8px}.pr-m{flex-direction:row;align-items:center}}
+.cvl a.cv-ln{color:inherit;text-decoration:underline;text-decoration-color:var(--pink-light);text-underline-offset:3px}
+.cvl a.cv-ln:hover{color:var(--pink-deep)}
 </style>
 
 <div class="frame" aria-hidden="true"></div>
@@ -695,6 +711,20 @@ body.admin .page .cards .card{cursor:grab;outline:1.5px dashed var(--pink-light)
 <section class="page archive" id="promo" hidden><div class="wrap">
   <div class="page-head"><div><h2>연수 홍보</h2><p>지금 신청할 수 있는 연수와 강의를 안내합니다.</p></div></div>
   <div class="filters"></div><div class="cards"></div>
+  <section class="press" aria-labelledby="press-h">
+    <div class="press-hd"><h3 id="press-h">언론 보도</h3><p>연수와 수업 활동을 다룬 기사입니다.</p></div>
+    <ul class="press-l">
+      <li><div class="pr-m"><span class="pr-d">2026.10</span><span class="pr-k">연수</span></div><div class="pr-b"><b>천재교육 T셀파, AI 영상 제작 교사 원데이 클래스</b><div class="pr-s">
+        <a href="https://www.etnews.com/20261026000034" target="_blank" rel="noopener">전자신문</a>
+        <a href="https://www.fnnews.com/news/202610260930495419" target="_blank" rel="noopener">파이낸셜뉴스 (뉴스1)</a>
+        <a href="https://www.fnnews.com/news/202610261002379354" target="_blank" rel="noopener">파이낸셜뉴스</a></div></div></li>
+      <li><div class="pr-m"><span class="pr-d">2026.10</span><span class="pr-k">수업</span></div><div class="pr-b"><b>2026 탄소제로 수호대 — 부천북초 2학년 탄소중립 캠페인</b><div class="pr-s">
+        <a href="https://www.hkbs.co.kr/news/articleView.html?idxno=836779" target="_blank" rel="noopener">환경일보</a>
+        <a href="http://www.ibsnews.kr/news/109722" target="_blank" rel="noopener">IBS뉴스</a></div></div></li>
+      <li><div class="pr-m"><span class="pr-d">2025.07</span><span class="pr-k">수업</span></div><div class="pr-b"><b>2025 청소년 탄소제로 수호대 — 부천북초 1학년</b><div class="pr-s">
+        <a href="https://www.hkbs.co.kr/news/articleView.html?idxno=800356" target="_blank" rel="noopener">환경일보</a></div></div></li>
+    </ul>
+  </section>
     <div class="cta" id="contact-anchor">
       <div class="cta-tx"><span class="cta-k">CONTACT</span><h3>연수·강의 문의</h3><p>연수·강의 요청과 콘텐츠 제작, 자문 문의는<br>편한 방법으로 연락 주세요.</p></div>
       <div class="cta-btns">
@@ -833,7 +863,7 @@ const CV_SUB={"기관 활동":"국가 기관 · 교육청 소속","외부 기관
 function cvBold(t){if(/<b>/.test(t))return t;let m=t.match(/^(.+?) - (.*)$/);if(m&&m[1].length<=30)return `<b>${m[1]}</b> - ${m[2]}`;
   m=t.match(/^(\S+) X (\S+)(.*)$/);if(m)return `<b>${m[1]}</b> X <b>${m[2]}</b>${m[3]}`;
   m=t.match(/^(\S+)(.*)$/);return m?`<b>${m[1]}</b>${m[2]}`:t}
-document.getElementById('cvBody').innerHTML=DATA.CV.map(([n,a],i)=>`<section class="cvsec"><div class="cvsec-h"><span class="cvn">${String(i+1).padStart(2,"0")}</span><h3>${n}</h3><p>${CV_SUB[n]||""}</p></div><ul class="cvl">${a.map(([t,y])=>`<li><span class="cy${/~$/.test(y)?" now":""}">${esc(y)}</span><span>${cvBold(esc(t))}</span></li>`).join("")}</ul></section>`).join("");
+document.getElementById('cvBody').innerHTML=DATA.CV.map(([n,a],i)=>`<section class="cvsec"><div class="cvsec-h"><span class="cvn">${String(i+1).padStart(2,"0")}</span><h3>${n}</h3><p>${CV_SUB[n]||""}</p></div><ul class="cvl">${a.map(([t,y])=>`<li><span class="cy${/~$/.test(y)?" now":""}">${esc(y)}</span><span>${/^EBS 시청자평가원/.test(t)?`<a class="cv-ln" href="https://about.ebs.co.kr/kor/viewership/evaluator?tabVal=intro" target="_blank" rel="noopener">${cvBold(esc(t))}</a>`:cvBold(esc(t))}</span></li>`).join("")}</ul></section>`).join("");
 /* 영상: 예람쌤 AI 영상 제작소와 같은 분류·카드 */
 let ytF='all';
 function ytCard(v){const sh=v[2]==="short";const url=(sh?'https://www.youtube.com/shorts/':'https://youtu.be/')+v[0];
