@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
-<script>(function(){var B="1793539837";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
+<script>(function(){var B="1793539922";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
 <meta name="color-scheme" content="light only">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="초등교사 김예람(예람쌤) — AI 영상·교육 콘텐츠 제작 연수, 영상·웹앱 콘텐츠, 연수 교안과 수업 자료">
@@ -1817,6 +1817,9 @@ document.addEventListener('click',e=>{ const c=e.target.closest('#webapp .cards 
  const dec=x=>atob(x).split('').reverse().join('');
  function close(){ pv.hidden=true; pv.innerHTML=''; document.body.style.overflow=''; }
  document.addEventListener('click',e=>{
+  const lk=e.target.closest('#train a.card[href], #class a.card[href]');
+  if(lk&&!document.body.classList.contains('admin')){ e.preventDefault(); const t=lk.querySelector('h3')?.textContent||'자료', url=lk.href;
+   return gate(lk,t,()=>{ const w=window.open(url,'_blank','noopener'); if(!w){ pv.innerHTML=`<div class="pvw-box pvw-login" role="dialog" aria-modal="true"><div class="pvw-bar"><b>${t}</b><button type="button" class="pvw-x" aria-label="닫기">✕</button></div><div class="pl-in"><h3>로그인됐어요</h3><a class="pl-go" href="${url}" target="_blank" rel="noopener" style="text-decoration:none">사이트 열기</a></div></div>`; pv.hidden=false; document.body.style.overflow='hidden'; pv.querySelector('.pl-go').addEventListener('click',()=>close()); } }); }
   const b=e.target.closest('[data-pv],[data-dl]'); if(!b||document.body.classList.contains('admin')) return;
   e.preventDefault(); const t=b.querySelector('h3')?.textContent||'자료';
   if(b.dataset.dl) return gate(b,'[수업 자료] '+t,()=>{ const a=document.createElement('a'); a.href=b.dataset.dl; a.download=''; document.body.appendChild(a); a.click(); a.remove(); });
@@ -1830,7 +1833,7 @@ document.addEventListener('click',e=>{ const c=e.target.closest('#webapp .cards 
  function gate(b,t,act){
   const go=()=>{ logOpen(t); if(act){ close(); act(); } else show(b,t); };
   if(U) return go();
-  pv.innerHTML=`<div class="pvw-box pvw-login" role="dialog" aria-modal="true" aria-label="로그인"><div class="pvw-bar"><b>${t.replace(/^\[수업 자료\] /,'')}</b><button type="button" class="pvw-x" aria-label="닫기">✕</button></div><div class="pl-in"><img src="obj/lecture.webp" alt=""><h3>${act?'자료는 로그인 후 내려받을 수 있어요':'연수 자료는 로그인 후 볼 수 있어요'}</h3><p>구글 계정으로 로그인해 주세요.</p><button type="button" class="pl-go" disabled>Google 계정으로 로그인</button></div></div>`;
+  pv.innerHTML=`<div class="pvw-box pvw-login" role="dialog" aria-modal="true" aria-label="로그인"><div class="pvw-bar"><b>${t.replace(/^\[수업 자료\] /,'')}</b><button type="button" class="pvw-x" aria-label="닫기">✕</button></div><div class="pl-in"><img src="obj/lecture.webp" alt=""><h3>${b.dataset.dl?'자료는 로그인 후 내려받을 수 있어요':(b.closest('#class')?'수업 자료는 로그인 후 볼 수 있어요':'연수 자료는 로그인 후 볼 수 있어요')}</h3><p>구글 계정으로 로그인해 주세요.</p><button type="button" class="pl-go" disabled>Google 계정으로 로그인</button></div></div>`;
   pv.hidden=false; document.body.style.overflow='hidden';
   const btn=pv.querySelector('.pl-go');
   fbReady().then(f=>{ if(U){ go(); return; } btn.disabled=false;
