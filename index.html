@@ -1811,14 +1811,14 @@ document.addEventListener('click',e=>{ const c=e.target.closest('#webapp .cards 
    .filter(x=>toks.some(w=>x.t.toLowerCase().includes(w))).slice(0,5);
   const extH=ext.length?`<ul>${ext.map(x=>`<li><a href="${e(x.u)}" target="_blank" rel="noopener">${e(x.t)} ↗</a> <em>${x.k}</em></li>`).join('')}</ul>`:'';
   if(hit.length||ext.length) return `질문과 관련된 내용을 찾아봤어요.${hit.length?li(hit):''}${extH}<p class="ch-note">※ 정해진 답변이 아니라 홈페이지·블로그·기사에서 찾아 모은 결과라, 정확한 내용은 링크에서 확인해 주세요.</p>`;
-  return `그 부분은 아직 제가 잘 몰라요. 연수, 이력, 앱, 연락처처럼 물어봐 주시거나 아래로 직접 문의해 주세요.<br><a href="https://open.kakao.com/o/sQjNnOnh" target="_blank" rel="noopener">카카오톡 오픈채팅 ↗</a>`;
+  return `그 부분은 아직 제가 잘 몰라요. 연수, 이력, 앱, 연락 방법처럼 물어봐 주시거나 아래로 직접 문의해 주세요.<br><a href="https://open.kakao.com/o/sQjNnOnh" target="_blank" rel="noopener">카카오톡 오픈채팅 ↗</a>`;
  }
  function add(who,h){ const d=document.createElement('div'); d.className='ch-m '+who; d.innerHTML=h; B.appendChild(d); B.scrollTop=B.scrollHeight; }
  function ask(q){ if(!q.trim()) return; add('me',e(q)); const d=document.createElement('div'); d.className='ch-m bot typing'; d.innerHTML='<i></i><i></i><i></i>'; B.appendChild(d); B.scrollTop=B.scrollHeight; setTimeout(()=>{ d.remove(); add('bot',answer(q)); },450); }
  Q.innerHTML=quick.map(q=>`<button type="button">${q}</button>`).join('');
  Q.addEventListener('click',ev=>{ const b=ev.target.closest('button'); if(b) ask(b.textContent); });
  F.addEventListener('submit',ev=>{ ev.preventDefault(); ask(T.value); T.value=''; });
- const open=()=>{ C.hidden=false; if(!B.children.length) add('bot','안녕하세요! 예람쌤 챗봇이에요. 예람쌤의 활동, 연수, 앱, 연락처를 물어보세요.'); setTimeout(()=>T.focus(),50); };
+ const open=()=>{ C.hidden=false; if(!B.children.length) add('bot','안녕하세요! 예람쌤 챗봇이에요. 예람쌤의 활동, 연수, 앱, 연락 방법을 물어보세요.'); setTimeout(()=>T.focus(),50); };
  const close=()=>{ C.hidden=true; };
  btn.addEventListener('click',()=>C.hidden?open():close());
  C.addEventListener('click',ev=>{ if(ev.target.closest('.ch-x')||ev.target.closest('[data-close]')) close(); });
