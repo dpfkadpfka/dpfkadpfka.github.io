@@ -972,6 +972,9 @@ html body.is-home .hero-d{top:calc(100svh - var(--mB) - var(--mH) - 72px)!import
  html body:not(.is-home) .blogs .bl-im{aspect-ratio:16/9!important}
  html body:not(.is-home) .ft{padding-bottom:90px}
 }
+.hero-d .bub{box-shadow:0 0 0 2px var(--pink),0 6px 14px rgba(255,71,145,.18)!important}
+.hero-d .bub::after,html body.is-home .hero-d .bub::after{content:""!important;position:absolute!important;left:50%!important;bottom:-11px!important;width:0!important;height:0!important;background:none!important;box-shadow:none!important;border-radius:0!important;transform:translateX(-50%)!important;border-left:9px solid transparent!important;border-right:9px solid transparent!important;border-top:12px solid #fff!important;z-index:2}
+.hero-d .bub::before{content:"";position:absolute;left:50%;bottom:-15px;width:0;height:0;transform:translateX(-50%);border-left:12px solid transparent;border-right:12px solid transparent;border-top:15px solid var(--pink);z-index:1}
 </style>
 
 <div class="frame" aria-hidden="true"></div>
