@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
-<script>(function(){var B="1793540056";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
+<script>(function(){var B="1793540111";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
 <meta name="color-scheme" content="light only">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="초등교사 김예람(예람쌤) — AI 영상·교육 콘텐츠 제작 연수, 영상·웹앱 콘텐츠, 연수 교안과 수업 자료">
@@ -385,7 +385,7 @@ body.is-home footer.ft{display:none}
 .adminbar input{border:0;border-radius:10px;padding:8px 10px;font:inherit;width:200px}
 .adminbar a{color:#fff}
 .adminbar .ab-log{border:0;border-radius:10px;padding:8px 14px;font:inherit;font-weight:800;background:#fff;color:var(--ink);cursor:pointer}
-body.admin #ytBody .ytc,body.admin .press-l li{cursor:grab;outline:1.5px dashed var(--pink-light);outline-offset:3px}
+body.editing #ytBody .ytc,body.editing .press-l li{cursor:grab;outline:1.5px dashed var(--pink-light);outline-offset:3px}
 .logw{position:fixed;inset:0;z-index:95;background:rgba(30,12,10,.6);display:grid;place-items:center;padding:16px}
 .logw[hidden]{display:none}
 .lg-box{width:min(980px,100%);max-height:calc(100vh - 32px);display:flex;flex-direction:column;background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.35)}
@@ -407,9 +407,13 @@ body.admin #ytBody .ytc,body.admin .press-l li{cursor:grab;outline:1.5px dashed 
  .adminbar.ab-main button{width:100%;padding:9px 10px!important}
  .adminbar.ab-main .ab-out{background:none;border:1px solid rgba(255,255,255,.35);color:#fff;border-radius:10px;font:inherit;font-size:13px;cursor:pointer}
 }
+.adminbar .ab-edit{border:0;border-radius:10px;padding:8px 14px;font:inherit;font-weight:800;background:var(--pink);color:#fff;cursor:pointer}
+.adminbar .ab-cancel{border:1px solid rgba(255,255,255,.35);border-radius:10px;padding:8px 14px;font:inherit;background:none;color:#fff;cursor:pointer}
+.adminbar [hidden]{display:none!important}
+.adminbar .ab-msg:empty{display:none}
 .adminbar .ab-save{border:0;border-radius:10px;padding:8px 18px;font:inherit;font-weight:800;background:var(--pink);color:#fff;cursor:pointer}
-body.admin .page .filters{display:none}
-body.admin .page .cards .card{cursor:grab;outline:1.5px dashed var(--pink-light);outline-offset:3px}
+body.editing .page .filters{display:none}
+body.editing .page .cards .card{cursor:grab;outline:1.5px dashed var(--pink-light);outline-offset:3px}
 .sort-ghost{opacity:.35}
 .logo .brand{display:block;width:52px;height:52px;object-fit:contain;transition:transform .35s cubic-bezier(.3,1.6,.5,1)}
 .logo:hover .brand{transform:rotate(-6deg) scale(1.06)}
@@ -1304,14 +1308,14 @@ function renderArchive(id){
   const NOALL=false, GROUP=id==='webapp'; const tags=[...(NOALL?[]:['전체']),...new Set(ARCHIVE[id].map(i=>i.tag))]; let cur=tags[0];
   const draw=()=>{
     let n=0;
-    const list=ARCHIVE[id]; if(document.body.classList.contains('admin')&&!NOALL) cur='전체';
+    const list=ARCHIVE[id]; if(document.body.classList.contains('editing')&&!NOALL) cur='전체';
     const card=i=>{
       const tag=i.url?'a':((i.pv||i.dl)?'button':'div'), href=i.url?` href="${esc(i.url)}" target="_blank" rel="noopener"`:(i.pv?` type="button" data-pv="${i.pv}"`:(i.dl?` type="button" data-dl="${esc(i.dl)}"`:''));
       return `<${tag} class="card tone-0"${href} data-key="${esc(i.t)}"><div class="thumb">${thumb(i)}${i.st?`<span class="st${i.st==='종료'?' end':''}">${esc(i.st)}</span>`:''}</div>
         <div class="card-body"><div class="card-meta"><span>${esc(i.tag)}</span><span>${esc(i.y)}</span></div><h3>${esc(i.t)}</h3>${i.d?`<p>${esc(i.d)}</p>`:''}
         <span class="go${i.url||i.pv||i.dl?'':' soon'}">${i.dl?'내려받기 →':i.pv?'자료 보기 →':i.url?(i.yt?'영상 보기 →':(id==='webapp')?'자세히 보기 →':'열어 보기 →'):'링크 준비 중'}</span></div></${tag}>`;
     };
-    const grouped=GROUP&&cur==='전체'&&!document.body.classList.contains('admin');
+    const grouped=GROUP&&cur==='전체'&&!document.body.classList.contains('editing');
     box.classList.toggle('grouped',grouped);
     box.innerHTML=grouped? tags.filter(t=>t!=='전체').map(t=>{ const g=list.filter(i=>i.tag===t); return `<section class="cgrp"><h4>${esc(t)} <small>${g.length}</small></h4><div class="cards">${g.map(card).join('')}</div></section>`; }).join('')
       : list.filter(i=>cur==='전체'||i.tag===cur).map(card).join('');
@@ -1340,27 +1344,33 @@ function adminOn(user){
   if(document.body.classList.contains('admin')) return;
   document.body.classList.add('admin');
   const bar=document.createElement('div'); bar.className='adminbar ab-main';
-  bar.innerHTML=`<b>관리자</b><span class="ab-msg">카드·영상·기사를 끌어서 순서를 바꾼 뒤 저장을 누르세요.</span><button class="ab-save" type="button">저장</button><button class="ab-log" type="button">기록 보기</button><button class="ab-out" type="button">로그아웃</button>`;
+  bar.innerHTML=`<b>관리자</b><span class="ab-msg"></span><button class="ab-edit" type="button">순서 바꾸기</button><button class="ab-save" type="button" hidden>저장하기</button><button class="ab-cancel" type="button" hidden>취소</button><button class="ab-log" type="button">기록 보기</button><button class="ab-out" type="button">로그아웃</button>`;
   document.body.appendChild(bar);
   const msg=bar.querySelector('.ab-msg');
   const sc2=document.createElement('script'); sc2.src='sortable.min.js';
-  const mkSort=()=>{ document.querySelectorAll('.page .cards, #ytBody .ytgrid, .press-l').forEach(box=>{ if(!box._srt) box._srt=Sortable.create(box,{animation:180,ghostClass:'sort-ghost'}); }); };
-  sc2.onload=()=>{ mkSort(); new MutationObserver(()=>{ if(window.Sortable) mkSort(); }).observe(document.getElementById('ytBody'),{childList:true}); };
-  if(typeof renderYT==='function') renderYT();
+  const mkSort=()=>{ if(!window.Sortable||!document.body.classList.contains('editing')) return; document.querySelectorAll('.page .cards, #ytBody .ytgrid, .press-l').forEach(box=>{ if(!box._srt) box._srt=Sortable.create(box,{animation:180,ghostClass:'sort-ghost'}); }); };
+  const unSort=()=>document.querySelectorAll('.page .cards, #ytBody .ytgrid, .press-l').forEach(box=>{ if(box._srt){ box._srt.destroy(); box._srt=null; } });
+  new MutationObserver(mkSort).observe(document.getElementById('ytBody'),{childList:true});
+  const ed=bar.querySelector('.ab-edit'), sv=bar.querySelector('.ab-save'), cn=bar.querySelector('.ab-cancel');
+  const setEdit=on=>{ document.body.classList.toggle('editing',on); ed.hidden=on; sv.hidden=!on; cn.hidden=!on; msg.textContent=on?'끌어서 옮긴 뒤 저장하기를 누르세요.':'';
+    unSort(); Object.values(DRAW).forEach(d=>d()); if(typeof renderYT==='function') renderYT(); if(on) mkSort(); };
+  let pressSnap=[];
+  ed.addEventListener('click',()=>{ pressSnap=[...document.querySelectorAll('.press-l > li')]; setEdit(true); });
+  cn.addEventListener('click',()=>{ const ul=document.querySelector('.press-l'); pressSnap.forEach(li=>ul.appendChild(li)); setEdit(false); msg.textContent='바꾼 순서를 되돌렸어요.'; });
+  sc2.onload=()=>mkSort();
   document.head.appendChild(sc2);
-  Object.values(DRAW).forEach(d=>d());
   bar.querySelector('.ab-save').addEventListener('click',async()=>{
     const order={}; Object.keys(ARCHIVE).forEach(id=>{ order[id]=[...document.querySelectorAll('#'+id+' .cards .card')].map(c=>c.dataset.key); });
     order.yt=[...document.querySelectorAll('#ytBody .ytc[data-yt]')].map(a=>a.dataset.yt);
     order.press=[...document.querySelectorAll('.press-l > li')].map(pressKey);
     msg.textContent='저장 중…';
-    try{ const {F,db}=await fbLoad(); await F.setDoc(F.doc(db,'config','hv_order'),{json:JSON.stringify(order),at:F.serverTimestamp()}); ORDER=order; msg.textContent='저장했어요. 바로 모든 사람에게 이 순서로 보여요.'; }
+    try{ const {F,db}=await fbLoad(); await F.setDoc(F.doc(db,'config','hv_order'),{json:JSON.stringify(order),at:F.serverTimestamp()}); ORDER=order; setEdit(false); msg.textContent='저장했어요. 모든 사람에게 이 순서로 보여요.'; }
     catch(e){ msg.textContent='저장하지 못했어요 ('+(e.code||e.message)+')'; }
   });
   bar.querySelector('.ab-log').addEventListener('click',openLogs);
   bar.querySelector('.ab-out').addEventListener('click',async()=>{ try{ localStorage.removeItem('yr_admin'); }catch{} const {Au,auth}=await fbLoad(); await Au.signOut(auth); location.reload(); });
 }
-document.addEventListener('click',e=>{ if(document.body.classList.contains('admin')){ const c=e.target.closest('.cards .card, #ytBody .ytc, .press-l li'); if(c){ e.preventDefault(); e.stopPropagation(); } } },true);
+document.addEventListener('click',e=>{ if(document.body.classList.contains('editing')){ const c=e.target.closest('.cards .card, #ytBody .ytc, .press-l li'); if(c){ e.preventDefault(); e.stopPropagation(); } } },true);
 /* 관리자: 기록 보기(자료 열람·다운로드 / 챗봇 질문) */
 async function openLogs(){
   let w=document.getElementById('logw');
@@ -1405,7 +1415,7 @@ fetch('yt.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).th
   j.items.forEach((x,i)=>{ if(have.has(x.id)) return; YTAUTO.set(x.id,i); add.push([x.id,x.t,x.k==='short'?'short':'edu']); });
   if(add.length){ DATA.YTV.unshift(...add); renderYT(); } }).catch(()=>{});
 function ytOrd(){ const o=(ORDER&&ORDER.yt)||[]; const pos=v=>{const k=o.indexOf(v[0]); return k>=0?k:(YTAUTO.has(v[0])?-1e6+YTAUTO.get(v[0]):1e6);}; return DATA.YTV.map((v,i)=>[v,i]).sort((a,b)=>(pos(a[0])-pos(b[0]))||(a[1]-b[1])).map(a=>a[0]); }
-function renderYT(){if(document.body.classList.contains('admin')) ytF='all'; const V=ytOrd(),n=k=>V.filter(x=>x[2]===k).length;
+function renderYT(){if(document.body.classList.contains('editing')) ytF='all'; const V=ytOrd(),n=k=>V.filter(x=>x[2]===k).length;
   document.getElementById('ytFil').innerHTML=[["all","전체",V.length],["edu","교육 콘텐츠",n("edu")],["mv","AI 뮤직비디오",n("mv")],["lec","강의",n("ar")+n("esop")],["short","숏폼",n("short")]].filter(([k,t,c])=>k==="all"||c).map(([k,t,c])=>`<button type="button" data-ytf="${k}" aria-pressed="${ytF===k}">${t}<i>${c}</i></button>`).join("");
   const keys=ytF==="all"?DATA.YTC.map(x=>x[0]):ytF==="lec"?["ar","esop"]:[ytF];
   document.getElementById('ytBody').innerHTML=keys.map(k=>{const c=DATA.YTC.find(x=>x[0]===k),L=V.filter(x=>x[2]===k);if(!L.length)return "";
@@ -1800,14 +1810,14 @@ async function openGuide(url,name){
 function closeGuide(){ gv.hidden=true; gv.innerHTML=''; }
 gv.addEventListener('click',e=>{ if(e.target===gv||e.target.classList.contains('gv-body')||e.target.classList.contains('gv-load')||e.target.closest('.gv-x')) closeGuide(); });
 addEventListener('keydown',e=>{ if(e.key!=='Escape') return; if(!gv.hidden) closeGuide(); else if(!wm.hidden) closeWin(); });
-document.addEventListener('click',e=>{ const c=e.target.closest('#webapp .cards .card, #train .cards .card'); if(!c||document.body.classList.contains('admin')) return; if(WINAPP[c.dataset.key]){ e.preventDefault(); openWin(c.dataset.key); } });
+document.addEventListener('click',e=>{ const c=e.target.closest('#webapp .cards .card, #train .cards .card'); if(!c||document.body.classList.contains('editing')) return; if(WINAPP[c.dataset.key]){ e.preventDefault(); openWin(c.dataset.key); } });
 </script>
 <script>
 (function(){
  const yv=document.createElement('div'); yv.className='ytv'; yv.hidden=true; document.body.appendChild(yv);
  function close(){ yv.hidden=true; yv.innerHTML=''; document.body.style.overflow=''; }
  document.addEventListener('click',e=>{
-  const a=e.target.closest('a.ytc[data-yt]'); if(!a||document.body.classList.contains('admin')) return;
+  const a=e.target.closest('a.ytc[data-yt]'); if(!a||document.body.classList.contains('editing')) return;
   e.preventDefault(); const id=a.dataset.yt, sh=a.dataset.sh==='1';
   yv.innerHTML=`<div class="ytv-box${sh?' sh':''}" role="dialog" aria-modal="true" aria-label="${a.dataset.title}"><div class="ytv-bar"><b>${a.dataset.title}</b><a href="${a.href}" target="_blank" rel="noopener">유튜브에서 보기</a><button type="button" class="ytv-x" aria-label="닫기">✕</button></div><div class="ytv-fr"><iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&playsinline=1" title="${a.dataset.title}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div></div>`;
   yv.hidden=false; document.body.style.overflow='hidden'; yv.querySelector('.ytv-x').focus();
@@ -1823,9 +1833,9 @@ document.addEventListener('click',e=>{ const c=e.target.closest('#webapp .cards 
  function close(){ pv.hidden=true; pv.innerHTML=''; document.body.style.overflow=''; }
  document.addEventListener('click',e=>{
   const lk=e.target.closest('#train a.card[href], #class a.card[href]');
-  if(lk&&!document.body.classList.contains('admin')){ e.preventDefault(); const t=lk.querySelector('h3')?.textContent||'자료', url=lk.href;
+  if(lk&&!document.body.classList.contains('editing')){ e.preventDefault(); const t=lk.querySelector('h3')?.textContent||'자료', url=lk.href;
    return gate(lk,t,()=>{ const w=window.open(url,'_blank','noopener'); if(!w){ pv.innerHTML=`<div class="pvw-box pvw-login" role="dialog" aria-modal="true"><div class="pvw-bar"><b>${t}</b><button type="button" class="pvw-x" aria-label="닫기">✕</button></div><div class="pl-in"><h3>로그인됐어요</h3><a class="pl-go" href="${url}" target="_blank" rel="noopener" style="text-decoration:none">사이트 열기</a></div></div>`; pv.hidden=false; document.body.style.overflow='hidden'; pv.querySelector('.pl-go').addEventListener('click',()=>close()); } }); }
-  const b=e.target.closest('[data-pv],[data-dl]'); if(!b||document.body.classList.contains('admin')) return;
+  const b=e.target.closest('[data-pv],[data-dl]'); if(!b||document.body.classList.contains('editing')) return;
   e.preventDefault(); const t=b.querySelector('h3')?.textContent||'자료';
   if(b.dataset.dl) return gate(b,'[수업 자료] '+t,()=>{ const a=document.createElement('a'); a.href=b.dataset.dl; a.download=''; document.body.appendChild(a); a.click(); a.remove(); });
   if(b.closest('#train')) return gate(b,t);
