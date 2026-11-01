@@ -882,7 +882,7 @@ let poseWant=null;
 const IDLES=['idle_phone','idle_mirror','idle_stretch','idle_yawn','idle_hum'];
 function setTarget(px,py){
   const r=cv.getBoundingClientRect(); const ox=r.left+r.width/2;
-  const nx=Math.max(-1,Math.min(1,(px-ox)/(innerWidth*.4)));
+  const reach=Math.max(260,Math.min(innerWidth*.4,r.height*.95)); const nx=Math.max(-1,Math.min(1,(px-ox)/reach));
   if(Math.abs(nx-tx)>.015) tx=nx;
   if(py!==undefined){ const b=r.height; ty=(py-r.top)/b; }   // 0=머리끝 근처, 1=발끝
   lastMove=performance.now();
