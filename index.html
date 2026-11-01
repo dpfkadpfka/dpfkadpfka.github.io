@@ -739,9 +739,9 @@ boot();
 /* 부위 클릭 반응 */
 function say(){}
 const ZONES=[
-  {x0:.12,x1:.40,y0:0,y1:.13,k:'react_horn'},
-  {x0:.60,x1:.88,y0:0,y1:.13,k:'react_horn'},
-  {x0:.22,x1:.78,y0:.03,y1:.40,k:'react_head'},
+  {x0:.12,x1:.40,y0:0,y1:.13,k:'react_shoe'},
+  {x0:.60,x1:.88,y0:0,y1:.13,k:'react_shoe'},
+  {x0:.22,x1:.78,y0:.03,y1:.40,k:'react_belly'},
   {x0:.12,x1:.41,y0:.37,y1:.58,k:'react_wing'},
   {x0:.57,x1:.80,y0:.37,y1:.58,k:'react_wing'},
   {x0:.25,x1:.75,y0:.40,y1:.80,k:'react_belly'},
@@ -757,7 +757,7 @@ hit.addEventListener('pointerleave',()=>lastZ=null);
 hit.addEventListener('click',e=>{
   if(mode!=='live'||(clip&&clip.startsWith('menu_'))) return;
   const r=hit.getBoundingClientRect(), y=(e.clientY-r.top)/r.height;
-  const k=(zoneAt(e)||{k:y<.4?'react_head':'react_belly'}).k;
+  const k=(zoneAt(e)||{k:y<.4?'react_wing':'react_belly'}).k;
   burst(e.clientX,e.clientY,14); loadSet(k);
   // 반응 중에 또 누르면 그 자리에서 바로 다시 시작
   if(clip && ready(k)){ startClip(k,performance.now()); } else clipQ=k;
