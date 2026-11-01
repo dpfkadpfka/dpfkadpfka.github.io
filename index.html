@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
-<script>(function(){var B="1793539730";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
+<script>(function(){var B="1793539797";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
 <meta name="color-scheme" content="light only">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="초등교사 김예람(예람쌤) — AI 영상·교육 콘텐츠 제작 연수, 영상·웹앱 콘텐츠, 연수 교안과 수업 자료">
@@ -400,6 +400,13 @@ body.admin #ytBody .ytc,body.admin .press-l li{cursor:grab;outline:1.5px dashed 
 .lg-body th{position:sticky;top:-12px;background:#fff;text-align:left;font-weight:800;color:var(--ink-soft);padding:8px 8px;border-bottom:1.5px solid var(--line);white-space:nowrap}
 .lg-body td{padding:8px;border-bottom:1px solid #F3E9ED;vertical-align:top}.lg-body td:first-child{white-space:nowrap;color:var(--ink-soft);font-variant-numeric:tabular-nums}
 .lg-empty{text-align:center;color:var(--ink-soft);padding:40px 0}
+@media (min-width:1400px){
+ .adminbar.ab-main{box-sizing:border-box;left:14px;top:110px;bottom:auto;transform:none;flex-direction:column;align-items:stretch;flex-wrap:nowrap;width:min(120px,calc((100vw - 1320px)/2 + 20px));gap:7px;padding:12px 10px;border-radius:18px;text-align:center;font-size:13px}
+ .adminbar.ab-main b{font-size:14px}
+ .adminbar.ab-main .ab-msg{font-size:11px;line-height:1.45;opacity:.8;word-break:keep-all}
+ .adminbar.ab-main button{width:100%;padding:9px 10px!important}
+ .adminbar.ab-main .ab-out{background:none;border:1px solid rgba(255,255,255,.35);color:#fff;border-radius:10px;font:inherit;font-size:13px;cursor:pointer}
+}
 .adminbar .ab-save{border:0;border-radius:10px;padding:8px 18px;font:inherit;font-weight:800;background:var(--pink);color:#fff;cursor:pointer}
 body.admin .page .filters{display:none}
 body.admin .page .cards .card{cursor:grab;outline:1.5px dashed var(--pink-light);outline-offset:3px}
@@ -1331,7 +1338,7 @@ async function fbLoad(){
 function adminOn(user){
   if(document.body.classList.contains('admin')) return;
   document.body.classList.add('admin');
-  const bar=document.createElement('div'); bar.className='adminbar';
+  const bar=document.createElement('div'); bar.className='adminbar ab-main';
   bar.innerHTML=`<b>관리자</b><span class="ab-msg">카드·영상·기사를 끌어서 순서를 바꾼 뒤 저장을 누르세요.</span><button class="ab-save" type="button">저장</button><button class="ab-log" type="button">기록 보기</button><button class="ab-out" type="button">로그아웃</button>`;
   document.body.appendChild(bar);
   const msg=bar.querySelector('.ab-msg');
