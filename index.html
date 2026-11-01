@@ -459,6 +459,10 @@ body.admin .page .cards .card{cursor:grab;outline:1.5px dashed var(--pink-light)
 .wm-box li::marker{color:var(--pink);font-weight:800}
 .wm-dl{display:block;margin-top:22px;padding:14px;border-radius:14px;background:var(--pink);color:#fff;text-align:center;font-weight:800;font-size:16px;text-decoration:none}
 .wm-dl:hover{background:var(--pink-deep)}
+.thumb{position:relative}
+.thumb .st{position:absolute;left:10px;top:10px;padding:5px 12px;border-radius:999px;background:var(--pink);color:#fff;font-size:13px;font-weight:800;box-shadow:0 2px 8px rgba(226,58,128,.3)}
+.thumb .st.end{background:#7C6460;box-shadow:none}
+.card:has(.st.end) .thumb img{filter:grayscale(.85);opacity:.75}
 </style>
 
 <div class="frame" aria-hidden="true"></div>
@@ -587,8 +591,8 @@ const ARCHIVE={
     {t:"Ram Calendar",d:"구글 캘린더와 실시간으로 이어지는 바탕화면 달력",tag:"윈도우 앱",y:"2026",img:"apps/calendar.webp",url:"https://github.com/dpfkadpfka/yeram-calendar/releases/latest"},
   ],
   promo:[
-    {"t": "AI 시대, 교사를 위한 디자인·영상 콘텐츠 제작 실전 과정", "d": "생성형 AI × 캔바 × 캡컷", "tag": "T셀파 원격교육연수원", "y": "직무연수 15시간 · 디지털역량", "url": "https://edu.tsherpa.co.kr/Product/Detail/2016?BoardDetail.BoardNo=&CourseType=0", "img": "https://edu.tsherpa.co.kr/Files/20261022124647/Course/20261022124628666.jpg"},
-    {"t": "맞춤형 AI 영상 제작 원데이 클래스", "d": "교실을 사로잡는 수업 영상 만들기 · 브루(Vrew) 실습", "tag": "천재 T셀파 × Q.U.O.K.A", "y": "오프라인 워크숍 · 2026.10.24(토)", "url": "https://ele.tsherpa.co.kr/event/2922710/index.html", "img": "https://dpfkadpfka.github.io/yeram-ai-video/assets/tr_oneday.jpg"},
+    {"st": "신청 중", "t": "AI 시대, 교사를 위한 디자인·영상 콘텐츠 제작 실전 과정", "d": "생성형 AI × 캔바 × 캡컷", "tag": "T셀파 원격교육연수원", "y": "직무연수 15시간 · 디지털역량", "url": "https://edu.tsherpa.co.kr/Product/Detail/2016?BoardDetail.BoardNo=&CourseType=0", "img": "https://edu.tsherpa.co.kr/Files/20261022124647/Course/20261022124628666.jpg"},
+    {"st": "종료", "t": "맞춤형 AI 영상 제작 원데이 클래스", "d": "교실을 사로잡는 수업 영상 만들기 · 브루(Vrew) 실습", "tag": "천재 T셀파 × Q.U.O.K.A", "y": "오프라인 워크숍 · 2026.10.24(토)", "url": "https://ele.tsherpa.co.kr/event/2922710/index.html", "img": "https://dpfkadpfka.github.io/yeram-ai-video/assets/tr_oneday.jpg"},
   ],
   train:[
     {t:"예람쌤 AI 영상 제작소",d:"캐릭터부터 대본·이미지·영상 프롬프트까지 대화하듯 만들어 주는 사이트",tag:"AI 영상",y:"2026",img:"apps/aivideo.webp",url:"https://dpfkadpfka.github.io/yeram-ai-video/"},
@@ -620,7 +624,7 @@ function renderArchive(id){
     const list=ARCHIVE[id]; if(document.body.classList.contains('admin')&&!NOALL) cur='전체';
     box.innerHTML=list.filter(i=>cur==='전체'||i.tag===cur).map(i=>{
       const tag=i.url?'a':'div', href=i.url?` href="${esc(i.url)}" target="_blank" rel="noopener"`:'';
-      return `<${tag} class="card tone-0"${href} data-key="${esc(i.t)}"><div class="thumb">${thumb(i)}</div>
+      return `<${tag} class="card tone-0"${href} data-key="${esc(i.t)}"><div class="thumb">${thumb(i)}${i.st?`<span class="st${i.st==='종료'?' end':''}">${esc(i.st)}</span>`:''}</div>
         <div class="card-body"><div class="card-meta"><span>${esc(i.tag)}</span><span>${esc(i.y)}</span></div><h3>${esc(i.t)}</h3>${i.d?`<p>${esc(i.d)}</p>`:''}
         <span class="go${i.url?'':' soon'}">${i.url?(i.yt?'영상 보기 →':i.tag==='윈도우 앱'?'자세히 보기 →':'열어 보기 →'):'링크 준비 중'}</span></div></${tag}>`;
     }).join('');
