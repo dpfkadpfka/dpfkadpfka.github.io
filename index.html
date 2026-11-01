@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
-<script>(function(){var B="1793547694";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
+<script>(function(){var B="1793547844";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
 <meta name="color-scheme" content="light only">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="초등교사 김예람(예람쌤) — AI 영상·교육 콘텐츠 제작 연수, 영상·웹앱 콘텐츠, 연수 교안과 수업 자료">
@@ -1307,6 +1307,12 @@ html,body{background-color:#FFFAFC}
  html body:not(.is-home) .ab-sns a{display:flex!important;flex-direction:column!important;align-items:center!important;min-width:0}
  html body:not(.is-home) .ab-sns a b,html body:not(.is-home) .ab-sns a .sb{align-self:center!important;text-align:center;margin:0!important}
  html body:not(.is-home) #askBtn #sideCv{filter:drop-shadow(1.5px 0 0 #fff) drop-shadow(-1.5px 0 0 #fff) drop-shadow(0 1.5px 0 #fff) drop-shadow(0 -1.5px 0 #fff)!important}
+}
+@media (max-width:700px){
+ html body:not(.is-home) #promo .cards{display:flex!important;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;gap:10px!important;padding:1px 1px 4px!important}
+ html body:not(.is-home) #promo .cards::-webkit-scrollbar{display:none}
+ html body:not(.is-home) #promo .cards .card{flex:0 0 100%!important;min-width:0!important;max-width:100%!important;box-sizing:border-box!important;scroll-snap-align:start}
+ html body:not(.is-home) #promo .cards .card h3{font-size:14.5px!important}
 }
 </style>
 
