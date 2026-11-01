@@ -681,6 +681,26 @@ button.card{font:inherit;text-align:left;cursor:pointer;width:100%;padding:0;bor
 .wm-gd2{display:flex;justify-content:center;gap:6px;margin-top:10px}
 .wm-gd2 i{width:7px;height:7px;border-radius:50%;background:#EBD3DC;transition:all .2s}
 .wm-gd2 i.on{width:20px;border-radius:99px;background:var(--pink)}
+.hero{top:calc(var(--nav-h) + 1vh)!important}
+.hero h1{font-family:"Black Han Sans","Freesentation",sans-serif!important;font-weight:400!important;font-size:clamp(56px,7vw,96px)!important;letter-spacing:.04em!important;line-height:1.05!important;color:var(--ink)!important;text-shadow:4px 4px 0 #FFD1E3}
+.hero h1 span:hover{color:var(--pink)!important;text-shadow:4px 4px 0 #FFE4EF}
+@media (max-width:700px){html body.is-home .hero h1{font-size:44px!important;text-shadow:3px 3px 0 #FFD1E3}}
+.hero-sub{margin:6px 0 0;font-size:clamp(15px,1.3vw,19px);font-weight:700;letter-spacing:.12em;color:var(--pink-deep)}
+@media (max-width:700px){.hero-sub{font-size:14px;margin-top:2px}}
+.hero.hero-wm{top:50%!important;bottom:auto!important;transform:translateY(-60%);z-index:2!important}
+.hero.hero-wm h1{font-family:"Black Han Sans","Freesentation",sans-serif!important;font-weight:400!important;font-size:min(30vh,21vw)!important;letter-spacing:.02em!important;line-height:1!important;color:#FFDCEA!important;text-shadow:none!important}
+.hero.hero-wm h1 span{transition:color .25s,transform .3s cubic-bezier(.3,1.6,.5,1)}
+.hero.hero-wm h1 span:hover{color:#FF9EC4!important;text-shadow:none!important;transform:translateY(-6px)}
+@media (max-width:700px){html body.is-home .hero.hero-wm{top:auto!important;bottom:calc(3vh + 22vh)!important;transform:none}html body.is-home .hero.hero-wm h1{font-size:30vw!important}}
+#about .page-head p.ab-lead{max-width:none!important;white-space:nowrap}
+@media (max-width:1100px){#about .page-head p.ab-lead{white-space:normal}}
+#webapp .cards.grouped{display:block!important}
+.cgrp{margin:0 0 40px}
+.cgrp h4{font-size:22px;font-weight:800;letter-spacing:-.02em;margin:0 0 16px;display:flex;align-items:baseline;gap:8px}
+.cgrp h4 small{font-size:14px;color:var(--ink-soft);font-weight:700}
+#webapp .chip small{font-size:.85em;opacity:.75;margin-left:2px}
+@media (max-width:700px){html body.is-home .hero.hero-wm{top:calc(env(safe-area-inset-top,0px) + 62px)!important;bottom:auto!important;transform:none!important;z-index:4!important}html body.is-home .hero.hero-wm h1{font-size:42px!important;color:var(--ink)!important;text-shadow:3px 3px 0 #FFD1E3!important}}
+@media (min-width:1101px){.page .page-head p{max-width:none!important;white-space:nowrap}}
 </style>
 
 <div class="frame" aria-hidden="true"></div>
@@ -733,7 +753,7 @@ button.card{font:inherit;text-align:left;cursor:pointer;width:100%;padding:0;bor
     <a class="obj" href="#class" data-go="class" style="--f:1;top:68%"><span class="obj-in"><span class="obj-card"><span class="obj-ic"><img src="obj/class.webp?v=2" alt=""></span><span class="obj-tx"><b>수업 자료</b></span></span></span></a>
   </nav>
   <div class="tagline"><h1>김예람</h1><p>AI 교육 콘텐츠를 만들고 가르치는 초등교사</p></div>
-  <div class="hero"><h1 aria-label="김예람"><span aria-hidden="true">김</span><span aria-hidden="true">예</span><span aria-hidden="true">람</span></h1></div>
+  <div class="hero hero-wm"><h1 aria-label="김예람"><span aria-hidden="true">김</span><span aria-hidden="true">예</span><span aria-hidden="true">람</span></h1></div>
   <div class="band"><span><b>교육 콘텐츠 비평·자문</b><small>EBS 시청자평가원 · EBS 〈처음 배우는 AI〉 자문교사</small></span><span><b>AI 콘텐츠 제작</b><small>EBS 이솦 공식 크리에이터</small></span><span><b>AI·SW 교육</b><small>AIEDAP 마스터교원 · 영재교육원 지도교사</small></span><span><b>미디어·디지털 리터러시</b><small>미디어교육사 · 디지털 토론 D'talks</small></span></div>
 </main>
 <canvas class="lights" id="lights" aria-hidden="true"></canvas>
@@ -743,8 +763,7 @@ button.card{font:inherit;text-align:left;cursor:pointer;width:100%;padding:0;bor
   <div class="wrap">
     <div class="page-head">
       <div><h2>예람쌤 소개</h2>
-      <p>부천북초등학교 교사 김예람입니다. AI로 교육 콘텐츠를 만들고, 그 방법을 선생님들과 나누고 있습니다.</p></div>
-      <div class="pills"><span class="pill">#초등교사</span><span class="pill">#연수강사</span><span class="pill">#크리에이터</span></div>
+      <p class="ab-lead">부천북초등학교 교사 김예람입니다. AI로 교육 콘텐츠를 만들고, 그 방법을 선생님들과 나누고 있습니다.</p></div>
     </div>
     <div class="ab-sns" aria-label="예람쌤 채널"><a data-sns="kakao" href="https://open.kakao.com/o/sQjNnOnh" target="_blank" rel="noopener"><img class="sb" src="sns/kakao.jpg" alt=""><b>오픈카톡</b><small>오픈채팅 문의</small></a><a data-sns="blog" href="https://blog.naver.com/dpfkadpfka2" target="_blank" rel="noopener"><img class="sb" src="sns/blog.png" alt=""><b>블로그</b><small>예쁜사람, 예람쌤</small></a><a data-sns="youtube" href="https://www.youtube.com/@%EC%98%88%EB%9E%8C%EC%8C%A4" target="_blank" rel="noopener"><img class="sb" src="sns/youtube.png" alt=""><b>유튜브</b><small>예람쌤 채널</small></a><a data-sns="esop" href="https://ebssw.kr/dpfkadpfka2" target="_blank" rel="noopener"><img class="sb" src="sns/esop.jpg" alt=""><b>EBS 이솦</b><small>크리에이터 강의</small></a><a data-sns="insta" href="#"><span class="sb"><svg viewBox="0 0 40 40" aria-hidden="true"><defs><radialGradient id="igg" cx="30%" cy="107%" r="150%"><stop offset="0" stop-color="#FDF497"/><stop offset=".05" stop-color="#FDF497"/><stop offset=".45" stop-color="#FD5949"/><stop offset=".6" stop-color="#D6249F"/><stop offset=".9" stop-color="#285AEB"/></radialGradient></defs><rect width="40" height="40" rx="11" fill="url(#igg)"/><rect x="9" y="9" width="22" height="22" rx="6.5" fill="none" stroke="#fff" stroke-width="2.6"/><circle cx="20" cy="20" r="5.2" fill="none" stroke="#fff" stroke-width="2.6"/><circle cx="26.6" cy="13.4" r="1.6" fill="#fff"/></svg></span><b>인스타그램</b><small>준비 중</small></a></div>
     <div class="ab-cv" id="cvBody"></div>
@@ -850,17 +869,21 @@ const DRAW={}; let ORDER={};
 function sortArchive(id){ const o=ORDER[id]; if(!o) return; const pos=t=>{const k=o.indexOf(t); return k<0?1e6:k;}; ARCHIVE[id]=ARCHIVE[id].map((x,i)=>[x,i]).sort((a,b)=>(pos(a[0].t)-pos(b[0].t))||(a[1]-b[1])).map(a=>a[0]); }
 function renderArchive(id){
   const sec=document.getElementById(id), fl=sec.querySelector('.filters'), box=sec.querySelector('.cards');
-  const NOALL=id==='webapp'; const tags=[...(NOALL?[]:['전체']),...new Set(ARCHIVE[id].map(i=>i.tag))]; let cur=tags[0];
+  const NOALL=false, GROUP=id==='webapp'; const tags=[...(NOALL?[]:['전체']),...new Set(ARCHIVE[id].map(i=>i.tag))]; let cur=tags[0];
   const draw=()=>{
     let n=0;
     const list=ARCHIVE[id]; if(document.body.classList.contains('admin')&&!NOALL) cur='전체';
-    box.innerHTML=list.filter(i=>cur==='전체'||i.tag===cur).map(i=>{
+    const card=i=>{
       const tag=i.url?'a':(i.pv?'button':'div'), href=i.url?` href="${esc(i.url)}" target="_blank" rel="noopener"`:(i.pv?` type="button" data-pv="${i.pv}"`:'');
       return `<${tag} class="card tone-0"${href} data-key="${esc(i.t)}"><div class="thumb">${thumb(i)}${i.st?`<span class="st${i.st==='종료'?' end':''}">${esc(i.st)}</span>`:''}</div>
         <div class="card-body"><div class="card-meta"><span>${esc(i.tag)}</span><span>${esc(i.y)}</span></div><h3>${esc(i.t)}</h3>${i.d?`<p>${esc(i.d)}</p>`:''}
         <span class="go${i.url||i.pv?'':' soon'}">${i.pv?'자료 보기 →':i.url?(i.yt?'영상 보기 →':(id==='webapp')?'자세히 보기 →':'열어 보기 →'):'링크 준비 중'}</span></div></${tag}>`;
-    }).join('');
-    fl.querySelectorAll('.chip').forEach(c=>c.setAttribute('aria-pressed',c.dataset.t===cur));
+    };
+    const grouped=GROUP&&cur==='전체'&&!document.body.classList.contains('admin');
+    box.classList.toggle('grouped',grouped);
+    box.innerHTML=grouped? tags.filter(t=>t!=='전체').map(t=>{ const g=list.filter(i=>i.tag===t); return `<section class="cgrp"><h4>${esc(t)} <small>${g.length}</small></h4><div class="cards">${g.map(card).join('')}</div></section>`; }).join('')
+      : list.filter(i=>cur==='전체'||i.tag===cur).map(card).join('');
+    fl.querySelectorAll('.chip').forEach(c=>{c.setAttribute('aria-pressed',c.dataset.t===cur); if(GROUP){ const k=c.dataset.t==='전체'?list.length:list.filter(i=>i.tag===c.dataset.t).length; c.innerHTML=`${esc(c.dataset.t)} <small>${k}</small>`; }});
   };
   fl.innerHTML=(id!=='promo'&&tags.length>(NOALL?1:2))?tags.map(t=>`<button class="chip" type="button" data-t="${esc(t)}">${esc(t)}</button>`).join(''):'';
   fl.addEventListener('click',e=>{const c=e.target.closest('.chip'); if(c){cur=c.dataset.t; draw();}});
