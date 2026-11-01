@@ -6,7 +6,7 @@
 <meta name="description" content="초등교사 김예람(예람쌤) — AI 영상·교육 콘텐츠 제작 연수, 영상·웹앱 콘텐츠, 연수 교안과 수업 자료">
 <meta property="og:title" content="예람쌤 홈">
 <meta property="og:description" content="AI 영상·교육 콘텐츠 제작 연수와 수업 자료를 나누는 초등교사 김예람">
-<meta property="og:image" content="https://dpfkadpfka.github.io/avatar.jpg">
+<meta property="og:image" content="https://dpfkadpfka.github.io/brand.png">
 <title>예람쌤 홈</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="icon" type="image/png" href="favicon.png">
@@ -357,45 +357,64 @@ body.is-home footer.ft{display:none}
   .char-wrap{bottom:calc(96px + 3vh);height:min(46vh,400px)}
   .floor{bottom:calc(96px + 3vh + 2px)}
 }
+.menu .lnico{display:none}
+body:not(.is-home) .menu .icon{display:none}
+body:not(.is-home) .menu .lnico{display:grid;place-items:center;width:42px;height:42px;border-radius:12px;color:#8A7A76;transition:background .15s,color .15s}
+body:not(.is-home) .menu .lnico svg{width:24px;height:24px}
+body:not(.is-home) .menu a:hover .lnico{background:#F6EEF1;color:var(--ink)}
+body:not(.is-home) .menu a[aria-current="page"] .lnico{background:var(--soft);color:var(--pink)}
+body:not(.is-home) .menu a[aria-current="page"] .label{color:var(--pink-deep);font-weight:800}
 @media (min-width:901px){
-  body:not(.is-home){--side:170px}
-  body:not(.is-home) .topnav{top:0;left:0;bottom:0;right:auto;width:var(--side);background:var(--soft);backdrop-filter:none;border-bottom:0;border-radius:0;overflow:visible}
-  body:not(.is-home) .topnav-in{box-sizing:border-box;flex-direction:column;align-items:center;height:100%;max-width:none;margin:0;padding:24px 0 0;gap:18px}
+  body:not(.is-home){--side:88px}
+  body:not(.is-home) .topnav{top:0;left:0;bottom:0;right:auto;width:var(--side);background:var(--bg);backdrop-filter:none;border-bottom:0;border-right:1px solid var(--line);border-radius:0}
+  body:not(.is-home) .topnav-in{box-sizing:border-box;flex-direction:column;align-items:center;height:100%;max-width:none;margin:0;padding:16px 0;gap:14px}
   body:not(.is-home) .logo .id{display:none}
-  body:not(.is-home) .menu{flex-direction:column;align-items:center;margin:0;gap:6px;overflow:visible}
-  body:not(.is-home) .menu a{padding:7px;border-radius:16px;transition:background .2s}
+  body:not(.is-home) .logo .ava{width:44px;height:44px}
+  body:not(.is-home) .menu{flex-direction:column;align-items:center;margin:0;gap:2px;overflow:visible}
+  body:not(.is-home) .menu a{flex-direction:column;gap:3px;width:76px;padding:4px 0 7px;border-radius:12px;background:none!important;box-shadow:none!important}
   body:not(.is-home) .menu a::before{display:none}
-  body:not(.is-home) .menu .icon{width:40px;height:40px}
-  body:not(.is-home) .menu .label{position:absolute;left:calc(100% + 10px);top:50%;transform:translate(-6px,-50%)!important;padding:6px 12px;border-radius:10px;background:var(--pink);color:#fff;font-size:14.5px;font-weight:800;white-space:nowrap;opacity:0;pointer-events:none;z-index:30;transition:opacity .18s,transform .25s cubic-bezier(.3,1.5,.5,1)}
-  body:not(.is-home) .menu a:hover .label,body:not(.is-home) .menu a:focus-visible .label{opacity:1;transform:translate(0,-50%)!important}
-  body:not(.is-home) .menu a:hover{background:color-mix(in srgb,#fff 60%,transparent)}
-  body:not(.is-home) .menu a[aria-current="page"]{background:var(--bg);box-shadow:0 0 0 1.5px var(--pink)}
+  body:not(.is-home) .menu .label{position:static;transform:none!important;opacity:1;background:none;padding:0;color:#5B524D;font-size:12.5px;font-weight:700;white-space:nowrap}
+  body:not(.is-home) .menu a:hover .label{color:var(--ink)}
   body:not(.is-home) > .page, body:not(.is-home) > footer.ft{margin-left:var(--side)}
-  body:not(.is-home) .wrap{padding-top:52px}
-  #sideCv{display:none}
-  body:not(.is-home) #sideCv{display:block;margin-top:auto;align-self:center;width:var(--side);max-width:none;height:auto;pointer-events:none}
+  body:not(.is-home) .wrap{padding-top:48px}
 }
-@media (max-width:900px){ #sideCv{display:none} }
+#sideCv{display:none}
+body:not(.is-home) #sideCv{display:block;position:absolute;right:0;top:-34px;height:230px;width:auto;pointer-events:none}
+body:not(.is-home) .page-head{position:relative;min-height:170px;padding-right:220px}
+body:not(.is-home) .page-head .pills{display:none}
+@media (max-width:700px){ body:not(.is-home) #sideCv{display:none} body:not(.is-home) .page-head{padding-right:0;min-height:0} }
 .card.tone-0,.feature article.tone-0,.contact-card.tone-0{box-shadow:0 0 0 1px var(--line)}
 .card.tone-0:hover,.feature article.tone-0:hover{box-shadow:0 0 0 1.5px var(--pink)}
 .pill:nth-child(n){background:var(--soft);color:var(--pink-deep)}
-.card-meta span:first-child{display:inline-block;background:var(--soft);color:var(--pink-deep);border-radius:99px;padding:1px 10px;font-size:12.5px}
+.card-meta span:first-child{display:inline-block;max-width:62%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;background:var(--soft);color:var(--pink-deep);border-radius:99px;padding:1px 10px;font-size:12.5px}
+.adminbar{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:50;display:flex;align-items:center;gap:12px;flex-wrap:wrap;max-width:calc(100vw - 32px);padding:12px 16px;border-radius:16px;background:var(--ink);color:#fff;font-size:14px;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+.adminbar b{color:var(--pink-light)}
+.adminbar .ab-msg{opacity:.85}
+.adminbar input{border:0;border-radius:10px;padding:8px 10px;font:inherit;width:200px}
+.adminbar a{color:#fff}
+.adminbar .ab-save{border:0;border-radius:10px;padding:8px 18px;font:inherit;font-weight:800;background:var(--pink);color:#fff;cursor:pointer}
+body.admin .page .filters{display:none}
+body.admin .page .cards .card{cursor:grab;outline:1.5px dashed var(--pink-light);outline-offset:3px}
+.sort-ghost{opacity:.35}
+.logo .brand{display:block;width:52px;height:52px;object-fit:contain;transition:transform .35s cubic-bezier(.3,1.6,.5,1)}
+.logo:hover .brand{transform:rotate(-6deg) scale(1.06)}
+@media (min-width:901px){ body:not(.is-home) .logo{margin-bottom:22px} body:not(.is-home) .logo .brand{width:56px;height:56px} }
 </style>
 
 <div class="frame" aria-hidden="true"></div>
 
 <header class="topnav">
   <div class="topnav-in">
-    <a class="logo" href="#" data-go=""><span class="ava"><span class="face"></span></span><span class="id">yeramssam</span></a>
+    <a class="logo" href="#" data-go=""><img class="brand" src="brand.png" alt="예람쌤"></a>
     <!-- 오브젝트 그림이 오면 .ph 대신 <img src="objects/파일명.png" alt=""> -->
     <nav class="menu" aria-label="메뉴">
-      <a href="#" data-go="" class="home-link"><span class="icon"><img src="obj/home.webp" alt=""></span><span class="label">홈</span></a>
-      <a href="#about"   data-go="about"   data-line="제 소개부터 할게요!"><span class="icon"><img src="obj/career.webp?v=2" alt=""></span><span class="label">이력</span></a>
-      <a href="#promo"   data-go="promo"><span class="icon"><img src="obj/promo.webp" alt=""></span><span class="label">연수 홍보</span></a>
-      <a href="#video"   data-go="video"   data-line="제가 만든 영상이에요"><span class="icon"><img src="obj/video.webp?v=2" alt=""></span><span class="label">영상 콘텐츠</span></a>
-      <a href="#webapp"  data-go="webapp"  data-line="직접 만든 웹앱이에요!"><span class="icon"><img src="obj/webapp.webp?v=2" alt=""></span><span class="label">웹앱 콘텐츠</span></a>
-      <a href="#train"   data-go="train"   data-line="연수 자료 보러 갈래요?"><span class="icon"><img src="obj/lecture.webp" alt=""></span><span class="label">연수 교안</span></a>
-      <a href="#class"   data-go="class"   data-line="우리 반 수업 이야기예요"><span class="icon"><img src="obj/class.webp?v=2" alt=""></span><span class="label">수업 자료</span></a>
+      <a href="#" data-go="" class="home-link"><span class="lnico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M10 21v-6h4v6"/></svg></span><span class="icon"><img src="obj/home.webp" alt=""></span><span class="label">홈</span></a>
+      <a href="#about"   data-go="about"   data-line="제 소개부터 할게요!"><span class="lnico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="10" r="3"/><path d="M6.5 18.6a6.5 6.5 0 0 1 11 0"/></svg></span><span class="icon"><img src="obj/career.webp?v=2" alt=""></span><span class="label">이력</span></a>
+      <a href="#promo"   data-go="promo"><span class="lnico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 10v4h3l7.5 4.5v-13L6.5 10z"/><path d="M17 9a4.5 4.5 0 0 1 0 6"/><path d="M19.5 6.5a8 8 0 0 1 0 11"/></svg></span><span class="icon"><img src="obj/promo.webp" alt=""></span><span class="label">연수 홍보</span></a>
+      <a href="#video"   data-go="video"   data-line="제가 만든 영상이에요"><span class="lnico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3.5"/><path d="m10 9.2 5 2.8-5 2.8z"/></svg></span><span class="icon"><img src="obj/video.webp?v=2" alt=""></span><span class="label">영상 콘텐츠</span></a>
+      <a href="#webapp"  data-go="webapp"  data-line="직접 만든 웹앱이에요!"><span class="lnico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M3 8.5h18"/><path d="M11 11.5v6.5l1.7-1.7 1.6 2.8 1.3-.7-1.6-2.8 2.4-.3z"/></svg></span><span class="icon"><img src="obj/webapp.webp?v=2" alt=""></span><span class="label">웹앱 콘텐츠</span></a>
+      <a href="#train"   data-go="train"   data-line="연수 자료 보러 갈래요?"><span class="lnico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 4h19"/><path d="M4 4v10.5h16V4"/><path d="M12 14.5V18M8.5 21l3.5-3 3.5 3"/><path d="M8.5 11.5v-2M12 11.5V7.5M15.5 11.5v-3"/></svg></span><span class="icon"><img src="obj/lecture.webp" alt=""></span><span class="label">연수 교안</span></a>
+      <a href="#class"   data-go="class"   data-line="우리 반 수업 이야기예요"><span class="lnico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1.6"/><path d="M7.5 20.5l1.8-4.5M16.5 20.5l-1.8-4.5"/><path d="M7 8.3h6.5M7 11.5h4"/></svg></span><span class="icon"><img src="obj/class.webp?v=2" alt=""></span><span class="label">수업 자료</span></a>
     </nav>
     <a class="contact-btn" href="#promo" data-go="promo" data-target="contact">연락하기</a>
     <canvas id="sideCv" aria-hidden="true"></canvas>
@@ -533,14 +552,17 @@ function thumb(i){
   if(i.img) return `<img src="${esc(i.img)}" alt="" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'ph',textContent:'${esc(i.tag)}'}))">`;
   return `<span class="ph">${esc(i.tag)}</span>`;
 }
+const DRAW={}; let ORDER={};
+function sortArchive(id){ const o=ORDER[id]; if(!o) return; const pos=t=>{const k=o.indexOf(t); return k<0?1e6:k;}; ARCHIVE[id]=ARCHIVE[id].map((x,i)=>[x,i]).sort((a,b)=>(pos(a[0].t)-pos(b[0].t))||(a[1]-b[1])).map(a=>a[0]); }
 function renderArchive(id){
-  const sec=document.getElementById(id), list=ARCHIVE[id], fl=sec.querySelector('.filters'), box=sec.querySelector('.cards');
-  const tags=['전체',...new Set(list.map(i=>i.tag))]; let cur='전체';
+  const sec=document.getElementById(id), fl=sec.querySelector('.filters'), box=sec.querySelector('.cards');
+  const tags=['전체',...new Set(ARCHIVE[id].map(i=>i.tag))]; let cur='전체';
   const draw=()=>{
     let n=0;
+    const list=ARCHIVE[id]; if(document.body.classList.contains('admin')) cur='전체';
     box.innerHTML=list.filter(i=>cur==='전체'||i.tag===cur).map(i=>{
       const tag=i.url?'a':'div', href=i.url?` href="${esc(i.url)}" target="_blank" rel="noopener"`:'';
-      return `<${tag} class="card tone-0"${href}><div class="thumb">${thumb(i)}</div>
+      return `<${tag} class="card tone-0"${href} data-key="${esc(i.t)}"><div class="thumb">${thumb(i)}</div>
         <div class="card-body"><div class="card-meta"><span>${esc(i.tag)}</span><span>${esc(i.y)}</span></div><h3>${esc(i.t)}</h3>${i.d?`<p>${esc(i.d)}</p>`:''}
         <span class="go${i.url?'':' soon'}">${i.url?(i.yt?'영상 보기 →':i.tag==='윈도우 앱'?'내려받기 →':'열어 보기 →'):'링크 준비 중'}</span></div></${tag}>`;
     }).join('');
@@ -548,9 +570,45 @@ function renderArchive(id){
   };
   fl.innerHTML=tags.length>2?tags.map(t=>`<button class="chip" type="button" data-t="${esc(t)}">${esc(t)}</button>`).join(''):'';
   fl.addEventListener('click',e=>{const c=e.target.closest('.chip'); if(c){cur=c.dataset.t; draw();}});
-  draw();
+  DRAW[id]=draw; draw();
 }
 Object.keys(ARCHIVE).forEach(renderArchive);
+fetch('order.json?t='+Date.now()).then(r=>r.ok?r.json():{}).then(o=>{ ORDER=o||{}; Object.keys(ARCHIVE).forEach(id=>{ sortArchive(id); DRAW[id](); }); }).catch(()=>{});
+
+/* 관리자: 주소 끝에 ?admin 을 붙여 열면 카드 순서를 끌어서 바꾸고 깃허브에 저장 */
+if(new URLSearchParams(location.search).has('admin')){
+  document.body.classList.add('admin');
+  const REPO='dpfkadpfka/dpfkadpfka.github.io';
+  const bar=document.createElement('div'); bar.className='adminbar';
+  bar.innerHTML=`<b>순서 편집</b><span class="ab-msg">카드를 끌어서 순서를 바꾼 뒤 저장을 누르세요.</span>
+    <input class="ab-tok" type="password" placeholder="깃허브 토큰 (처음 한 번만)" autocomplete="off">
+    <a class="ab-help" href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">토큰 만들기</a>
+    <button class="ab-save" type="button">저장</button><a class="ab-exit" href="./">나가기</a>`;
+  document.body.appendChild(bar);
+  const tokIn=bar.querySelector('.ab-tok'), msg=bar.querySelector('.ab-msg');
+  let tok=''; try{ tok=localStorage.getItem('yr_gh_tok')||''; }catch{}
+  if(tok) tokIn.hidden=true, bar.querySelector('.ab-help').hidden=true;
+  document.addEventListener('click',e=>{ const c=e.target.closest('.cards .card'); if(c) e.preventDefault(); },true);
+  const s=document.createElement('script'); s.src='sortable.min.js';
+  s.onload=()=>document.querySelectorAll('.page .cards').forEach(box=>Sortable.create(box,{animation:180,ghostClass:'sort-ghost'}));
+  document.head.appendChild(s);
+  Object.values(DRAW).forEach(d=>d());
+  bar.querySelector('.ab-save').addEventListener('click',async()=>{
+    if(!tok){ tok=tokIn.value.trim(); if(!tok){ msg.textContent='토큰을 먼저 넣어 주세요.'; tokIn.focus(); return; } }
+    const order={}; Object.keys(ARCHIVE).forEach(id=>{ order[id]=[...document.querySelectorAll('#'+id+' .cards .card')].map(c=>c.dataset.key); });
+    msg.textContent='저장 중…';
+    const api='https://api.github.com/repos/'+REPO+'/contents/order.json', H={Authorization:'Bearer '+tok,Accept:'application/vnd.github+json'};
+    try{
+      let sha; const g=await fetch(api,{headers:H}); if(g.status===401){ throw new Error('토큰이 맞지 않아요'); } if(g.ok) sha=(await g.json()).sha;
+      const body=JSON.stringify(order,null,1), b64=btoa(unescape(encodeURIComponent(body)));
+      const p=await fetch(api,{method:'PUT',headers:H,body:JSON.stringify({message:'카드 순서 변경',content:b64,sha})});
+      if(!p.ok) throw new Error('저장 실패 ('+p.status+')');
+      try{ localStorage.setItem('yr_gh_tok',tok); }catch{}
+      tokIn.hidden=true; bar.querySelector('.ab-help').hidden=true;
+      ORDER=order; msg.textContent='저장했어요. 1~2분 뒤 사이트에 반영돼요.';
+    }catch(err){ msg.textContent=err.message+' — 다시 확인해 주세요.'; if(/토큰/.test(err.message)){ tok=''; tokIn.hidden=false; try{localStorage.removeItem('yr_gh_tok');}catch{} } }
+  });
+}
 const CV_SUB={"기관 활동":"국가 기관 · 교육청 소속","외부 기관":"학회 · 연구 기관 · 교육청 공동체","콘텐츠 개발":"제작 · 집필 참여","수상":"표창 및 수상","강사":"연수 · 강의"};
 function cvBold(t){if(/<b>/.test(t))return t;let m=t.match(/^(.+?) - (.*)$/);if(m&&m[1].length<=30)return `<b>${m[1]}</b> - ${m[2]}`;
   m=t.match(/^(\S+) X (\S+)(.*)$/);if(m)return `<b>${m[1]}</b> X <b>${m[2]}</b>${m[3]}`;
@@ -817,7 +875,7 @@ function render(){
   document.body.classList.toggle('is-home',home); stage.hidden=!home;
   pages.forEach(p=>$('#'+p).hidden=p!==id);
   document.querySelectorAll('.menu a').forEach(a=>{ if(a.dataset.go===id && !a.dataset.target) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current'); });
-  if(!home){ scrollTo(0,0); sideStart(id); }
+  if(!home){ scrollTo(0,0); const ph=document.querySelector('#'+id+' .page-head'); if(ph) ph.appendChild(document.getElementById('sideCv')); sideStart(id); }
 }
 
 /* 메뉴 페이지: 왼쪽 판의 캐릭터가 그 페이지 자세를 함 */
