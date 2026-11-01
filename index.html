@@ -468,7 +468,9 @@ body.admin .page .cards .card{cursor:grab;outline:1.5px dashed var(--pink-light)
 .card-meta span:first-child+span:last-child{white-space:normal}
 #promo .card-meta{flex-direction:column;align-items:flex-start}
 #promo .card-meta span:last-child{margin-left:0;text-align:left}
-.band{display:grid!important;grid-template-columns:repeat(4,1fr);padding:0 max(40px,calc(50vw - 640px))}
+.band{display:grid;grid-template-columns:repeat(4,1fr);padding:0 max(40px,calc(50vw - 640px))}
+@media (max-width:1000px){.band{grid-template-columns:repeat(2,1fr);height:auto!important;padding:10px 16px;row-gap:10px}.band span{padding:0 8px!important;border-left:0!important}.band b{font-size:14px}.band small{font-size:11.5px}}
+@media (max-width:700px){.band{display:none!important}}
 .band span{padding:0 12px!important;min-width:0}
 .band small{white-space:normal!important;text-align:center}
 .cta{margin-top:56px;display:grid;grid-template-columns:1fr auto;gap:28px;align-items:center;padding:36px 40px;border-radius:26px;background:linear-gradient(120deg,#FFF0F5,#FFE1EC)}
@@ -500,6 +502,32 @@ body.admin .page .cards .card{cursor:grab;outline:1.5px dashed var(--pink-light)
 .ytc-im{border-radius:18px}
 .ytc b{padding:0 8px;font-size:16px;font-weight:800}
 .ytc:hover b{color:var(--ink)}
+/* ===== 휴대폰 메인: 데스크톱처럼 캐릭터 양옆에 오브젝트 ===== */
+@media (max-width:700px){
+  body.is-home .contact-btn{display:none!important}
+  body.is-home .topnav-in{padding-top:6px}
+  body.is-home .logo .brand{width:42px;height:42px}
+  body.is-home .hero{top:calc(env(safe-area-inset-top,0px) + 70px)!important;bottom:auto!important}
+  body.is-home .hero h1{font-size:34px}
+  body.is-home .hero-badge{font-size:13px}
+  body.is-home .objs{display:block!important;position:absolute;inset:0!important;top:0!important;left:0!important;right:0!important;bottom:0!important;padding:0!important;pointer-events:none}
+  body.is-home .obj{position:absolute!important;left:calc(50% + var(--fm,var(--f)) * 36vw)!important;transform:translate(-50%,-50%)!important;pointer-events:auto}
+  body.is-home .obj[data-go="about"],body.is-home .obj[data-go="promo"]{top:40%!important}
+  body.is-home .obj[data-go="video"],body.is-home .obj[data-go="webapp"]{top:57%!important}
+  body.is-home .obj[data-go="train"],body.is-home .obj[data-go="class"]{top:74%!important}
+  body.is-home .obj-card{display:flex!important;flex-direction:column;align-items:center;gap:3px;padding:0!important;background:none!important}
+  body.is-home .obj-ic{width:56px!important;height:56px!important}
+  body.is-home .obj-tx{position:static!important;transform:none!important;opacity:1!important;background:none!important;padding:0!important}
+  body.is-home .obj-tx b{font-size:12px!important;color:var(--ink)!important;font-weight:800}
+  body.is-home .char-wrap{bottom:calc(5vh + env(safe-area-inset-bottom,0px))!important;height:min(52vh,430px)!important}
+  body.is-home .floor{bottom:calc(5vh + env(safe-area-inset-bottom,0px) + 2px)!important}
+}
+.wm-box{width:min(720px,100%)}
+.wm-gal{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;margin:-6px -6px 18px;padding:6px;scrollbar-width:thin}
+.wm-gal img{flex:0 0 100%;width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:16px;scroll-snap-align:center;box-shadow:0 0 0 1px var(--line)}
+.wm-gal:has(img:nth-child(2)) img{flex-basis:88%}
+.wm-head{padding-right:0}
+@media (max-width:900px){ body:not(.is-home) .topnav{background:#fff!important;box-shadow:0 1px 0 var(--line)} body:not(.is-home) .page .wrap{padding-top:96px} }
 </style>
 
 <div class="frame" aria-hidden="true"></div>
@@ -545,10 +573,10 @@ body.admin .page .cards .card{cursor:grab;outline:1.5px dashed var(--pink-light)
   <!-- 오브젝트 그림이 오면 .ph 대신 <img src="objects/파일명.png" alt=""> -->
   <nav class="objs" aria-label="오브젝트 메뉴">
     <a class="obj" href="#about" data-go="about" style="--f:-1;top:36%"><span class="obj-in"><span class="obj-card"><span class="obj-ic"><img src="obj/career.webp?v=5" alt=""></span><span class="obj-tx"><b>예람쌤 소개</b></span></span></span></a>
-    <a class="obj" href="#video" data-go="video" style="--f:-1.22;top:52%"><span class="obj-in"><span class="obj-card"><span class="obj-ic"><img src="obj/video.webp?v=2" alt=""></span><span class="obj-tx"><b>영상 콘텐츠</b></span></span></span></a>
+    <a class="obj" href="#video" data-go="video" style="--fm:-1;--f:-1.22;top:52%"><span class="obj-in"><span class="obj-card"><span class="obj-ic"><img src="obj/video.webp?v=2" alt=""></span><span class="obj-tx"><b>영상 콘텐츠</b></span></span></span></a>
     <a class="obj" href="#train" data-go="train" style="--f:-1;top:68%"><span class="obj-in"><span class="obj-card"><span class="obj-ic"><img src="obj/lecture.webp" alt=""></span><span class="obj-tx"><b>연수 자료</b></span></span></span></a>
     <a class="obj" href="#promo" data-go="promo" style="--f:1;top:36%"><span class="obj-in"><span class="obj-card"><span class="obj-ic"><img src="obj/promo.webp" alt=""></span><span class="obj-tx"><b>연수 홍보</b></span></span></span></a>
-    <a class="obj" href="#webapp" data-go="webapp" style="--f:1.22;top:52%"><span class="obj-in"><span class="obj-card"><span class="obj-ic"><img src="obj/webapp.webp?v=2" alt=""></span><span class="obj-tx"><b>바이브코딩</b></span></span></span></a>
+    <a class="obj" href="#webapp" data-go="webapp" style="--fm:1;--f:1.22;top:52%"><span class="obj-in"><span class="obj-card"><span class="obj-ic"><img src="obj/webapp.webp?v=2" alt=""></span><span class="obj-tx"><b>바이브코딩</b></span></span></span></a>
     <a class="obj" href="#class" data-go="class" style="--f:1;top:68%"><span class="obj-in"><span class="obj-card"><span class="obj-ic"><img src="obj/class.webp?v=2" alt=""></span><span class="obj-tx"><b>수업 자료</b></span></span></span></a>
   </nav>
   <div class="tagline"><h1>김예람</h1><p>AI 교육 콘텐츠를 만들고 가르치는 초등교사</p></div>
@@ -625,7 +653,7 @@ const ARCHIVE={
     {t:"자리 바꾸기 레이스",d:"태블릿을 연타해 동물이 도착한 순서대로 자리 고르기",tag:"웹앱",y:"2026",img:"apps/seatrace.webp",url:"https://dpfkadpfka.github.io/yeram-ai-video/seat-race/"},
     {t:"RamClock",d:"시간표·타이머·뽑기·주간학습안내를 한 화면에 띄우는 교실 시계 위젯",tag:"윈도우 앱",y:"2026",img:"apps/ramclock.webp",url:"https://github.com/dpfkadpfka/RamClock/releases/latest"},
     {t:"RamSpirit",d:"ChatGPT·Gemini·Grok·Claude를 한 창에 띄우고 질문을 한 번에 보내는 프로그램",tag:"윈도우 앱",y:"2026",img:"apps/ramspirit.webp",url:"https://github.com/dpfkadpfka/ramspirit/releases/latest"},
-    {t:"Ram Calendar",d:"구글 캘린더와 실시간으로 이어지는 바탕화면 달력",tag:"윈도우 앱",y:"2026",img:"apps/calendar.webp",url:"https://github.com/dpfkadpfka/yeram-calendar/releases/latest"},
+    {t:"Ram Calendar",d:"구글 캘린더와 실시간으로 이어지는 바탕화면 달력",tag:"윈도우 앱",y:"2026",img:"apps/calendar.webp?v=2",url:"https://github.com/dpfkadpfka/yeram-calendar/releases/latest"},
   ],
   promo:[
     {"st": "신청 중", "t": "AI 시대, 교사를 위한 디자인·영상 콘텐츠 제작 실전 과정", "d": "생성형 AI × 캔바 × 캡컷", "tag": "T셀파 원격교육연수원", "y": "직무연수 15시간 · 디지털역량", "url": "https://edu.tsherpa.co.kr/Product/Detail/2016?BoardDetail.BoardNo=&CourseType=0", "img": "apps/tr_tsherpa.jpg"},
@@ -1049,7 +1077,7 @@ var WINAPP={
  'Ram Calendar':{lead:'구글 캘린더와 실시간으로 이어지는 윈도우 바탕화면 달력이에요. 달력에서 바로 일정을 넣고 고칠 수 있어요.',
   feat:['구글 캘린더 일정이 바탕화면에 바로 보임','앱 안에서 일정 추가·수정','시간 정해진 일정 알림','새 버전은 자동으로 업데이트'],
   how:['내려받기를 눌러 설치 파일(YeramCalendar-Setup)을 받아 실행해요.','“Windows의 PC 보호”가 뜨면 [추가 정보 → 실행]을 눌러요.','앱의 ⚙ 설정 → 구글 로그인을 눌러 연결해요.'],
-  dl:'https://github.com/dpfkadpfka/yeram-calendar/releases/latest'}
+  dl:'https://github.com/dpfkadpfka/yeram-calendar/releases/latest', imgs:['apps/rc_1.webp','apps/rc_2.webp','apps/rc_3.webp','apps/rc_4.webp']}
 };
 
 Object.assign(WINAPP,{
@@ -1075,7 +1103,7 @@ Object.assign(WINAPP,{
 const wm=document.createElement('div'); wm.className='wmodal'; wm.hidden=true; document.body.appendChild(wm);
 function openWin(key){ const a=WINAPP[key], it=ARCHIVE.webapp.find(x=>x.t===key); if(!a) return;
   wm.innerHTML=`<div class="wm-box" role="dialog" aria-modal="true" aria-label="${esc(key)}"><button class="wm-x" type="button" aria-label="닫기">✕</button>
-   <div class="wm-head"><img src="${esc(it?.img||'')}" alt=""><div><span class="wm-tag">${a.web?'웹앱 · 무료':'윈도우 앱 · 무료'}</span><h3>${esc(key)}</h3><p>${esc(a.lead)}</p></div></div>
+   ${(a.imgs||[it?.img]).filter(Boolean).length?`<div class="wm-gal">${(a.imgs||[it.img]).map(u=>`<img src="${esc(u)}" alt="" loading="lazy">`).join('')}</div>`:''}<div class="wm-head"><div><span class="wm-tag">${a.web?'웹앱 · 무료':'윈도우 앱 · 무료'}</span><h3>${esc(key)}</h3><p>${esc(a.lead)}</p></div></div>
    <h4>이런 걸 할 수 있어요</h4><ul>${a.feat.map(f=>`<li>${esc(f)}</li>`).join('')}</ul>
    <h4>${a.web?'이렇게 써요':'설치 방법'}</h4><ol>${a.how.map(f=>`<li>${esc(f)}</li>`).join('')}</ol>
    <a class="wm-dl" href="${esc(a.dl||it?.url||'#')}" target="_blank" rel="noopener">${a.web?'열어 보기':'내려받기'}</a></div>`;
