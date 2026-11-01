@@ -419,7 +419,8 @@ body.admin .page .cards .card{cursor:grab;outline:1.5px dashed var(--pink-light)
 .menu .lnico{display:none}
 #sideCv{display:none}
 @media (min-width:901px){
-  body:not(.is-home){background:#FFE4EF}
+  body:not(.is-home){background:#FFE4EF;min-height:100%;height:auto}
+  html:has(>body:not(.is-home)){background:#FFE4EF}
   body:not(.is-home) .topnav{position:absolute;top:0;left:0;right:0;bottom:auto;width:auto;background:none;border:0;backdrop-filter:none;border-radius:0}
   body:not(.is-home) .topnav-in{box-sizing:border-box;max-width:1320px;margin:0 auto;padding:20px 40px 0;flex-direction:row;align-items:flex-end;gap:22px;min-height:0;height:auto}
   body:not(.is-home) .logo{margin-bottom:10px}
