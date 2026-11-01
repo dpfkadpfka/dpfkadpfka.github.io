@@ -471,6 +471,20 @@ body.admin .page .cards .card{cursor:grab;outline:1.5px dashed var(--pink-light)
 .band{display:grid!important;grid-template-columns:repeat(4,1fr);padding:0 max(40px,calc(50vw - 640px))}
 .band span{padding:0 12px!important;min-width:0}
 .band small{white-space:normal!important;text-align:center}
+.cta{margin-top:56px;display:grid;grid-template-columns:1fr auto;gap:28px;align-items:center;padding:36px 40px;border-radius:26px;background:linear-gradient(120deg,#FFF0F5,#FFE1EC)}
+.cta-k{font-size:12.5px;font-weight:800;letter-spacing:.12em;color:var(--pink-deep)}
+.cta h3{margin:4px 0 8px;font-size:30px;font-weight:800;letter-spacing:-.02em}
+.cta p{margin:0;color:var(--ink-soft);font-size:15.5px;line-height:1.65}
+.cta-btns{display:grid;gap:10px;min-width:330px}
+.cta-b{display:flex;align-items:center;gap:14px;padding:12px 18px 12px 12px;border:0;border-radius:16px;background:#fff;color:var(--ink);font:inherit;text-align:left;text-decoration:none;cursor:pointer;box-shadow:0 1px 0 rgba(226,58,128,.12);transition:transform .2s,box-shadow .2s}
+.cta-b:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(226,58,128,.16)}
+.cta-ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:#fff;overflow:hidden;flex:none;box-shadow:0 0 0 1px var(--line)}
+.cta-ic svg{width:26px}.cta-ic img{width:100%;height:100%;object-fit:cover}
+.cta-l{display:flex;flex-direction:column}
+.cta-l b{font-size:15.5px;font-weight:800}
+.cta-l em{font-style:normal;font-size:12.5px;font-weight:700;color:var(--pink-deep)}
+.cta-b.done em{color:#fff;background:var(--pink);border-radius:99px;padding:0 8px;align-self:flex-start}
+@media (max-width:760px){.cta{grid-template-columns:1fr;padding:26px 22px}.cta-btns{min-width:0}}
 </style>
 
 <div class="frame" aria-hidden="true"></div>
@@ -551,11 +565,12 @@ body.admin .page .cards .card{cursor:grab;outline:1.5px dashed var(--pink-light)
 <section class="page archive" id="promo" hidden><div class="wrap">
   <div class="page-head"><div><h2>연수 홍보</h2><p>지금 신청할 수 있는 연수와 강의를 안내합니다.</p></div></div>
   <div class="filters"></div><div class="cards"></div>
-    <h3 class="subhead" id="contact-anchor">연수·강의 문의</h3>
-    <p class="ct-lead">연수·강의 요청과 콘텐츠 제작, 자문 문의는 편한 방법으로 연락 주세요.</p>
-    <div class="ct-grid">
-      <button class="ct-tile" id="copyMail" type="button"><span class="ct-logo gm"><svg viewBox="52 42 88 66" aria-hidden="true"><path fill="#4285f4" d="M58 108h14V74L52 59v43c0 3.32 2.69 6 6 6"/><path fill="#34a853" d="M120 108h14c3.32 0 6-2.69 6-6V59l-20 15"/><path fill="#fbbc04" d="M120 48v26l20-15v-8c0-7.42-8.47-11.65-14.4-7.2"/><path fill="#ea4335" d="M72 74V48l24 18 24-18v26L96 92"/><path fill="#c5221f" d="M52 51v8l20 15V48l-5.6-4.2c-5.94-4.45-14.4-.22-14.4 7.2"/></svg></span><span class="ct-tx"><b>Gmail</b><small id="mail">dpfkadpfka@gmail.com</small><em>누르면 주소가 복사돼요</em></span></button>
-      <a class="ct-tile" href="https://open.kakao.com/o/sQjNnOnh" target="_blank" rel="noopener"><span class="ct-logo"><img src="sns/kakao.jpg" alt=""></span><span class="ct-tx"><b>카카오톡 오픈채팅</b><small>바로 대화하기</small><em>누르면 오픈채팅이 열려요</em></span></a>
+    <div class="cta" id="contact-anchor">
+      <div class="cta-tx"><span class="cta-k">CONTACT</span><h3>연수·강의 문의</h3><p>연수·강의 요청과 콘텐츠 제작, 자문 문의는<br>편한 방법으로 연락 주세요.</p></div>
+      <div class="cta-btns">
+        <button class="cta-b" id="copyMail" type="button"><span class="cta-ic"><svg viewBox="52 42 88 66" aria-hidden="true"><path fill="#4285f4" d="M58 108h14V74L52 59v43c0 3.32 2.69 6 6 6"/><path fill="#34a853" d="M120 108h14c3.32 0 6-2.69 6-6V59l-20 15"/><path fill="#fbbc04" d="M120 48v26l20-15v-8c0-7.42-8.47-11.65-14.4-7.2"/><path fill="#ea4335" d="M72 74V48l24 18 24-18v26L96 92"/><path fill="#c5221f" d="M52 51v8l20 15V48l-5.6-4.2c-5.94-4.45-14.4-.22-14.4 7.2"/></svg></span><span class="cta-l"><b id="mail">dpfkadpfka@gmail.com</b><em>누르면 주소 복사</em></span></button>
+        <a class="cta-b" href="https://open.kakao.com/o/sQjNnOnh" target="_blank" rel="noopener"><span class="cta-ic"><img src="sns/kakao.jpg" alt=""></span><span class="cta-l"><b>카카오톡 오픈채팅</b><em>바로 대화하기</em></span></a>
+      </div>
     </div>
 </div></section>
 <section class="page archive" id="train" hidden><div class="wrap">
@@ -637,7 +652,7 @@ function renderArchive(id){
     }).join('');
     fl.querySelectorAll('.chip').forEach(c=>c.setAttribute('aria-pressed',c.dataset.t===cur));
   };
-  fl.innerHTML=tags.length>(NOALL?1:2)?tags.map(t=>`<button class="chip" type="button" data-t="${esc(t)}">${esc(t)}</button>`).join(''):'';
+  fl.innerHTML=(id!=='promo'&&tags.length>(NOALL?1:2))?tags.map(t=>`<button class="chip" type="button" data-t="${esc(t)}">${esc(t)}</button>`).join(''):'';
   fl.addEventListener('click',e=>{const c=e.target.closest('.chip'); if(c){cur=c.dataset.t; draw();}});
   DRAW[id]=draw; draw();
 }
@@ -999,7 +1014,7 @@ $('#copyMail').addEventListener('click',async()=>{
   const b=$('#copyMail'), em=b.querySelector('em'), t=$('#mail').textContent;
   try{ await navigator.clipboard.writeText(t); em.textContent='복사됐어요!'; }
   catch{ const g=getSelection(),r=document.createRange(); r.selectNodeContents($('#mail')); g.removeAllRanges(); g.addRange(r); em.textContent='선택됨 · Ctrl+C'; }
-  b.classList.add('done'); clearTimeout(b._t); b._t=setTimeout(()=>{ b.classList.remove('done'); em.textContent='누르면 주소가 복사돼요'; },1800);
+  b.classList.add('done'); clearTimeout(b._t); b._t=setTimeout(()=>{ b.classList.remove('done'); em.textContent='누르면 주소 복사'; },1800);
 });
 
 /* 인스타그램: 아직 준비 중 */
