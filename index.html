@@ -634,6 +634,13 @@ body.admin .page .cards .card{cursor:grab;outline:1.5px dashed var(--pink-light)
 .page .card .thumb{aspect-ratio:16/9!important;height:auto!important}
 .page .card .thumb img{width:100%;height:100%;object-fit:cover}
 .wm-gal img{aspect-ratio:16/9!important}
+.press-l li{grid-template-columns:110px 200px minmax(0,1fr)!important;align-items:start}
+.pr-im{display:block;aspect-ratio:3/2;border-radius:12px;overflow:hidden;background:var(--soft);box-shadow:0 0 0 1px var(--line)}
+.pr-im img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
+.pr-im:hover img{transform:scale(1.04)}
+@media (max-width:600px){.press-l li{grid-template-columns:minmax(0,1fr)!important}.pr-im{order:-1}}
+.press-l li:not(:has(.pr-im)){grid-template-columns:110px minmax(0,1fr)!important}
+@media (max-width:600px){.press-l li:not(:has(.pr-im)){grid-template-columns:minmax(0,1fr)!important}}
 </style>
 
 <div class="frame" aria-hidden="true"></div>
@@ -717,14 +724,14 @@ body.admin .page .cards .card{cursor:grab;outline:1.5px dashed var(--pink-light)
   <section class="press" aria-labelledby="press-h">
     <div class="press-hd"><h3 id="press-h">언론 보도</h3><p>연수와 수업 활동을 다룬 기사입니다.</p></div>
     <ul class="press-l">
-      <li><div class="pr-m"><span class="pr-d">2026.10</span><span class="pr-k">연수</span></div><div class="pr-b"><b>천재교육 T셀파, AI 영상 제작 교사 원데이 클래스</b><div class="pr-s">
+      <li><div class="pr-m"><span class="pr-d">2026.10</span><span class="pr-k">연수</span></div><a class="pr-im" href="https://www.etnews.com/20261026000034" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><img src="https://image.fnnews.com/resource/media/image/2026/10/26/202610260931016482_e.jpg" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentNode.remove()"></a><div class="pr-b"><b>천재교육 T셀파, AI 영상 제작 교사 원데이 클래스</b><div class="pr-s">
         <a href="https://www.etnews.com/20261026000034" target="_blank" rel="noopener">전자신문</a>
         <a href="https://www.fnnews.com/news/202610260930495419" target="_blank" rel="noopener">파이낸셜뉴스 (뉴스1)</a>
         <a href="https://www.fnnews.com/news/202610261002379354" target="_blank" rel="noopener">파이낸셜뉴스</a></div></div></li>
-      <li><div class="pr-m"><span class="pr-d">2026.10</span><span class="pr-k">수업</span></div><div class="pr-b"><b>2026 탄소제로 수호대 — 부천북초 2학년 탄소중립 캠페인</b><div class="pr-s">
+      <li><div class="pr-m"><span class="pr-d">2026.10</span><span class="pr-k">수업</span></div><a class="pr-im" href="https://www.hkbs.co.kr/news/articleView.html?idxno=836779" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><img src="https://cdn.hkbs.co.kr/news/thumbnail/202610/836779_567141_2451_v150.jpg" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentNode.remove()"></a><div class="pr-b"><b>2026 탄소제로 수호대 — 부천북초 2학년 탄소중립 캠페인</b><div class="pr-s">
         <a href="https://www.hkbs.co.kr/news/articleView.html?idxno=836779" target="_blank" rel="noopener">환경일보</a>
         <a href="http://www.ibsnews.kr/news/109722" target="_blank" rel="noopener">IBS뉴스</a></div></div></li>
-      <li><div class="pr-m"><span class="pr-d">2025.07</span><span class="pr-k">수업</span></div><div class="pr-b"><b>2025 청소년 탄소제로 수호대 — 부천북초 1학년</b><div class="pr-s">
+      <li><div class="pr-m"><span class="pr-d">2025.07</span><span class="pr-k">수업</span></div><a class="pr-im" href="https://www.hkbs.co.kr/news/articleView.html?idxno=800356" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><img src="https://cdn.hkbs.co.kr/news/photo/202507/800356_532430_3311.jpg" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentNode.remove()"></a><div class="pr-b"><b>2025 청소년 탄소제로 수호대 — 부천북초 1학년</b><div class="pr-s">
         <a href="https://www.hkbs.co.kr/news/articleView.html?idxno=800356" target="_blank" rel="noopener">환경일보</a></div></div></li>
     </ul>
   </section>
