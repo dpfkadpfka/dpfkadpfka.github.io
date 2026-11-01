@@ -1,0 +1,20 @@
+name: 유튜브 최신 영상 가져오기
+on:
+  schedule:
+    - cron: "37 */2 * * *"
+  workflow_dispatch:
+  push:
+    paths: ['scripts/yt.py', '.github/workflows/yt.yml']
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 scripts/yt.py
+      - run: |
+          git config user.name "yt-bot"
+          git config user.email "dpfkadpfka@gmail.com"
+          git add yt.json
+          git diff --cached --quiet || (git commit -m "유튜브 최신 영상 갱신" && git pull --rebase -q && git push)
