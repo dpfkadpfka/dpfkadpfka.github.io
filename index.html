@@ -801,6 +801,15 @@ body.is-home .obj-ic{width:clamp(84px,10vh,108px)!important;height:clamp(84px,10
 .hero-d .bub::after{content:"";position:absolute;left:50%;bottom:-11px;width:18px;height:18px;background:#fff;transform:translateX(-50%) rotate(45deg);box-shadow:2px 2px 0 0 var(--pink);border-radius:0 0 4px 0}
 }
 @media (max-width:900px){.hero-d{display:none}}
+@media (min-width:901px){
+body.is-home{--H:min(68vh,620px)!important}
+body.is-home .char-wrap{bottom:calc(72px + 3vh)!important}
+body.is-home .floor{bottom:calc(72px + 3vh + 2px)!important}
+.hero-d{top:calc(100vh - 72px - 3vh - var(--H) - 82px)!important}
+html body.is-home .obj[data-go="about"],html body.is-home .obj[data-go="promo"]{top:30%!important}
+html body.is-home .obj[data-go="video"],html body.is-home .obj[data-go="webapp"]{top:50%!important}
+html body.is-home .obj[data-go="train"],html body.is-home .obj[data-go="class"]{top:70%!important}
+}
 </style>
 
 <div class="frame" aria-hidden="true"></div>
