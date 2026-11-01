@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
-<script>(function(){var B="1793544794";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
+<script>(function(){var B="1793544902";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
 <meta name="color-scheme" content="light only">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="초등교사 김예람(예람쌤) — AI 영상·교육 콘텐츠 제작 연수, 영상·웹앱 콘텐츠, 연수 교안과 수업 자료">
@@ -439,6 +439,16 @@ body.editing .page .cards .card,body.editing #ytBody .ytc,body.editing .press-l 
 .st-ban{border:1px solid #F0C9CF;background:#fff;color:#D23B4E;border-radius:8px;padding:5px 11px;font:inherit;font-size:12.5px;font-weight:800;cursor:pointer;white-space:nowrap}
 .st-ban.on{background:#FDECEE}
 @media (max-width:760px){ .sx{grid-template-columns:1fr;grid-template-rows:auto minmax(0,1fr);height:calc(100vh - 24px)} .sx-nav{display:flex;gap:4px;overflow-x:auto;padding:10px;border-right:0;border-bottom:1px solid #F0E3E9} .sx-brand,.sx-g{display:none} .sx-i{width:auto;white-space:nowrap;flex:none} .sx-hd,.sx-body{padding-left:16px;padding-right:16px} }
+.fz{position:fixed;left:clamp(10px,1.5vw,28px);bottom:22px;z-index:44;display:none;align-items:center;gap:8px;padding:7px 12px;border-radius:99px;background:rgba(255,255,255,.95);box-shadow:0 0 0 1px var(--line),0 6px 18px rgba(74,42,34,.12);backdrop-filter:blur(6px)}
+body:not(.is-home) .fz{display:flex}
+.fz-b{border:0;background:none;padding:0 2px;font:inherit;font-weight:800;font-size:13px;color:var(--ink-soft);cursor:pointer;line-height:1}.fz-b.big{font-size:19px}
+.fz-b:hover{color:var(--pink-deep)}
+.fz input{-webkit-appearance:none;appearance:none;width:110px;height:5px;border-radius:99px;background:linear-gradient(90deg,var(--pink) var(--p,20%),#EEDFE5 var(--p,20%));outline:0;cursor:pointer}
+.fz input::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 0 0 2px var(--pink),0 2px 4px rgba(0,0,0,.15)}
+.fz input::-moz-range-thumb{width:18px;height:18px;border:0;border-radius:50%;background:#fff;box-shadow:0 0 0 2px var(--pink)}
+.fz-v{min-width:38px;font-size:12px;font-weight:800;color:var(--ink-soft);font-variant-numeric:tabular-nums;text-align:right}
+body:not(.is-home) .page .wrap{zoom:var(--fz,1)}
+@media (max-width:900px){.fz{left:10px;bottom:calc(84px + env(safe-area-inset-bottom,0px));padding:6px 10px;gap:6px}.fz input{width:80px}.fz-v{display:none}}
 .m-off{display:none!important}
 .st-box{width:min(760px,100%)}
 .st-body{overflow:auto;padding:14px 18px 20px}
@@ -2217,7 +2227,14 @@ document.addEventListener('click',e=>{ const c=e.target.closest('#webapp .cards 
  async function saveCourses(){ drawSel(); drawAdmin(); try{ const {F,db}=await fbLoad(); await F.setDoc(F.doc(db,'config','hv_courses'),{json:JSON.stringify(courses),at:F.serverTimestamp()}); }catch(x){ alertBox&&alertBox('연수명을 저장하지 못했어요'); } }
      roll(); drawKinds(); drawColors(); drawStk(); drawBoard();
  let started=false; const go=()=>{ if(!started&&location.hash==='#guest'){ started=true; load(); } }; addEventListener('hashchange',go); go();
-})();</script><div class="pvw prw" id="prw" hidden></div>
+})();</script><div class="fz" id="fz" aria-label="글자 크기"><button type="button" class="fz-b" data-d="-1" aria-label="글자 작게">가</button><input type="range" id="fzR" min="90" max="140" step="5" value="100" aria-label="글자 크기 조절"><button type="button" class="fz-b big" data-d="1" aria-label="글자 크게">가</button><span class="fz-v" id="fzV">100%</span></div>
+<script>(function(){ const R=document.getElementById('fzR'), V=document.getElementById('fzV');
+ const set=v=>{ v=Math.max(90,Math.min(140,+v||100)); R.value=v; V.textContent=v+'%'; document.documentElement.style.setProperty('--fz',v/100); R.style.setProperty('--p',((v-90)/50*100)+'%'); try{ localStorage.setItem('fz',v); }catch(_){} };
+ let v=100; try{ v=+localStorage.getItem('fz')||100; }catch(_){} set(v);
+ R.addEventListener('input',()=>set(R.value));
+ document.getElementById('fz').addEventListener('click',e=>{ const b=e.target.closest('[data-d]'); if(b) set(+R.value+(+b.dataset.d)*5); });
+})();</script>
+<div class="pvw prw" id="prw" hidden></div>
 <script>(function(){
  const W=document.getElementById('prw'), FRAME=/(^|\.)etnews\.com$|(^|\.)hkbs\.co\.kr$|(^|\.)news1\.kr$/;
  const e=x=>String(x??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
