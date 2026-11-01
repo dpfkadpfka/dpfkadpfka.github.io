@@ -1287,7 +1287,7 @@ async function openGuide(url,name){
   }catch(err){ body.innerHTML=`<iframe class="gv-frame" src="${esc(url)}" title="${esc(name)} 사용 가이드"></iframe>`; }
 }
 function closeGuide(){ gv.hidden=true; gv.innerHTML=''; }
-gv.addEventListener('click',e=>{ if(e.target===gv||e.target.closest('.gv-x')) closeGuide(); });
+gv.addEventListener('click',e=>{ if(e.target===gv||e.target.classList.contains('gv-body')||e.target.classList.contains('gv-load')||e.target.closest('.gv-x')) closeGuide(); });
 addEventListener('keydown',e=>{ if(e.key!=='Escape') return; if(!gv.hidden) closeGuide(); else if(!wm.hidden) closeWin(); });
 document.addEventListener('click',e=>{ const c=e.target.closest('#webapp .cards .card, #train .cards .card'); if(!c||document.body.classList.contains('admin')) return; if(WINAPP[c.dataset.key]){ e.preventDefault(); openWin(c.dataset.key); } });
 </script>
