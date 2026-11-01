@@ -358,22 +358,22 @@ body.is-home footer.ft{display:none}
   .floor{bottom:calc(96px + 3vh + 2px)}
 }
 @media (min-width:901px){
-  body:not(.is-home){--side:330px}
-  body:not(.is-home) .topnav{top:0;left:0;bottom:0;right:auto;width:var(--side);background:var(--soft);backdrop-filter:none;border-bottom:0;border-radius:0;overflow:hidden}
-  body:not(.is-home) .topnav-in{box-sizing:border-box;flex-direction:column;align-items:stretch;height:100%;max-width:none;margin:0;padding:28px 24px 0;gap:22px}
-  body:not(.is-home) .menu{flex-direction:column;margin:0;gap:4px;overflow:visible}
-  body:not(.is-home) .menu a{justify-content:flex-start;gap:12px;padding:8px 12px;border-radius:14px;transition:background .2s}
+  body:not(.is-home){--side:170px}
+  body:not(.is-home) .topnav{top:0;left:0;bottom:0;right:auto;width:var(--side);background:var(--soft);backdrop-filter:none;border-bottom:0;border-radius:0;overflow:visible}
+  body:not(.is-home) .topnav-in{box-sizing:border-box;flex-direction:column;align-items:center;height:100%;max-width:none;margin:0;padding:24px 0 0;gap:18px}
+  body:not(.is-home) .logo .id{display:none}
+  body:not(.is-home) .menu{flex-direction:column;align-items:center;margin:0;gap:6px;overflow:visible}
+  body:not(.is-home) .menu a{padding:7px;border-radius:16px;transition:background .2s}
   body:not(.is-home) .menu a::before{display:none}
-  body:not(.is-home) .menu .icon{width:34px;height:34px}
-  body:not(.is-home) .menu .label{position:static;transform:none!important;opacity:1;background:none;padding:0;color:var(--ink-soft);font-size:16.5px;font-weight:700}
+  body:not(.is-home) .menu .icon{width:40px;height:40px}
+  body:not(.is-home) .menu .label{position:absolute;left:calc(100% + 10px);top:50%;transform:translate(-6px,-50%)!important;padding:6px 12px;border-radius:10px;background:var(--pink);color:#fff;font-size:14.5px;font-weight:800;white-space:nowrap;opacity:0;pointer-events:none;z-index:30;transition:opacity .18s,transform .25s cubic-bezier(.3,1.5,.5,1)}
+  body:not(.is-home) .menu a:hover .label,body:not(.is-home) .menu a:focus-visible .label{opacity:1;transform:translate(0,-50%)!important}
   body:not(.is-home) .menu a:hover{background:color-mix(in srgb,#fff 60%,transparent)}
-  body:not(.is-home) .menu a:hover .label{color:var(--ink)}
   body:not(.is-home) .menu a[aria-current="page"]{background:var(--bg);box-shadow:0 0 0 1.5px var(--pink)}
-  body:not(.is-home) .menu a[aria-current="page"] .label{color:var(--ink)}
   body:not(.is-home) > .page, body:not(.is-home) > footer.ft{margin-left:var(--side)}
   body:not(.is-home) .wrap{padding-top:52px}
   #sideCv{display:none}
-  body:not(.is-home) #sideCv{display:block;margin-top:auto;align-self:center;height:min(42vh,380px);width:auto;pointer-events:none}
+  body:not(.is-home) #sideCv{display:block;margin-top:auto;align-self:center;width:var(--side);max-width:none;height:auto;pointer-events:none}
 }
 @media (max-width:900px){ #sideCv{display:none} }
 .card.tone-0,.feature article.tone-0,.contact-card.tone-0{box-shadow:0 0 0 1px var(--line)}
@@ -823,7 +823,7 @@ function render(){
 }
 
 /* 메뉴 페이지: 왼쪽 판의 캐릭터가 그 페이지 자세를 함 */
-const sc=document.getElementById('sideCv'), sx2=sc.getContext('2d'), SIDE_X=280, SIDE_W=730;
+const sc=document.getElementById('sideCv'), sx2=sc.getContext('2d'), SIDE_X=330, SIDE_W=630;
 const POSE_OF={about:'career',promo:'contact',video:'video',webapp:'webapp',train:'train',class:'class'};
 let sidePage=null, sideWant=null, sideCur=null, sPh='in', sF=0, sLast=0, sUntil=0, sAct=null;
 function sideStart(id){ const p=POSE_OF[id]; if(!p||!META) return; sidePage=sideWant=sideCur='menu_'+p; sPh='in'; sF=0; sLast=performance.now(); loadSet(sideCur); }
