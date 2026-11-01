@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
-<script>(function(){var B="1793538808";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
+<script>(function(){var B="1793539129";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
 <meta name="color-scheme" content="light only">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="초등교사 김예람(예람쌤) — AI 영상·교육 콘텐츠 제작 연수, 영상·웹앱 콘텐츠, 연수 교안과 수업 자료">
@@ -1871,6 +1871,7 @@ document.addEventListener('click',e=>{ const c=e.target.closest('#webapp .cards 
   {k:['앱 ','앱?','앱을','앱은','앱이','웹앱','윈도우','바이브','코딩','프로그램','만든'],a:()=>`수업·연수용으로 직접 만든 앱이에요.<ul>${apps().map(x=>`<li><b>${e(x.t)}</b> — ${e(x.d)}</li>`).join('')}</ul>${go('webapp','앱 보러 가기')}`},
   {k:['영상','유튜브','숏폼','뮤직비디오'],a:()=>`교육 영상, 강좌, 홍보 숏폼, AI 뮤직비디오를 만들어요. <a href="https://www.youtube.com/@%EC%98%88%EB%9E%8C%EC%8C%A4" target="_blank" rel="noopener">유튜브 ↗</a> ${go('video','영상 보기')}`},
   {k:['블로그','근황','최근','소식','기사','보도'],a:()=>`최근 활동과 언론 보도는 활동 소식에 모여 있어요. <a href="https://blog.naver.com/dpfkadpfka2" target="_blank" rel="noopener">블로그 ↗</a> ${go('promo','활동 소식 보기')}`},
+  {k:['분홍','핑크','pink','좋아하는 색','좋아하는색','무슨 색','무슨색','색깔','컬러','색 좋아'],a:()=>`사실 제일 좋아하는 색은 흰색이에요! 그런데 흰색은 예람쌤만의 색이라는 느낌이 잘 안 살아서, 저를 나타내는 색으로는 분홍색을 쓰고 있어요.`},
   {k:['자료','수업 자료','연수 자료','교안','ppt'],a:()=>`연수 자료와 수업 자료를 나누고 있어요. ${go('train','연수 자료')} ${go('class','수업 자료')}`},
   {k:['학교','근무','어디'],a:()=>`경기도 <b>부천북초등학교</b>에서 근무하고 있어요.`},
  ];
@@ -1902,6 +1903,7 @@ document.addEventListener('click',e=>{ const c=e.target.closest('#webapp .cards 
   const L=[];
   L.push('[소개] 부천북초등학교 교사 김예람(예람쌤). AI로 교육 콘텐츠를 만들고 그 방법을 선생님들과 연수로 나눔. 주로 AI 영상·교육 콘텐츠 제작 연수를 함.');
   L.push('[전문 분야] 교육 콘텐츠 비평·자문(EBS 시청자평가원, EBS 〈처음 배우는 AI〉 자문교사) / AI 콘텐츠 제작(EBS 이솦 공식 크리에이터) / AI·SW 교육(AIEDAP 마스터교원, 영재교육원 지도교사) / 미디어·디지털 리터러시(미디어교육사, 디지털 토론 D\'talks)');
+  L.push('[좋아하는 색] 가장 좋아하는 색은 흰색. 다만 흰색은 특색이 잘 드러나지 않아서, 예람쌤을 나타내는 대표 색(브랜드 색)으로는 분홍색을 씀.');
   L.push('[연락 방법] 연수·강의 요청, 콘텐츠 제작, 자문 문의: 이메일 dpfkadpfka@gmail.com, 카카오톡 오픈채팅 https://open.kakao.com/o/sQjNnOnh (전화번호 등 다른 연락처는 공개하지 않음)');
   CV.forEach(([n,a])=>L.push(`[이력: ${n}] `+a.map(x=>`${x[0]} (${x[1]})`).join(' / ')));
   const W=(typeof WINAPP!=='undefined')?WINAPP:{};
