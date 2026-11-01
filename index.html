@@ -989,6 +989,13 @@ html body.is-home .hero-d{top:calc(100svh - var(--mB) - var(--mH) - 72px)!import
 .bl-dots[hidden]{display:none}
 .bl-dots i{width:7px;height:7px;border-radius:50%;background:#EBD3DC;transition:all .2s}
 .bl-dots i.on{width:20px;border-radius:99px;background:var(--pink)}
+@media (max-width:700px){
+#about{--ico:url(obj/career.webp?v=5)}#promo{--ico:url(obj/promo.webp)}#video{--ico:url(obj/video.webp)}#webapp{--ico:url(obj/webapp.webp)}#train{--ico:url(obj/lecture.webp)}#class{--ico:url(obj/class.webp)}
+html body:not(.is-home) .page-head{position:relative!important;overflow:hidden;padding:22px 120px 22px 20px!important;margin:0 14px 14px!important;border-radius:20px!important;background:linear-gradient(120deg,#FFE4EF,#FFF4F8)!important;box-shadow:none!important;color:var(--ink)!important}
+html body:not(.is-home) .page-head::after{content:"";position:absolute;right:-10px;bottom:-14px;width:130px;height:130px;background:var(--ico) center/contain no-repeat;transform:rotate(-8deg)}
+html body:not(.is-home) .page-head h2{font-size:22px!important;color:var(--ink)!important}
+html body:not(.is-home) .page-head p{font-size:13px!important;color:var(--ink-soft)!important}
+}
 </style>
 
 <div class="frame" aria-hidden="true"></div>
