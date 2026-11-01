@@ -508,7 +508,7 @@ body.admin .page .cards .card{cursor:grab;outline:1.5px dashed var(--pink-light)
       <a href="https://ebssw.kr/dpfkadpfka2" target="_blank" rel="noopener" title="EBS 이솦" aria-label="EBS 이솦"><img src="sns/esop.jpg" alt=""></a>
     </div>
   </div>
-  <div class="ft-bot"><span>© 2026 예람쌤 · dpfkadpfka@gmail.com</span><span><a href="https://dpfkadpfka.github.io/yeram-ai-video/" target="_blank" rel="noopener">예람쌤 AI 영상 제작소</a></span></div>
+  <div class="ft-bot"><span>© 2026 예람쌤 · dpfkadpfka@gmail.com</span><span><a href="https://dpfkadpfka.github.io/yeram-ai-video/" target="_blank" rel="noopener">예람쌤 AI 영상 제작소</a> · <a href="#" id="adminLogin">관리자</a></span></div>
 </div></footer>
 
 <script>
@@ -573,42 +573,48 @@ function renderArchive(id){
   DRAW[id]=draw; draw();
 }
 Object.keys(ARCHIVE).forEach(renderArchive);
-fetch('order.json?t='+Date.now()).then(r=>r.ok?r.json():{}).then(o=>{ ORDER=o||{}; Object.keys(ARCHIVE).forEach(id=>{ sortArchive(id); DRAW[id](); }); }).catch(()=>{});
+/* 카드 순서: Firestore config/hv_order (누구나 읽기, 관리자만 쓰기) */
+const FB={apiKey:"AIzaSyCZ-UaL2zBCzYYkjwzrdEUAA9dEVLg5uKM",authDomain:"yeram-ai-video.firebaseapp.com",projectId:"yeram-ai-video",storageBucket:"yeram-ai-video.firebasestorage.app",messagingSenderId:"590325912000",appId:"1:590325912000:web:8056b70fbd73e29d34f825"};
+const ADMIN_EMAIL='dpfkadpfka@gmail.com', ORDER_URL='https://firestore.googleapis.com/v1/projects/yeram-ai-video/databases/(default)/documents/config/hv_order';
+fetch(ORDER_URL).then(r=>r.ok?r.json():null).then(d=>{ const j=d&&d.fields&&d.fields.json&&d.fields.json.stringValue; if(!j) return; ORDER=JSON.parse(j)||{}; Object.keys(ARCHIVE).forEach(id=>{ sortArchive(id); DRAW[id](); }); }).catch(()=>{});
 
-/* 관리자: 주소 끝에 ?admin 을 붙여 열면 카드 순서를 끌어서 바꾸고 깃허브에 저장 */
-if(new URLSearchParams(location.search).has('admin')){
+/* 관리자: 구글로 로그인(예람쌤 계정)하면 카드를 끌어서 순서를 바꾸고 저장 */
+let fbx=null;
+async function fbLoad(){
+  if(fbx) return fbx; const V='https://www.gstatic.com/firebasejs/10.12.2/';
+  const [A,Au,F]=await Promise.all([import(V+'firebase-app.js'),import(V+'firebase-auth.js'),import(V+'firebase-firestore.js')]);
+  const app=A.initializeApp(FB,'home'); fbx={Au,F,auth:Au.getAuth(app),db:F.getFirestore(app)}; return fbx;
+}
+function adminOn(user){
+  if(document.body.classList.contains('admin')) return;
   document.body.classList.add('admin');
-  const REPO='dpfkadpfka/dpfkadpfka.github.io';
   const bar=document.createElement('div'); bar.className='adminbar';
-  bar.innerHTML=`<b>순서 편집</b><span class="ab-msg">카드를 끌어서 순서를 바꾼 뒤 저장을 누르세요.</span>
-    <input class="ab-tok" type="password" placeholder="깃허브 토큰 (처음 한 번만)" autocomplete="off">
-    <a class="ab-help" href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">토큰 만들기</a>
-    <button class="ab-save" type="button">저장</button><a class="ab-exit" href="./">나가기</a>`;
+  bar.innerHTML=`<b>관리자</b><span class="ab-msg">카드를 끌어서 순서를 바꾼 뒤 저장을 누르세요.</span><button class="ab-save" type="button">저장</button><button class="ab-out" type="button">로그아웃</button>`;
   document.body.appendChild(bar);
-  const tokIn=bar.querySelector('.ab-tok'), msg=bar.querySelector('.ab-msg');
-  let tok=''; try{ tok=localStorage.getItem('yr_gh_tok')||''; }catch{}
-  if(tok) tokIn.hidden=true, bar.querySelector('.ab-help').hidden=true;
-  document.addEventListener('click',e=>{ const c=e.target.closest('.cards .card'); if(c) e.preventDefault(); },true);
-  const s=document.createElement('script'); s.src='sortable.min.js';
-  s.onload=()=>document.querySelectorAll('.page .cards').forEach(box=>Sortable.create(box,{animation:180,ghostClass:'sort-ghost'}));
-  document.head.appendChild(s);
+  const msg=bar.querySelector('.ab-msg');
+  const sc2=document.createElement('script'); sc2.src='sortable.min.js';
+  sc2.onload=()=>document.querySelectorAll('.page .cards').forEach(box=>Sortable.create(box,{animation:180,ghostClass:'sort-ghost'}));
+  document.head.appendChild(sc2);
   Object.values(DRAW).forEach(d=>d());
   bar.querySelector('.ab-save').addEventListener('click',async()=>{
-    if(!tok){ tok=tokIn.value.trim(); if(!tok){ msg.textContent='토큰을 먼저 넣어 주세요.'; tokIn.focus(); return; } }
     const order={}; Object.keys(ARCHIVE).forEach(id=>{ order[id]=[...document.querySelectorAll('#'+id+' .cards .card')].map(c=>c.dataset.key); });
     msg.textContent='저장 중…';
-    const api='https://api.github.com/repos/'+REPO+'/contents/order.json', H={Authorization:'Bearer '+tok,Accept:'application/vnd.github+json'};
-    try{
-      let sha; const g=await fetch(api,{headers:H}); if(g.status===401){ throw new Error('토큰이 맞지 않아요'); } if(g.ok) sha=(await g.json()).sha;
-      const body=JSON.stringify(order,null,1), b64=btoa(unescape(encodeURIComponent(body)));
-      const p=await fetch(api,{method:'PUT',headers:H,body:JSON.stringify({message:'카드 순서 변경',content:b64,sha})});
-      if(!p.ok) throw new Error('저장 실패 ('+p.status+')');
-      try{ localStorage.setItem('yr_gh_tok',tok); }catch{}
-      tokIn.hidden=true; bar.querySelector('.ab-help').hidden=true;
-      ORDER=order; msg.textContent='저장했어요. 1~2분 뒤 사이트에 반영돼요.';
-    }catch(err){ msg.textContent=err.message+' — 다시 확인해 주세요.'; if(/토큰/.test(err.message)){ tok=''; tokIn.hidden=false; try{localStorage.removeItem('yr_gh_tok');}catch{} } }
+    try{ const {F,db}=await fbLoad(); await F.setDoc(F.doc(db,'config','hv_order'),{json:JSON.stringify(order),at:F.serverTimestamp()}); ORDER=order; msg.textContent='저장했어요. 바로 모든 사람에게 이 순서로 보여요.'; }
+    catch(e){ msg.textContent='저장하지 못했어요 ('+(e.code||e.message)+')'; }
   });
+  bar.querySelector('.ab-out').addEventListener('click',async()=>{ try{ localStorage.removeItem('yr_admin'); }catch{} const {Au,auth}=await fbLoad(); await Au.signOut(auth); location.reload(); });
 }
+document.addEventListener('click',e=>{ if(document.body.classList.contains('admin')){ const c=e.target.closest('.cards .card'); if(c) e.preventDefault(); } },true);
+async function adminLogin(){
+  try{ const {Au,auth}=await fbLoad(); const r=await Au.signInWithPopup(auth,new Au.GoogleAuthProvider());
+    if(r.user.email===ADMIN_EMAIL){ try{ localStorage.setItem('yr_admin','1'); }catch{} adminOn(r.user); }
+    else { await Au.signOut(auth); alertBox('관리자 계정이 아니에요.'); }
+  }catch(e){ alertBox('로그인하지 못했어요 ('+(e.code||e.message)+')'); }
+}
+function alertBox(t){ const d=document.createElement('div'); d.className='adminbar'; d.textContent=t; document.body.appendChild(d); setTimeout(()=>d.remove(),2600); }
+let keep=false; try{ keep=localStorage.getItem('yr_admin')==='1'; }catch{}
+if(keep) fbLoad().then(({Au,auth})=>Au.onAuthStateChanged(auth,u=>{ if(u&&u.email===ADMIN_EMAIL) adminOn(u); })).catch(()=>{});
+document.getElementById('adminLogin')?.addEventListener('click',e=>{ e.preventDefault(); adminLogin(); });
 const CV_SUB={"기관 활동":"국가 기관 · 교육청 소속","외부 기관":"학회 · 연구 기관 · 교육청 공동체","콘텐츠 개발":"제작 · 집필 참여","수상":"표창 및 수상","강사":"연수 · 강의"};
 function cvBold(t){if(/<b>/.test(t))return t;let m=t.match(/^(.+?) - (.*)$/);if(m&&m[1].length<=30)return `<b>${m[1]}</b> - ${m[2]}`;
   m=t.match(/^(\S+) X (\S+)(.*)$/);if(m)return `<b>${m[1]}</b> X <b>${m[2]}</b>${m[3]}`;
