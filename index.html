@@ -625,7 +625,7 @@ function renderArchive(id){
       const tag=i.url?'a':'div', href=i.url?` href="${esc(i.url)}" target="_blank" rel="noopener"`:'';
       return `<${tag} class="card tone-0"${href} data-key="${esc(i.t)}"><div class="thumb">${thumb(i)}${i.st?`<span class="st${i.st==='종료'?' end':''}">${esc(i.st)}</span>`:''}</div>
         <div class="card-body"><div class="card-meta"><span>${esc(i.tag)}</span><span>${esc(i.y)}</span></div><h3>${esc(i.t)}</h3>${i.d?`<p>${esc(i.d)}</p>`:''}
-        <span class="go${i.url?'':' soon'}">${i.url?(i.yt?'영상 보기 →':i.tag==='윈도우 앱'?'자세히 보기 →':'열어 보기 →'):'링크 준비 중'}</span></div></${tag}>`;
+        <span class="go${i.url?'':' soon'}">${i.url?(i.yt?'영상 보기 →':(id==='webapp')?'자세히 보기 →':'열어 보기 →'):'링크 준비 중'}</span></div></${tag}>`;
     }).join('');
     fl.querySelectorAll('.chip').forEach(c=>c.setAttribute('aria-pressed',c.dataset.t===cur));
   };
@@ -854,7 +854,7 @@ async function boot(){
   hit.style.left=(META.box[0]/META.vw*100)+'%'; hit.style.width=(META.box[2]/META.vw*100)+'%';
   const idleP=loadSet('idle'); await loadSet('intro_pop');
   $('#loading').hidden=true;
-  (async()=>{ await idleP; for(const k of CORE) await loadSet(k); if(!coarse) for(const k of ['career','promo','video','webapp','lecture','class']) await loadSet('menu_'+k); })();
+  (async()=>{ await idleP; await loadSet('turn_mid'); if(!coarse) await Promise.all(['career','promo','video','webapp','lecture','class'].map(k=>loadSet('menu_'+k))); for(const k of CORE) await loadSet(k); })();
   if(reduce){ mode='live'; goIdle(performance.now()); } else { mode='intro'; introPop=false; introStart=performance.now(); }
   requestAnimationFrame(frame);
 }
@@ -999,7 +999,7 @@ function toast(t){ let d=document.querySelector('.toast'); if(!d){ d=document.cr
 document.querySelectorAll('[data-sns="insta"]').forEach(a=>a.addEventListener('click',e=>{ e.preventDefault(); toast('인스타그램은 준비 중입니다'); }));
 
 /* 윈도우 앱: 누르면 설명 창 */
-const WINAPP={
+var WINAPP={
  'RamClock':{lead:'교실 컴퓨터 바탕화면에 띄워 두는 시계 위젯이에요. 수업에 필요한 것을 한 화면에 모았어요.',
   feat:['시간표·주간학습안내 PDF를 올리면 그 주 시간표로 바뀜','타이머·스톱워치·학생 뽑기·투표','선생님 안내 문구와 자주 쓰는 사이트 바로가기','새 버전은 자동으로 받아짐'],
   how:['내려받기를 눌러 RamClock.exe를 받아요.','원하는 폴더(바탕화면 등)에 두고 실행해요. 설치는 필요 없어요.','“Windows의 PC 보호”가 뜨면 [추가 정보 → 실행]을 눌러요.'],
@@ -1013,13 +1013,34 @@ const WINAPP={
   how:['내려받기를 눌러 설치 파일(YeramCalendar-Setup)을 받아 실행해요.','“Windows의 PC 보호”가 뜨면 [추가 정보 → 실행]을 눌러요.','앱의 ⚙ 설정 → 구글 로그인을 눌러 연결해요.'],
   dl:'https://github.com/dpfkadpfka/yeram-calendar/releases/latest'}
 };
+
+Object.assign(WINAPP,{
+ '나도 장영실! 시계 발명가':{web:1,lead:'아이가 그린 시계 그림을 AI가 진짜로 움직이는 시계로 만들어 주는 수업 앱이에요.',
+  feat:['바늘시계·디지털시계 중에서 골라 만들기','손으로 그린 그림 사진이나 AI 그림으로 시계 만들기','우리 반 전시관에 올리고 좋아요·댓글로 응원하기','선생님은 학교·학년·반과 비밀번호로 우리 반 작품만 관리'],
+  how:['반·번호·이름을 쓰고 시작해요.','만들 시계 종류를 고르고 시계 그림을 올려요.','완성된 시계를 전시관에 올려 친구들과 함께 봐요.']},
+ '해시계 물시계 실험실':{web:1,lead:'해시계와 물시계가 어떻게 시간을 재는지 직접 움직여 보며 이해하는 실험 앱이에요.',
+  feat:['해의 위치를 바꾸면 그림자가 움직이는 해시계','물이 차오르는 높이로 시간을 읽는 물시계','장영실 인물 수업과 시계 만들기 수업에 바로 연결'],
+  how:['해시계나 물시계를 골라요.','해나 물을 직접 움직이며 변화를 살펴봐요.','알게 된 원리를 수업 활동과 이어 가요.']},
+ '나도 발명가! 생활 발명 연구소':{web:1,lead:'생활 속 불편함에서 출발해 AI 친구와 아이디어를 키우고, 내 발명품을 그림으로 완성하는 수업 앱이에요.',
+  feat:['불편했던 일을 고르거나 직접 쓰기','AI 친구와 대화하며 발명 아이디어 다듬기','내 발명품을 AI 그림으로 완성','반 발명 갤러리에서 친구 작품 구경하기'],
+  how:['반·번호·이름을 쓰고 시작해요.','불편함 → 아이디어 → 그림 순서로 따라가요.','완성한 발명품을 갤러리에 올려요.']},
+ '피자로 배우는 삼권분립':{web:1,lead:'피자를 나누는 상황으로 권력을 왜 셋으로 나누는지 알아보는 사회 수업 앱이에요.',
+  feat:['피자 한 판을 공평하게 나누는 이야기로 시작','입법·행정·사법이 하는 일을 역할로 체험','캐릭터 말풍선 안내로 혼자서도 차근차근'],
+  how:['[다음]을 눌러 이야기를 따라가요.','단계마다 내 생각을 골라 보며 생각을 넓혀요.','마지막 퀴즈로 배운 내용을 확인해요.']},
+ '글자 조합 놀이터':{web:1,lead:'친구들이 모은 낱말을 글자 하나하나로 쪼개서 새로운 낱말을 만들어 보는 국어 놀이 앱이에요.',
+  feat:['학생들이 태블릿으로 낱말 보내기','모인 낱말을 글자 단위로 나눠 바구니에 담기','글자를 조합해 새 낱말 만들기'],
+  how:['선생님이 화면을 열고 학생들이 낱말을 보내요.','모인 글자를 골라 새 낱말을 만들어요.','만든 낱말을 함께 읽고 이야기 나눠요.']},
+ '자리 바꾸기 레이스':{web:1,lead:'태블릿을 연타해 동물 친구를 달리게 하고, 도착한 순서대로 자리를 고르는 학급 자리 바꾸기 앱이에요.',
+  feat:['학생마다 동물 캐릭터로 달리기 경주','빨리 누를수록 빨리 달려요','도착 순서대로 원하는 자리 고르기'],
+  how:['선생님 화면에서 경주를 시작해요.','학생들은 태블릿을 열심히 눌러 달려요.','결승선에 들어온 순서대로 자리를 골라요.']}
+});
 const wm=document.createElement('div'); wm.className='wmodal'; wm.hidden=true; document.body.appendChild(wm);
 function openWin(key){ const a=WINAPP[key], it=ARCHIVE.webapp.find(x=>x.t===key); if(!a) return;
   wm.innerHTML=`<div class="wm-box" role="dialog" aria-modal="true" aria-label="${esc(key)}"><button class="wm-x" type="button" aria-label="닫기">✕</button>
-   <div class="wm-head"><img src="${esc(it?.img||'')}" alt=""><div><span class="wm-tag">윈도우 앱 · 무료</span><h3>${esc(key)}</h3><p>${esc(a.lead)}</p></div></div>
+   <div class="wm-head"><img src="${esc(it?.img||'')}" alt=""><div><span class="wm-tag">${a.web?'웹앱 · 무료':'윈도우 앱 · 무료'}</span><h3>${esc(key)}</h3><p>${esc(a.lead)}</p></div></div>
    <h4>이런 걸 할 수 있어요</h4><ul>${a.feat.map(f=>`<li>${esc(f)}</li>`).join('')}</ul>
-   <h4>설치 방법</h4><ol>${a.how.map(f=>`<li>${esc(f)}</li>`).join('')}</ol>
-   <a class="wm-dl" href="${esc(a.dl)}" target="_blank" rel="noopener">내려받기</a></div>`;
+   <h4>${a.web?'이렇게 써요':'설치 방법'}</h4><ol>${a.how.map(f=>`<li>${esc(f)}</li>`).join('')}</ol>
+   <a class="wm-dl" href="${esc(a.dl||it?.url||'#')}" target="_blank" rel="noopener">${a.web?'열어 보기':'내려받기'}</a></div>`;
   wm.hidden=false; document.body.style.overflow='hidden'; wm.querySelector('.wm-x').focus(); }
 function closeWin(){ wm.hidden=true; document.body.style.overflow=''; }
 wm.addEventListener('click',e=>{ if(e.target===wm||e.target.closest('.wm-x')) closeWin(); });
