@@ -1064,6 +1064,29 @@ body:not(.is-home) #askBtn:hover #sideCv{transform:translateY(-4px) scale(1.04)}
 .ch-quick{flex-wrap:wrap!important;overflow:visible!important}
 :root{color-scheme:light only}
 html,body{background-color:#FFFAFC}
+
+/* ===== 모바일: 카드·언론 보도를 영상 카드처럼(16:9 썸네일 + 2열), 블로그는 정사각형 ===== */
+@media (max-width:900px){
+ html body:not(.is-home) .page .cards:not(.grouped){display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important;background:none!important;padding:0!important;box-shadow:none!important}
+ html body:not(.is-home) .page .cards .card{display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:8px!important;padding:8px 8px 12px!important;background:#fff!important;border-radius:16px!important;border:0!important;box-shadow:0 0 0 1px var(--line)!important;width:auto!important;min-width:0}
+ html body:not(.is-home) .page .cards .card:last-child{border-bottom:0!important}
+ html body:not(.is-home) .page .cards .card .thumb,html body:not(.is-home) .page .cards .card .thumb:has(.ph){width:100%!important;aspect-ratio:16/9!important;border-radius:12px!important;margin:0!important;position:relative}
+ html body:not(.is-home) .page .cards .card .thumb img{width:100%!important;height:100%!important;object-fit:cover!important}
+ html body:not(.is-home) .page .cards .card .card-body{padding:0 4px!important;gap:3px!important}
+ html body:not(.is-home) .page .cards .card .card-meta{display:block!important;font-size:11px!important;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+ html body:not(.is-home) .page .cards .card .card-meta span:last-child{display:none!important}
+ html body:not(.is-home) .page .cards .card h3{font-size:13.5px!important;line-height:1.4!important}
+ html body:not(.is-home) .page .cards .card p{display:none!important}
+ html body:not(.is-home) .press-l{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important;background:none!important;padding:0!important;box-shadow:none!important}
+ html body:not(.is-home) .press-l li,html body:not(.is-home) .press-l li:not(:has(.pr-im)){display:flex!important;flex-direction:column!important;gap:6px!important;padding:8px 8px 12px!important;background:#fff;border-radius:16px;border:0!important;box-shadow:0 0 0 1px var(--line);min-width:0}
+ html body:not(.is-home) .press-l .pr-im{order:-2!important;width:100%;aspect-ratio:16/9!important;border-radius:12px!important}
+ html body:not(.is-home) .press-l .pr-b{order:-1;padding:0 4px}
+ html body:not(.is-home) .press-l .pr-b b{font-size:13.5px!important;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+ html body:not(.is-home) .press-l .pr-m{padding:0 4px}
+ html body:not(.is-home) .press-l .pr-s a{font-size:11px!important;padding:2px 7px!important}
+ html body:not(.is-home) .blogs .bl .bl-im{aspect-ratio:1/1!important}
+ html body:not(.is-home) #askBtn #sideCv{filter:drop-shadow(1.5px 0 0 #fff) drop-shadow(-1.5px 0 0 #fff) drop-shadow(0 1.5px 0 #fff) drop-shadow(0 -1.5px 0 #fff) drop-shadow(0 3px 6px rgba(74,42,34,.22))!important}
+}
 </style>
 
 <div class="frame" aria-hidden="true"></div>
