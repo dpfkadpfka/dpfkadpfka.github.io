@@ -1818,7 +1818,54 @@ document.addEventListener('click',e=>{ const c=e.target.closest('#webapp .cards 
   return `그 부분은 아직 제가 잘 몰라요. 연수, 이력, 앱, 연락 방법처럼 물어봐 주시거나 아래로 직접 문의해 주세요.<br><a href="https://open.kakao.com/o/sQjNnOnh" target="_blank" rel="noopener">카카오톡 오픈채팅 ↗</a>`;
  }
  function add(who,h){ const d=document.createElement('div'); d.className='ch-m '+who; d.innerHTML=h; B.appendChild(d); B.scrollTop=B.scrollHeight; }
- function ask(q){ if(!q.trim()) return; add('me',e(q)); const d=document.createElement('div'); d.className='ch-m bot typing'; d.innerHTML='<i></i><i></i><i></i>'; B.appendChild(d); B.scrollTop=B.scrollHeight; setTimeout(()=>{ d.remove(); add('bot',answer(q)); },450); }
+ const FB={apiKey:"AIzaSyCZ-UaL2zBCzYYkjwzrdEUAA9dEVLg5uKM",authDomain:"yeram-ai-video.firebaseapp.com",projectId:"yeram-ai-video",appId:"1:590325912000:web:8056b70fbd73e29d34f825"};
+ const MODELS=['gemini-2.5-flash','gemini-2.5-flash-lite','gemini-2.0-flash'];
+ let aiChat=null, aiFail=false;
+ function kb(){
+  const L=[];
+  L.push('[소개] 부천북초등학교 교사 김예람(예람쌤). AI로 교육 콘텐츠를 만들고 그 방법을 선생님들과 연수로 나눔. 주로 AI 영상·교육 콘텐츠 제작 연수를 함.');
+  L.push('[전문 분야] 교육 콘텐츠 비평·자문(EBS 시청자평가원, EBS 〈처음 배우는 AI〉 자문교사) / AI 콘텐츠 제작(EBS 이솦 공식 크리에이터) / AI·SW 교육(AIEDAP 마스터교원, 영재교육원 지도교사) / 미디어·디지털 리터러시(미디어교육사, 디지털 토론 D\'talks)');
+  L.push('[연락 방법] 연수·강의 요청, 콘텐츠 제작, 자문 문의: 이메일 dpfkadpfka@gmail.com, 카카오톡 오픈채팅 https://open.kakao.com/o/sQjNnOnh (전화번호 등 다른 연락처는 공개하지 않음)');
+  CV.forEach(([n,a])=>L.push(`[이력: ${n}] `+a.map(x=>`${x[0]} (${x[1]})`).join(' / ')));
+  const W=(typeof WINAPP!=='undefined')?WINAPP:{};
+  apps().forEach(x=>{ const w=W[x.t]||{}; L.push(`[앱: ${x.t}] ${x.tag} · ${w.lead||x.d}${w.feat?' 기능: '+w.feat.join(', '):''}`); });
+  if(typeof ARCHIVE!=='undefined'){ (ARCHIVE.train||[]).forEach(x=>L.push(`[연수 자료] ${x.t} — ${x.d||''}`)); (ARCHIVE.class||[]).forEach(x=>L.push(`[수업 자료] ${x.t} — ${x.d||''}`)); (ARCHIVE.promo||[]).forEach(x=>L.push(`[연수·강의 안내] ${x.t} — ${x.d||''} ${x.st||''}`)); }
+  L.push('[검색 자료: 블로그] '+BLOG.map(b=>b.t.replace(/\s*예람쌤.*$/,'')+' ('+(b.d||'').slice(5,16)+') '+b.u).join(' / '));
+  L.push('[검색 자료: 언론 기사] '+PRESS.map(b=>`${b.t} (${b.d}) ${b.u}`).join(' / '));
+  L.push('[검색 자료: 유튜브 영상] '+VIDS.map(b=>b.t).join(' / '));
+  return L.join('\n');
+ }
+ const SYS=()=>`너는 초등교사 김예람(예람쌤)의 홈페이지 안내 챗봇이야. 방문자의 질문에 아래 [정보]만 근거로 한국어로 답해.
+규칙:
+- 친절한 존댓말, 3~5문장 이내로 짧게. 목록이 필요하면 '· '로 시작하는 줄로.
+- [정보]에 없는 내용은 지어내지 말고 "그 부분은 홈페이지에 정리돼 있지 않아요"라고 말한 뒤 카카오톡 오픈채팅 문의를 안내해.
+- 개인적인 정보(나이, 가족, 주소, 전화번호, 사생활)는 답하지 마.
+- '[검색 자료: …]'를 근거로 답했으면 마지막 줄에 "※ 블로그·기사 등에서 찾은 내용이라 정확한 내용은 원문에서 확인해 주세요."를 붙이고, 관련 링크 주소를 그대로 적어.
+- 예람쌤을 3인칭('예람쌤은')으로 소개해.
+[정보]
+${kb()}`;
+ let AI=null, mi=0;
+ async function getAIx(){ if(AI) return AI;
+  const [{initializeApp,getApps},{getAI,getGenerativeModel,GoogleAIBackend}]=await Promise.all([import('https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js'),import('https://www.gstatic.com/firebasejs/12.4.0/firebase-ai.js')]);
+  const app=getApps().find(a=>a.name==='chat')||initializeApp(FB,'chat');
+  AI={ai:getAI(app,{backend:new GoogleAIBackend()}),getGenerativeModel}; return AI; }
+ async function getChat(){
+  if(aiChat) return aiChat;
+  const {ai,getGenerativeModel}=await getAIx();
+  const model=getGenerativeModel(ai,{model:MODELS[mi],systemInstruction:SYS(),generationConfig:{temperature:0.3,maxOutputTokens:700}});
+  aiChat={c:model.startChat(),m:MODELS[mi]}; return aiChat;
+ }
+ function md(t){ return e(t).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/(https?:\/\/[^\s<)]+)/g,'<a href="$1" target="_blank" rel="noopener">링크 ↗</a>').replace(/\n/g,'<br>'); }
+ function logQ(q){ try{ fetch('https://firestore.googleapis.com/v1/projects/yeram-ai-video/databases/(default)/documents/chat_log',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({fields:{q:{stringValue:q.slice(0,290)},p:{stringValue:location.hash.slice(1)||'home'},t:{timestampValue:new Date().toISOString()}}})}); }catch(_){} }
+ async function aiAnswer(q){
+  while(mi<MODELS.length){
+   try{ const {c}=await getChat(); const r=await c.sendMessage(q); return md(r.response.text()); }
+   catch(x){ console.warn('AI',MODELS[mi],x&&x.message); aiChat=null; if(/not found|404|not supported/i.test(String(x&&x.message))) { mi++; continue; } throw x; }
+  }
+  throw new Error('no model');
+ }
+ function ask(q){ if(!q.trim()) return; add('me',e(q)); logQ(q); const d=document.createElement('div'); d.className='ch-m bot typing'; d.innerHTML='<i></i><i></i><i></i>'; B.appendChild(d); B.scrollTop=B.scrollHeight;
+  aiAnswer(q).then(h=>{ d.remove(); add('bot',h); }).catch(()=>{ d.remove(); add('bot',answer(q)); }); }
  Q.innerHTML=quick.map(q=>`<button type="button">${q}</button>`).join('');
  Q.addEventListener('click',ev=>{ const b=ev.target.closest('button'); if(b) ask(b.textContent); });
  F.addEventListener('submit',ev=>{ ev.preventDefault(); ask(T.value); T.value=''; });
