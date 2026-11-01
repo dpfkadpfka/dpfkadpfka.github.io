@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
-<script>(function(){var B="1793545527";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
+<script>(function(){var B="1793545627";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
 <meta name="color-scheme" content="light only">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="초등교사 김예람(예람쌤) — AI 영상·교육 콘텐츠 제작 연수, 영상·웹앱 콘텐츠, 연수 교안과 수업 자료">
@@ -2163,7 +2163,7 @@ document.addEventListener('click',e=>{ const c=e.target.closest('#webapp .cards 
  },true);
 })();
 </script><script>(function(){
- const KINDS=['자유','수강 후기'], NC=6, STK=['heart','thumb','thanks','clap','cheer','fighting','love','cry','wow','idea','coffee','sleepy']; let stk='';
+ const KINDS=['자유','수강 후기'], NC=6, STK=['heart','thumb','thanks','clap','cheer','fighting','love','cry','wow','idea','sleepy']; let stk='';
  const $g=id=>document.getElementById(id), form=$g('gbForm'); if(!form) return;
  if(!document.getElementById('gbFont')){ const st=document.createElement('style'); st.id='gbFont'; st.textContent="@font-face{font-family:'OngleipEoyeonce';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105@1.1/Uiyeun.woff') format('woff');font-weight:normal;font-display:swap}"; document.head.appendChild(st); }
  const e=x=>String(x??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -2171,7 +2171,7 @@ document.addEventListener('click',e=>{ const c=e.target.closest('#webapp .cards 
  const prev=$g('gbPrev'), kinds=$g('gbKinds'), sel=$g('gbCourse'), msg=$g('gbMsg'), nm=$g('gbName'), out=$g('gbMsgOut');
  function drawKinds(){ kinds.innerHTML=KINDS.map((k,i)=>`<button type="button" role="radio" aria-checked="${i===kind}" data-k="${i}">${k}</button>`).join(''); $g('gbCourseF').hidden=kind!==1; upd(); }
  function drawColors(){ $g('gbColors').innerHTML=Array.from({length:NC},(_,i)=>`<button type="button" role="radio" aria-label="포스트잇 ${i+1}" aria-checked="${i===color}" data-c="${i}"></button>`).join(''); prev.dataset.c=color; }
- function drawStk(){ $g('gbStks').innerHTML=`<button type="button" class="gb-none" role="radio" aria-checked="${!stk}" data-s="">없음</button>`+STK.map(n=>`<button type="button" role="radio" aria-checked="${stk===n}" data-s="${n}"><img src="stk/${n}.webp" alt="" loading="lazy"></button>`).join(''); const im=$g('gbPvStk'); im.hidden=!stk; if(stk) im.src='stk/'+stk+'.webp'; }
+ function drawStk(){ $g('gbStks').innerHTML=`<button type="button" class="gb-none" role="radio" aria-checked="${!stk}" data-s="">없음</button>`+STK.map(n=>`<button type="button" role="radio" aria-checked="${stk===n}" data-s="${n}"><img src="stk/${n}.webp?v=3" alt="" loading="lazy"></button>`).join(''); const im=$g('gbPvStk'); im.hidden=!stk; if(stk) im.src='stk/'+stk+'.webp?v=3'; }
  $g('gbStks').addEventListener('click',ev=>{ const b=ev.target.closest('[data-s]'); if(b){ stk=b.dataset.s; drawStk(); } });
  const cLabel=c=>typeof c==='string'?c:((c.d?c.d+' ':'')+c.t);
  function drawSel(){ sel.innerHTML='<option value="">연수를 골라 주세요</option>'+courses.map(c=>`<option>${e(cLabel(c))}</option>`).join('')+'<option value="기타">기타</option>'; }
@@ -2186,7 +2186,7 @@ document.addEventListener('click',e=>{ const c=e.target.closest('#webapp .cards 
  const hash=s=>{ let h=0; for(const ch of s) h=(h*31+ch.charCodeAt(0))|0; return Math.abs(h); };
  const when=t=>{ const d=t&&t.toDate?t.toDate():(t instanceof Date?t:null); if(!d) return ''; return `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`; };
  function note(x,pop){ const h=hash(x.id||x.m), r=((h%9)-4)*.8, pin=h%3===0;
-  return `<div class="gb-note${pop?' gb-pop':''}" data-c="${x.c|0}" data-id="${e(x.id||'')}" style="--r:${r}deg">${pin?'<i class="gb-pin"></i>':'<i class="gb-tape"></i>'}<button type="button" class="gb-del" title="삭제">✕</button>${x.k===1?`<span class="gb-chip">수강 후기${x.r?' · '+e(x.r):''}</span>`:x.k===2?'<span class="gb-chip">응원</span>':''}<p class="gb-txt">${e(x.m)}</p><div class="gb-by"><b>${e(x.n||'익명')}</b><span>${when(x.t)}</span></div>${x.s&&STK.includes(x.s)?`<img class="gb-stk" src="stk/${x.s}.webp" alt="" loading="lazy" style="--sr:${(h%20)-10}deg">`:''}</div>`; }
+  return `<div class="gb-note${pop?' gb-pop':''}" data-c="${x.c|0}" data-id="${e(x.id||'')}" style="--r:${r}deg">${pin?'<i class="gb-pin"></i>':'<i class="gb-tape"></i>'}<button type="button" class="gb-del" title="삭제">✕</button>${x.k===1?`<span class="gb-chip">수강 후기${x.r?' · '+e(x.r):''}</span>`:x.k===2?'<span class="gb-chip">응원</span>':''}<p class="gb-txt">${e(x.m)}</p><div class="gb-by"><b>${e(x.n||'익명')}</b><span>${when(x.t)}</span></div>${x.s&&STK.includes(x.s)?`<img class="gb-stk" src="stk/${x.s}.webp?v=3" alt="" loading="lazy" style="--sr:${(h%20)-10}deg">`:''}</div>`; }
  function drawBoard(popId){
   const cnt=k=>items.filter(x=>x.k===k).length;
   $g('gbTabs').innerHTML=[...KINDS.map((k,i)=>[String(i),k,cnt(i)])].map(([v,t,n])=>`<button type="button" data-t="${v}" aria-pressed="${tab===v}">${t}<i>${n}</i></button>`).join('');
