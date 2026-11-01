@@ -653,6 +653,20 @@ body.admin .page .cards .card{cursor:grab;outline:1.5px dashed var(--pink-light)
 .ytv-box.sh .ytv-fr{aspect-ratio:9/16}
 .ytv-fr iframe{width:100%;height:100%;border:0;display:block}
 @media (max-width:600px){.ytv{padding:10px}.ytv-bar a{display:none}}
+.pvw{position:fixed;inset:0;z-index:90;background:rgba(30,12,10,.78);display:grid;place-items:center;padding:20px}
+.pvw[hidden]{display:none}
+.pvw-box{width:min(1280px,100%,calc((100vh - 110px)*16/9));background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.4)}
+.pvw-bar{display:flex;align-items:center;gap:10px;padding:10px 12px 10px 18px;background:#fff;box-shadow:0 1px 0 var(--line)}
+.pvw-bar b{flex:1;min-width:0;font-size:15px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pvw-fs{border:0;border-radius:10px;background:var(--soft);color:var(--pink-deep);font:inherit;font-size:13px;font-weight:800;padding:8px 12px;cursor:pointer}
+.pvw-x{width:36px;height:36px;flex:none;border:0;border-radius:50%;background:var(--soft);color:var(--pink-deep);font-size:15px;cursor:pointer}
+.pvw-fr{aspect-ratio:16/10;background:#f5f0ee}
+.pvw-fr:fullscreen{aspect-ratio:auto}
+.pvw-fr iframe{width:100%;height:100%;border:0;display:block}
+button.card{font:inherit;text-align:left;cursor:pointer;width:100%;padding:0;border:0;color:inherit}
+@media (max-width:600px){.pvw{padding:8px}.pvw-fr{aspect-ratio:4/5}}
+.sec-hd{margin:8px 0 0}
+#promo .press{margin-top:52px}
 </style>
 
 <div class="frame" aria-hidden="true"></div>
@@ -732,6 +746,7 @@ body.admin .page .cards .card{cursor:grab;outline:1.5px dashed var(--pink-light)
   <div class="filters"></div><div class="cards"></div></div></section>
 <section class="page archive" id="promo" hidden><div class="wrap">
   <div class="page-head"><div><h2>활동 소식</h2><p>신청할 수 있는 연수와 강의, 언론에 소개된 활동을 모았습니다.</p></div></div>
+  <div class="press-hd sec-hd"><h3>연수·강의 안내</h3><p>신청 중이거나 최근에 연 연수와 강의입니다.</p></div>
   <div class="filters"></div><div class="cards"></div>
   <section class="press" aria-labelledby="press-h">
     <div class="press-hd"><h3 id="press-h">언론 보도</h3><p>연수와 수업 활동을 다룬 기사입니다.</p></div>
@@ -800,9 +815,9 @@ const ARCHIVE={
   ],
   train:[
     {t:"예람쌤 AI 영상 제작소",d:"캐릭터부터 대본·이미지·영상 프롬프트까지 대화하듯 만들어 주는 사이트",tag:"AI 영상",y:"2026",img:"apps/aivideo.webp?v=3",url:"https://dpfkadpfka.github.io/yeram-ai-video/"},
-    {t:'클로드 제대로 써먹기',d:'교사 대상 클로드 활용 연수 자료',tag:'AI 활용',y:'2026',img:'apps/tr_claude.webp',url:'https://yeram-claude.netlify.app/#s1'},
-    {t:'브루로 만드는 AI 영상',d:'교원 AI 영상 제작 강의',tag:'AI 영상',y:'2026',img:'apps/tr_vrew.webp',url:'https://yeram-vrew.netlify.app/#s1'},
-    {t:'위툰 활용 수업 사례',d:'댓글 예절 4컷 만화 수업 나눔',tag:'수업 나눔',y:'2026',img:'apps/tr_wetoon.webp',url:'https://yeram-wetoon.netlify.app/'},
+    {t:'클로드 제대로 써먹기',d:'교사 대상 클로드 활용 연수 자료',tag:'AI 활용',y:'2026',img:'apps/tr_claude.webp',pv:'MXMjL3BwYS55ZmlsdGVuLmVkdWFsYy1tYXJleS8vOnNwdHRo'},
+    {t:'브루로 만드는 AI 영상',d:'교원 AI 영상 제작 강의',tag:'AI 영상',y:'2026',img:'apps/tr_vrew.webp',pv:'MXMjL3BwYS55ZmlsdGVuLndlcnYtbWFyZXkvLzpzcHR0aA=='},
+    {t:'위툰 활용 수업 사례',d:'댓글 예절 4컷 만화 수업 나눔',tag:'수업 나눔',y:'2026',img:'apps/tr_wetoon.webp',pv:'L3BwYS55ZmlsdGVuLm5vb3Rldy1tYXJleS8vOnNwdHRo'},
   ],
   class:[
     {t:'모두의 이모지',d:'이모지에 없는 사람들을 이모지로 만드는 다양성 수업',tag:'2학년',y:'2026'},
@@ -826,10 +841,10 @@ function renderArchive(id){
     let n=0;
     const list=ARCHIVE[id]; if(document.body.classList.contains('admin')&&!NOALL) cur='전체';
     box.innerHTML=list.filter(i=>cur==='전체'||i.tag===cur).map(i=>{
-      const tag=i.url?'a':'div', href=i.url?` href="${esc(i.url)}" target="_blank" rel="noopener"`:'';
+      const tag=i.url?'a':(i.pv?'button':'div'), href=i.url?` href="${esc(i.url)}" target="_blank" rel="noopener"`:(i.pv?` type="button" data-pv="${i.pv}"`:'');
       return `<${tag} class="card tone-0"${href} data-key="${esc(i.t)}"><div class="thumb">${thumb(i)}${i.st?`<span class="st${i.st==='종료'?' end':''}">${esc(i.st)}</span>`:''}</div>
         <div class="card-body"><div class="card-meta"><span>${esc(i.tag)}</span><span>${esc(i.y)}</span></div><h3>${esc(i.t)}</h3>${i.d?`<p>${esc(i.d)}</p>`:''}
-        <span class="go${i.url?'':' soon'}">${i.url?(i.yt?'영상 보기 →':(id==='webapp')?'자세히 보기 →':'열어 보기 →'):'링크 준비 중'}</span></div></${tag}>`;
+        <span class="go${i.url||i.pv?'':' soon'}">${i.pv?'자료 보기 →':i.url?(i.yt?'영상 보기 →':(id==='webapp')?'자세히 보기 →':'열어 보기 →'):'링크 준비 중'}</span></div></${tag}>`;
     }).join('');
     fl.querySelectorAll('.chip').forEach(c=>c.setAttribute('aria-pressed',c.dataset.t===cur));
   };
@@ -1288,6 +1303,23 @@ document.addEventListener('click',e=>{ const c=e.target.closest('#webapp .cards 
  });
  yv.addEventListener('click',e=>{ if(e.target===yv||e.target.closest('.ytv-x')) close(); });
  addEventListener('keydown',e=>{ if(e.key==='Escape'&&!yv.hidden) close(); });
+})();
+</script>
+<script>
+(function(){
+ const pv=document.createElement('div'); pv.className='pvw'; pv.hidden=true; document.body.appendChild(pv);
+ const dec=x=>atob(x).split('').reverse().join('');
+ function close(){ pv.hidden=true; pv.innerHTML=''; document.body.style.overflow=''; }
+ document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-pv]'); if(!b||document.body.classList.contains('admin')) return;
+  e.preventDefault(); const t=b.querySelector('h3')?.textContent||'자료';
+  pv.innerHTML=`<div class="pvw-box" role="dialog" aria-modal="true" aria-label="${t}"><div class="pvw-bar"><b>${t}</b><button type="button" class="pvw-fs">전체 화면</button><button type="button" class="pvw-x" aria-label="닫기">✕</button></div><div class="pvw-fr"><iframe title="${t}" allow="fullscreen; clipboard-write" allowfullscreen referrerpolicy="no-referrer"></iframe></div></div>`;
+  pv.querySelector('iframe').src=dec(b.dataset.pv);
+  pv.hidden=false; document.body.style.overflow='hidden'; pv.querySelector('.pvw-x').focus();
+ });
+ pv.addEventListener('click',e=>{ if(e.target===pv||e.target.closest('.pvw-x')) close(); else if(e.target.closest('.pvw-fs')){ const f=pv.querySelector('.pvw-fr'); (f.requestFullscreen||f.webkitRequestFullscreen).call(f); } });
+ pv.addEventListener('contextmenu',e=>e.preventDefault());
+ addEventListener('keydown',e=>{ if(e.key==='Escape'&&!pv.hidden&&!document.fullscreenElement) close(); });
 })();
 </script>
 </html>
