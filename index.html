@@ -357,32 +357,7 @@ body.is-home footer.ft{display:none}
   .char-wrap{bottom:calc(96px + 3vh);height:min(46vh,400px)}
   .floor{bottom:calc(96px + 3vh + 2px)}
 }
-.menu .lnico{display:none}
-body:not(.is-home) .menu .icon{display:none}
-body:not(.is-home) .menu .lnico{display:grid;place-items:center;width:42px;height:42px;border-radius:12px;color:#8A7A76;transition:background .15s,color .15s}
-body:not(.is-home) .menu .lnico svg{width:24px;height:24px}
-body:not(.is-home) .menu a:hover .lnico{background:#F6EEF1;color:var(--ink)}
-body:not(.is-home) .menu a[aria-current="page"] .lnico{background:var(--soft);color:var(--pink)}
-body:not(.is-home) .menu a[aria-current="page"] .label{color:var(--pink-deep);font-weight:800}
-@media (min-width:901px){
-  body:not(.is-home){--side:88px}
-  body:not(.is-home) .topnav{top:0;left:0;bottom:0;right:auto;width:var(--side);background:var(--bg);backdrop-filter:none;border-bottom:0;border-right:1px solid var(--line);border-radius:0}
-  body:not(.is-home) .topnav-in{box-sizing:border-box;flex-direction:column;align-items:center;height:100%;max-width:none;margin:0;padding:16px 0;gap:14px}
-  body:not(.is-home) .logo .id{display:none}
-  body:not(.is-home) .logo .ava{width:44px;height:44px}
-  body:not(.is-home) .menu{flex-direction:column;align-items:center;margin:0;gap:2px;overflow:visible}
-  body:not(.is-home) .menu a{flex-direction:column;gap:3px;width:76px;padding:4px 0 7px;border-radius:12px;background:none!important;box-shadow:none!important}
-  body:not(.is-home) .menu a::before{display:none}
-  body:not(.is-home) .menu .label{position:static;transform:none!important;opacity:1;background:none;padding:0;color:#5B524D;font-size:12.5px;font-weight:700;white-space:nowrap}
-  body:not(.is-home) .menu a:hover .label{color:var(--ink)}
-  body:not(.is-home) > .page, body:not(.is-home) > footer.ft{margin-left:var(--side)}
-  body:not(.is-home) .wrap{padding-top:48px}
-}
-#sideCv{display:none}
-body:not(.is-home) #sideCv{display:block;position:absolute;right:0;top:-34px;height:230px;width:auto;pointer-events:none}
-body:not(.is-home) .page-head{position:relative;min-height:170px;padding-right:220px}
-body:not(.is-home) .page-head .pills{display:none}
-@media (max-width:700px){ body:not(.is-home) #sideCv{display:none} body:not(.is-home) .page-head{padding-right:0;min-height:0} }
+
 .card.tone-0,.feature article.tone-0,.contact-card.tone-0{box-shadow:0 0 0 1px var(--line)}
 .card.tone-0:hover,.feature article.tone-0:hover{box-shadow:0 0 0 1.5px var(--pink)}
 .pill:nth-child(n){background:var(--soft);color:var(--pink-deep)}
@@ -425,6 +400,49 @@ body.admin .page .cards .card{cursor:grab;outline:1.5px dashed var(--pink-light)
 .obj[data-go="class"]:hover .obj-ic img{animation:o-swing .8s ease-in-out infinite}
 @media (prefers-reduced-motion:reduce){.obj:hover .obj-ic img{animation:none!important}}
 .objs{z-index:5}
+/* ===== 메뉴 화면: PC는 폴더 탭, 휴대폰은 앱 화면 ===== */
+.menu .lnico{display:none}
+#sideCv{display:none}
+@media (min-width:901px){
+  body:not(.is-home){background:#FFE4EF}
+  body:not(.is-home) .topnav{position:absolute;top:0;left:0;right:0;bottom:auto;width:auto;background:none;border:0;backdrop-filter:none;border-radius:0}
+  body:not(.is-home) .topnav-in{box-sizing:border-box;max-width:1320px;margin:0 auto;padding:20px 40px 0;flex-direction:row;align-items:flex-end;gap:22px;min-height:0;height:auto}
+  body:not(.is-home) .logo{margin-bottom:10px}
+  body:not(.is-home) .logo .brand{width:48px;height:48px}
+  body:not(.is-home) .menu{flex-direction:row;align-items:flex-end;gap:5px;margin:0;overflow:visible}
+  body:not(.is-home) .menu a{flex-direction:row;gap:8px;padding:10px 16px 9px;border-radius:16px 16px 0 0;background:#FFCFE0;box-shadow:none;transition:background .2s,padding .2s}
+  body:not(.is-home) .menu a::before{display:none}
+  body:not(.is-home) .menu .icon{display:block;width:26px;height:26px}
+  body:not(.is-home) .menu a:hover .icon{transform:rotate(-8deg) scale(1.1)}
+  body:not(.is-home) .menu .label{position:static;transform:none!important;opacity:1;background:none;padding:0;color:#7A4A55;font-size:15px;font-weight:800;white-space:nowrap}
+  body:not(.is-home) .menu a:hover{background:#FFDDE9}
+  body:not(.is-home) .menu a[aria-current="page"]{background:#fff;padding-top:14px}
+  body:not(.is-home) .menu a[aria-current="page"] .label{color:var(--ink)}
+  body:not(.is-home) > .page{box-sizing:border-box;max-width:1320px;margin:0 auto;padding:78px 40px 40px}
+  body:not(.is-home) > .page > .wrap{max-width:none;margin:0;background:#fff;border-radius:0 28px 28px 28px;padding:44px min(400px,30vw) 64px 48px;min-height:calc(100vh - 140px)}
+  body:not(.is-home) > footer.ft{max-width:1320px;margin:0 auto;padding-inline:40px}
+  body:not(.is-home) #sideCv{display:block;position:fixed;top:auto;bottom:28px;left:calc(50vw + min(50vw, 660px) - 500px);height:min(48vh,410px);width:auto;pointer-events:none;z-index:6}
+  body:not(.is-home) .page-head{min-height:0;padding-right:0}
+}
+@media (max-width:900px){
+  body:not(.is-home){padding-bottom:96px}
+  body:not(.is-home) .topnav{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;transform:none!important;filter:none!important;background:rgba(255,255,255,.96)}
+  body:not(.is-home) .topnav-in{flex-wrap:nowrap}
+  body:not(.is-home) .menu{position:fixed;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom,0px));z-index:40;display:flex;justify-content:space-around;align-items:center;width:auto;margin:0;padding:8px 6px;border-radius:24px;background:rgba(255,255,255,.94);backdrop-filter:blur(14px);box-shadow:0 8px 28px rgba(226,58,128,.18),0 0 0 1px #F2DCE4;overflow:visible}
+  body:not(.is-home) .menu a{flex-direction:column;gap:2px;padding:2px 0 0;flex:1;min-width:0}
+  body:not(.is-home) .menu a::before{display:none}
+  body:not(.is-home) .menu .icon{width:30px;height:30px;transition:transform .25s}
+  body:not(.is-home) .menu a[aria-current="page"] .icon{transform:translateY(-3px) scale(1.12)}
+  body:not(.is-home) .menu .label{position:static;transform:none!important;opacity:1;background:none;padding:0;font-size:10.5px;font-weight:700;color:#8A6E6A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+  body:not(.is-home) .menu a[aria-current="page"] .label{color:var(--pink-deep);font-weight:800}
+  :root{--nav-h:72px}
+  body:not(.is-home) .page .cards{grid-template-columns:repeat(3,minmax(0,1fr));gap:20px 12px}
+  body:not(.is-home) .page .card{background:none!important;box-shadow:none!important;border-radius:0;align-items:center;text-align:center}
+  body:not(.is-home) .page .card .thumb{margin:0;width:100%;aspect-ratio:1;border-radius:22px;box-shadow:0 4px 0 #F3C9D9,0 0 0 1px #F2DCE4}
+  body:not(.is-home) .page .card-body{padding:7px 2px 0;gap:0}
+  body:not(.is-home) .page .card-meta,body:not(.is-home) .page .card p,body:not(.is-home) .page .card .go{display:none}
+  body:not(.is-home) .page .card h3{font-size:12.5px;line-height:1.3;font-weight:700;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+}
 </style>
 
 <div class="frame" aria-hidden="true"></div>
@@ -672,7 +690,7 @@ function loadSet(name){
   o.p=new Promise(res=>{ img.onload=()=>{ (img.decode?img.decode():Promise.resolve()).catch(()=>{}).then(()=>{ o.ready=true; res(); }); }; img.onerror=()=>res(); });
   img.src=`frames2/${name}.webp?v=${META.v||1}`;
   // 한 번에 쓰는 일이 드문 영상은 최대 6개만 메모리에 둠
-  const extra=Object.keys(SETS).filter(k=>!CORE.includes(k)&&!k.startsWith('menu_'));
+  const extra=Object.keys(SETS).filter(k=>!CORE.includes(k)&&!k.startsWith('menu_')&&k!=='intro_pop');
   if(extra.length>6){ extra.sort((a,b)=>SETS[a].used-SETS[b].used); for(const k of extra.slice(0,extra.length-6)) if(k!==clip&&k!==clipQ&&k!==name) delete SETS[k]; }
   return o.p;
 }
@@ -702,7 +720,7 @@ const colX={left:-1,center:0,right:1};
 function tIdx(set,x){ const s=META.sets[set], n=s.count, m=s.front??((n-1)>>1); return Math.round(x<0? m*(1+x) : m+(n-1-m)*x); }
 function planIdle(now){ idleNext=now+8000+Math.random()*7000; nextIdle=IDLES[Math.floor(Math.random()*IDLES.length)]; if(!coarse) loadSet(nextIdle); }
 function goIdle(now){ idle=true; idleT0=now; planIdle(now); }
-let spT=0, introPop=false;
+let spT=0, introPop=false, introFrom=0;
 function introSpark(now){
   if(reduce||now-spT<60) return; spT=now;
   const w=cv.width,h=cv.height; if(!w) return;
@@ -717,9 +735,9 @@ function frame(now){
   if(mode==='loading'||!isHome()) return;
   cx2.clearRect(0,0,cv.width,cv.height);
   if(mode==='intro'){   // 바닥 구멍에서 쏙 올라오는 영상
-    if(!ready('intro_pop')){ if(now-introStart>2500){ mode='live'; goIdle(now); } return; }
+    if(!ready('intro_pop')){ if(now-introStart>1200){ mode='live'; goIdle(now); } else draw('idle',0); return; }
     if(!introPop){ introPop=true; introStart=now; }
-    const s=META.sets.intro_pop, i=Math.floor((now-introStart)/1000*s.fps);
+    const s=META.sets.intro_pop, i=introFrom+Math.floor((now-introStart)/1000*s.fps);
     if(i<s.count){
       draw('intro_pop',i);
       if(i>=5&&i<=20&&now-spT>50){ spT=now; const r=cv.getBoundingClientRect(), k=r.width/cv.width, sx=r.left+(META.box[0]+META.box[2]/2)*k, sy=r.top+690*k;
@@ -900,7 +918,7 @@ function render(){
   const id=location.hash.slice(1), home=!pages.includes(id);
   const wasHome=document.body.classList.contains('is-home');
   // 하위 페이지에서 메인으로 돌아오면 등장 장면을 다시 재생
-  if(home && !wasHome && mode!=='loading' && !reduce){ mode='intro'; introPop=false; introStart=performance.now(); clip=null; clipQ=null; trans=null; vert='mid'; shown=-1; poseWant=null; idle=false; lx=0; tx=0; }
+  if(home && !wasHome && mode!=='loading' && !reduce){ mode='intro'; introPop=false; introFrom=8; introStart=performance.now(); clip=null; clipQ=null; trans=null; vert='mid'; shown=-1; poseWant=null; idle=false; lx=0; tx=0; }
   document.body.classList.toggle('is-home',home); stage.hidden=!home;
   pages.forEach(p=>$('#'+p).hidden=p!==id);
   document.querySelectorAll('.menu a').forEach(a=>{ if(a.dataset.go===id && !a.dataset.target) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current'); });
@@ -913,7 +931,8 @@ const POSE_OF={about:'career',promo:'promo',video:'video',webapp:'webapp',train:
 let sidePage=null, sideWant=null, sideCur=null, sPh='in', sF=0, sLast=0, sUntil=0, sAct=null;
 function sideStart(id){ const p=POSE_OF[id]; if(!p||!META) return; sidePage=sideWant=sideCur='menu_'+p; sPh='in'; sF=0; sLast=performance.now(); loadSet(sideCur); }
 function drawSide(n,i){ const s=SETS[n]; if(!s||!s.ready) return false; s.used=performance.now(); i=Math.max(0,Math.min(s.count-1,Math.round(i))); const c=i%s.cols, r=(i/s.cols)|0;
-  sx2.clearRect(0,0,sc.width,sc.height); sx2.drawImage(s.img,c*s.cw,r*s.ch,s.cw,s.ch,s.x-SIDE_X,0,s.w,META.box[3]); return true; }
+  const x0=300, x1=Math.max(960,s.x+s.w), W=x1-x0; if(sc.width!==W||sc.height!==META.box[3]){ sc.width=W; sc.height=META.box[3]; }
+  sx2.clearRect(0,0,sc.width,sc.height); sx2.drawImage(s.img,c*s.cw,r*s.ch,s.cw,s.ch,s.x-x0,0,s.w,META.box[3]); return true; }
 document.querySelectorAll('.menu a').forEach(a=>{
   const p=POSE_OF[a.dataset.go];
   a.addEventListener('pointerenter',()=>{ if(!isHome()&&p){ sideWant='menu_'+p; loadSet(sideWant); } });
@@ -921,8 +940,7 @@ document.querySelectorAll('.menu a').forEach(a=>{
 });
 (function sideLoop(now){
   requestAnimationFrame(sideLoop);
-  if(!sideCur||isHome()||!META||!sc.offsetParent) return;
-  if(sc.width!==SIDE_W){ sc.width=SIDE_W; sc.height=META.box[3]; }
+  if(!sideCur||isHome()||!META||!sc.getClientRects().length) return;
   const dt=Math.min(.1,(now-sLast)/1000)*12; sLast=now;
   const S=n=>SETS[n]&&SETS[n].ready, cnt=n=>META.sets[n].count;
   if(sPh==='in'){ if(!S(sideCur)) return; sF=Math.min(cnt(sideCur)-1,sF+dt*1.6); if(sF>=cnt(sideCur)-1){ sPh='hold'; sUntil=now+2600; } drawSide(sideCur,sF); }
