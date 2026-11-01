@@ -419,10 +419,10 @@ body.admin .page .cards .card{cursor:grab;outline:1.5px dashed var(--pink-light)
   body:not(.is-home) .menu a[aria-current="page"]{background:#fff;padding-top:14px}
   body:not(.is-home) .menu a[aria-current="page"] .label{color:var(--ink)}
   body:not(.is-home) > .page{box-sizing:border-box;max-width:1320px;margin:0 auto;padding:78px 40px 40px}
-  body:not(.is-home) > .page > .wrap{max-width:none;margin:0;background:#fff;border-radius:0 28px 28px 28px;padding:44px min(400px,30vw) 64px 48px;min-height:calc(100vh - 140px)}
+  body:not(.is-home) > .page > .wrap{max-width:none;margin:0;background:#fff;border-radius:0 28px 28px 28px;padding:40px 48px 64px;min-height:calc(100vh - 140px)}
   body:not(.is-home) > footer.ft{max-width:1320px;margin:0 auto;padding-inline:40px}
-  body:not(.is-home) #sideCv{display:block;position:fixed;top:auto;bottom:28px;left:calc(50vw + min(50vw, 660px) - 500px);height:min(48vh,410px);width:auto;pointer-events:none;z-index:6}
-  body:not(.is-home) .page-head{min-height:0;padding-right:0}
+  body:not(.is-home) #sideCv{display:block;position:absolute;right:0;bottom:-24px;top:auto;left:auto;height:210px;width:auto;pointer-events:none;z-index:2}
+  body:not(.is-home) .page-head{position:relative;min-height:150px;padding-right:330px}
 }
 @media (max-width:900px){
   body:not(.is-home){padding-bottom:96px}
@@ -878,7 +878,7 @@ sizeL(); addEventListener('resize',sizeL);
 function burst(x,y,n=10){ for(let i=0;i<n;i++) addMote(x,y,1.2+Math.random()*2.2); }
 function addMote(x,y,sp){
   const a=Math.random()*Math.PI*2, s=sp*(.3+Math.random());
-  motes.push({x,y,vx:Math.cos(a)*s*.7,vy:Math.sin(a)*s*.5-.3,r:2.6+Math.random()*3.6,life:1,decay:.012+Math.random()*.018,
+  motes.push({x,y,vx:Math.cos(a)*s*.7,vy:Math.sin(a)*s*.5-.3,r:4.5+Math.random()*4,life:1,decay:.012+Math.random()*.018,
     hue:(q=>q<.5?'255,71,145':q<.85?'255,150,190':'255,255,255')(Math.random()),tw:Math.random()*6.28,rot:Math.random()*1.6,spin:(Math.random()-.5)*.08});
 }
 addEventListener('pointermove',e=>{
@@ -899,7 +899,7 @@ addEventListener('pointermove',e=>{
       g.addColorStop(0,`rgba(255,176,206,${al*.45})`); g.addColorStop(1,'rgba(255,176,206,0)');
       lx2.fillStyle=g; lx2.beginPath(); lx2.arc(X,Y,R*2.2,0,Math.PI*2); lx2.fill();
       lx2.save(); lx2.translate(X,Y); lx2.rotate(m.rot); const c=R*.13;
-      lx2.beginPath(); lx2.moveTo(0,-R); lx2.quadraticCurveTo(c,-c,R,0); lx2.quadraticCurveTo(c,c,0,R); lx2.quadraticCurveTo(-c,c,-R,0); lx2.quadraticCurveTo(-c,-c,0,-R);
+      lx2.rotate(-m.rot*.6); lx2.beginPath(); lx2.moveTo(0,R*.9); lx2.bezierCurveTo(-R*1.25,R*.05,-R*.85,-R*.95,0,-R*.35); lx2.bezierCurveTo(R*.85,-R*.95,R*1.25,R*.05,0,R*.9); lx2.closePath();
       lx2.fillStyle=m.hue==='255,255,255'?`rgba(255,255,255,${al})`:`rgba(${m.hue},${al})`; lx2.fill();
       if(m.hue==='255,255,255'){ lx2.strokeStyle=`rgba(255,71,145,${al*.5})`; lx2.lineWidth=ldpr; lx2.stroke(); }
       lx2.restore();
