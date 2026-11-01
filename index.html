@@ -755,10 +755,12 @@ hit.addEventListener('pointermove',e=>{
 });
 hit.addEventListener('pointerleave',()=>lastZ=null);
 hit.addEventListener('click',e=>{
-  if(mode!=='live'||clip) return;
+  if(mode!=='live'||(clip&&clip.startsWith('menu_'))) return;
   const r=hit.getBoundingClientRect(), y=(e.clientY-r.top)/r.height;
   const k=(zoneAt(e)||{k:y<.4?'react_head':'react_belly'}).k;
-  burst(e.clientX,e.clientY,14); clipQ=k; loadSet(k);
+  burst(e.clientX,e.clientY,14); loadSet(k);
+  // 반응 중에 또 누르면 그 자리에서 바로 다시 시작
+  if(clip && ready(k)){ startClip(k,performance.now()); } else clipQ=k;
 });
 document.querySelectorAll('.obj').forEach(a=>{
   const n=({about:'career',promo:'contact'})[a.dataset.go]||a.dataset.go;
