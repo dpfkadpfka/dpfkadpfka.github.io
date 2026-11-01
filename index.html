@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
-<script>(function(){var B="1793547214";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
+<script>(function(){var B="1793547418";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
 <meta name="color-scheme" content="light only">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="초등교사 김예람(예람쌤) — AI 영상·교육 콘텐츠 제작 연수, 영상·웹앱 콘텐츠, 연수 교안과 수업 자료">
@@ -818,6 +818,11 @@ textarea.gb-in{resize:none;line-height:1.6;min-height:110px}
 @media (max-width:760px){.gb-stk{width:66px;height:66px;right:-10px;bottom:-12px}.gb-note:has(.gb-stk) .gb-by{padding-right:40px}}
 .gb-note .gb-by span{position:absolute;top:9px;right:14px;font-size:11.5px;color:rgba(90,42,51,.5)}
 .gb-del{right:auto!important;left:6px}
+.gb-wall .gb-tabs{justify-content:flex-end;gap:2px;margin:0}
+.gb-wall .gb-tabs button{background:none!important;box-shadow:none!important;padding:4px 10px;font-size:12.5px;font-weight:700;color:var(--ink-soft)}
+.gb-wall .gb-tabs button[aria-pressed="true"]{background:none!important;color:var(--pink-deep)!important;text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:2px}
+.gb-wall .gb-tabs button+button::before{content:"·";margin-right:8px;color:#D9C4CC;font-weight:400;text-decoration:none;display:inline-block}
+.gb-wall .gb-board{padding-top:20px}
 /* 게시판 */
 .gb-wall{border-radius:24px;padding:22px 24px 34px;background:#FFF3F7 radial-gradient(rgba(255,71,145,.13) 1.2px,transparent 1.3px) 0 0/18px 18px}
 .gb-tabs{display:flex;gap:6px;justify-content:center;margin:0 0 6px}
@@ -2191,7 +2196,7 @@ document.addEventListener('click',e=>{ const c=e.target.closest('#webapp .cards 
  function drawStk(){ $g('gbStks').innerHTML=`<button type="button" class="gb-none" role="radio" aria-checked="${!stk}" data-s="">없음</button>`+STK.map(n=>`<button type="button" role="radio" aria-checked="${stk===n}" data-s="${n}"><img src="stk/${n}.webp?v=3" alt="" loading="lazy"></button>`).join(''); const im=$g('gbPvStk'); im.hidden=!stk; if(stk) im.src='stk/'+stk+'.webp?v=3'; }
  $g('gbStks').addEventListener('click',ev=>{ const b=ev.target.closest('[data-s]'); if(b){ stk=b.dataset.s; drawStk(); } });
  const cLabel=c=>typeof c==='string'?c:((c.d?c.d+' ':'')+c.t);
- function drawSel(){ sel.innerHTML='<option value="">연수를 골라 주세요</option>'+courses.map(c=>`<option>${e(cLabel(c))}</option>`).join('')+'<option value="기타">기타</option>'; }
+ function drawSel(){ $g('gbCourseF').hidden=kind!==1||!courses.length; sel.innerHTML='<option value="">연수를 골라 주세요</option>'+courses.map(c=>`<option>${e(cLabel(c))}</option>`).join('')+'<option value="기타">기타</option>'; }
  const ADJ=['반짝이는','수줍은','신나는','졸린','용감한','다정한','호기심 많은','느긋한','씩씩한','말랑말랑한','꼼꼼한','상냥한','배고픈','행복한','엉뚱한','조용한','부지런한','명랑한','포근한','깜찍한'];
  const ANI=['수달','펭귄','고양이','강아지','토끼','다람쥐','판다','코알라','햄스터','고슴도치','여우','부엉이','돌고래','알파카','쿼카','아기곰','병아리','오리','라쿤','사슴'];
  let rnd=''; const roll=()=>{ rnd=ADJ[Math.floor(Math.random()*ADJ.length)]+' '+ANI[Math.floor(Math.random()*ANI.length)]; const lc=rnd.charCodeAt(rnd.length-1)-0xAC00, jb=lc%28; nm.placeholder=`비워 두면 '${rnd}'${jb===0||jb===8?'로':'으로'} 붙어요`; };
@@ -2206,13 +2211,13 @@ document.addEventListener('click',e=>{ const c=e.target.closest('#webapp .cards 
   return `<div class="gb-note${pop?' gb-pop':''}" data-c="${x.c|0}" data-id="${e(x.id||'')}" style="--r:${r}deg">${pin?'<i class="gb-pin"></i>':'<i class="gb-tape"></i>'}<button type="button" class="gb-del" title="삭제">✕</button>${x.k===1?`<span class="gb-chip">수강 후기${x.r&&x.r!=='기타'?' · '+e(x.r):''}</span>`:x.k===2?'<span class="gb-chip">응원</span>':''}<p class="gb-txt">${e(x.m)}</p><div class="gb-by"><b>${e(x.n||'익명')}</b><span>${when(x.t)}</span></div>${x.s&&STK.includes(x.s)?`<img class="gb-stk" src="stk/${x.s}.webp?v=3" alt="" loading="lazy" style="--sr:${(h%20)-10}deg">`:''}</div>`; }
  function drawBoard(popId){
   const cnt=k=>items.filter(x=>x.k===k).length;
-  $g('gbTabs').innerHTML=[...KINDS.map((k,i)=>[String(i),k,cnt(i)])].map(([v,t,n])=>`<button type="button" data-t="${v}" aria-pressed="${tab===v}">${t}<i>${n}</i></button>`).join('');
+  $g('gbTabs').innerHTML=[['all','전체',items.length],...KINDS.map((k,i)=>[String(i),k,cnt(i)])].map(([v,t,n])=>`<button type="button" data-t="${v}" aria-pressed="${tab===v}">${t}<i>${n}</i></button>`).join('');
   const rs=[...new Set(items.filter(x=>x.k===1&&x.r).map(x=>x.r))];
   $g('gbSub').innerHTML='';
   const L=items.filter(x=>tab==='all'||String(x.k)===tab);
   $g('gbBoard').innerHTML=L.length?L.map(x=>note(x,x.id===popId)).join(''):`<p class="gb-empty">${loaded?'첫 번째 포스트잇을 붙여 주세요!':'방명록을 불러오는 중…'}</p>`;
  }
- $g('gbTabs').addEventListener('click',ev=>{ const b=ev.target.closest('[data-t]'); if(b){ tab=tab===b.dataset.t?'all':b.dataset.t; drawBoard(); } });
+ $g('gbTabs').addEventListener('click',ev=>{ const b=ev.target.closest('[data-t]'); if(b){ tab=b.dataset.t; drawBoard(); } });
  $g('gbSub').addEventListener('click',ev=>{ const b=ev.target.closest('[data-s]'); if(b){ sub=b.dataset.s; drawBoard(); } });
  async function load(){
   try{ const r=await fetch('https://firestore.googleapis.com/v1/projects/yeram-ai-video/databases/(default)/documents/config/hv_courses?t='+Date.now()); if(r.ok){ const d=await r.json(); courses=JSON.parse(d.fields?.json?.stringValue||'[]'); } }catch(_){}
