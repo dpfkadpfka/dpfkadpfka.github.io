@@ -740,7 +740,7 @@ const colX={left:-1,center:0,right:1};
 function tIdx(set,x){ const s=META.sets[set], n=s.count, m=s.front??((n-1)>>1); return Math.round(x<0? m*(1+x) : m+(n-1-m)*x); }
 function planIdle(now){ idleNext=now+8000+Math.random()*7000; nextIdle=IDLES[Math.floor(Math.random()*IDLES.length)]; if(!coarse) loadSet(nextIdle); }
 function goIdle(now){ idle=true; idleT0=now; planIdle(now); }
-let spT=0, introPop=false, introFrom=0;
+let spT=0, introPop=false, introFrom=3;
 function introSpark(now){
   if(reduce||now-spT<60) return; spT=now;
   const w=cv.width,h=cv.height; if(!w) return;
@@ -757,10 +757,10 @@ function frame(now){
   if(mode==='intro'){   // 바닥 구멍에서 쏙 올라오는 영상
     if(!ready('intro_pop')){ if(now-introStart>1200){ mode='live'; goIdle(now); } else draw('idle',0); return; }
     if(!introPop){ introPop=true; introStart=now; }
-    const s=META.sets.intro_pop, i=introFrom+Math.floor((now-introStart)/1000*s.fps);
-    if(i<s.count){
+    const s=META.sets.intro_pop, i=introFrom+Math.floor((now-introStart)/1000*s.fps*1.8);
+    if(i<Math.min(s.count,25)){
       draw('intro_pop',i);
-      if(i>=5&&i<=20&&now-spT>50){ spT=now; const r=cv.getBoundingClientRect(), k=r.width/cv.width, sx=r.left+(META.box[0]+META.box[2]/2)*k, sy=r.top+690*k;
+      if(i>=4&&i<=18&&now-spT>40){ spT=now; const r=cv.getBoundingClientRect(), k=r.width/cv.width, sx=r.left+(META.box[0]+META.box[2]/2)*k, sy=r.top+690*k;
         for(let j=0;j<3;j++) addMote(sx+(Math.random()-.5)*META.box[2]*.5*k, sy-Math.random()*r.height*.6, .7+Math.random()*1.4); }
       return;
     }
@@ -939,7 +939,7 @@ function render(){
   const id=location.hash.slice(1), home=!pages.includes(id);
   const wasHome=document.body.classList.contains('is-home');
   // 하위 페이지에서 메인으로 돌아오면 등장 장면을 다시 재생
-  if(home && !wasHome && mode!=='loading' && !reduce){ mode='intro'; introPop=false; introFrom=8; introStart=performance.now(); clip=null; clipQ=null; trans=null; vert='mid'; shown=-1; poseWant=null; idle=false; lx=0; tx=0; }
+  if(home && !wasHome && mode!=='loading' && !reduce){ mode='intro'; introPop=false; introFrom=6; introStart=performance.now(); clip=null; clipQ=null; trans=null; vert='mid'; shown=-1; poseWant=null; idle=false; lx=0; tx=0; }
   document.body.classList.toggle('is-home',home); stage.hidden=!home;
   pages.forEach(p=>$('#'+p).hidden=p!==id);
   document.querySelectorAll('.menu a').forEach(a=>{ if(a.dataset.go===id && !a.dataset.target) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current'); });
