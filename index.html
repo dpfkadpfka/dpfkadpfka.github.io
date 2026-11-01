@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
-<script>(function(){var B="1793545125";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
+<script>(function(){var B="1793545436";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
 <meta name="color-scheme" content="light only">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="초등교사 김예람(예람쌤) — AI 영상·교육 콘텐츠 제작 연수, 영상·웹앱 콘텐츠, 연수 교안과 수업 자료">
@@ -2166,7 +2166,7 @@ document.addEventListener('click',e=>{ const c=e.target.closest('#webapp .cards 
  const $g=id=>document.getElementById(id), form=$g('gbForm'); if(!form) return;
  if(!document.getElementById('gbFont')){ const st=document.createElement('style'); st.id='gbFont'; st.textContent="@font-face{font-family:'OngleipEoyeonce';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105@1.1/Uiyeun.woff') format('woff');font-weight:normal;font-display:swap}"; document.head.appendChild(st); }
  const e=x=>String(x??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
- let kind=0, color=0, courses=[], items=[], tab='0', sub='', loaded=false;
+ let kind=0, color=0, courses=[], items=[], tab='all', sub='', loaded=false;
  const prev=$g('gbPrev'), kinds=$g('gbKinds'), sel=$g('gbCourse'), msg=$g('gbMsg'), nm=$g('gbName'), out=$g('gbMsgOut');
  function drawKinds(){ kinds.innerHTML=KINDS.map((k,i)=>`<button type="button" role="radio" aria-checked="${i===kind}" data-k="${i}">${k}</button>`).join(''); $g('gbCourseF').hidden=kind!==1; upd(); }
  function drawColors(){ $g('gbColors').innerHTML=Array.from({length:NC},(_,i)=>`<button type="button" role="radio" aria-label="포스트잇 ${i+1}" aria-checked="${i===color}" data-c="${i}"></button>`).join(''); prev.dataset.c=color; }
@@ -2190,11 +2190,11 @@ document.addEventListener('click',e=>{ const c=e.target.closest('#webapp .cards 
   const cnt=k=>items.filter(x=>x.k===k).length;
   $g('gbTabs').innerHTML=[...KINDS.map((k,i)=>[String(i),k,cnt(i)])].map(([v,t,n])=>`<button type="button" data-t="${v}" aria-pressed="${tab===v}">${t}<i>${n}</i></button>`).join('');
   const rs=[...new Set(items.filter(x=>x.k===1&&x.r).map(x=>x.r))];
-  $g('gbSub').innerHTML=tab==='1'&&rs.length?[['','모든 연수'],...rs.map(r=>[r,r])].map(([v,t])=>`<button type="button" data-s="${e(v)}" aria-pressed="${sub===v}">${e(t)}${v?`<i>${items.filter(x=>x.r===v).length}</i>`:''}</button>`).join(''):'';
-  const L=items.filter(x=>(String(x.k)===tab)&&(tab!=='1'||!sub||x.r===sub));
+  $g('gbSub').innerHTML='';
+  const L=items.filter(x=>tab==='all'||String(x.k)===tab);
   $g('gbBoard').innerHTML=L.length?L.map(x=>note(x,x.id===popId)).join(''):`<p class="gb-empty">${loaded?'첫 번째 포스트잇을 붙여 주세요!':'방명록을 불러오는 중…'}</p>`;
  }
- $g('gbTabs').addEventListener('click',ev=>{ const b=ev.target.closest('[data-t]'); if(b){ tab=b.dataset.t; sub=''; drawBoard(); } });
+ $g('gbTabs').addEventListener('click',ev=>{ const b=ev.target.closest('[data-t]'); if(b){ tab=tab===b.dataset.t?'all':b.dataset.t; drawBoard(); } });
  $g('gbSub').addEventListener('click',ev=>{ const b=ev.target.closest('[data-s]'); if(b){ sub=b.dataset.s; drawBoard(); } });
  async function load(){
   try{ const r=await fetch('https://firestore.googleapis.com/v1/projects/yeram-ai-video/databases/(default)/documents/config/hv_courses?t='+Date.now()); if(r.ok){ const d=await r.json(); courses=JSON.parse(d.fields?.json?.stringValue||'[]'); } }catch(_){}
@@ -2216,7 +2216,7 @@ document.addEventListener('click',e=>{ const c=e.target.closest('#webapp .cards 
    const ref={id:rj.id}; const {F,db}=await fbLoad();
    items.unshift({id:ref.id,...data,t:new Date()});
    try{ const {auth}=await fbLoad(); if(auth.authStateReady) await auth.authStateReady(); const u=auth.currentUser; if(u&&u.email) await F.addDoc(F.collection(db,'guest_log'),{gid:ref.id,uid:u.uid,email:u.email,name:u.displayName||'',t:F.serverTimestamp()}); }catch(_){} try{ localStorage.setItem('gbLast',Date.now()); }catch(_){}
-   msg.value=''; roll(); $g('gbCnt').textContent='0/300'; upd(); out.textContent='포스트잇을 붙였어요! 고마워요 💗'; tab=String(kind); sub=''; drawBoard(ref.id);
+   msg.value=''; roll(); $g('gbCnt').textContent='0/300'; upd(); out.textContent='포스트잇을 붙였어요! 고마워요 💗'; tab='all'; drawBoard(ref.id);
    const r=prev.getBoundingClientRect(); if(typeof pop==='function') pop(r.left+r.width/2,r.top+r.height/2);
   }catch(x){ out.textContent='붙이지 못했어요. 잠시 뒤 다시 시도해 주세요.'; console.warn(x); }
   btn.disabled=false;
