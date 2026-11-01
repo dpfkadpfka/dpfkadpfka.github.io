@@ -445,6 +445,20 @@ body.admin .page .cards .card{cursor:grab;outline:1.5px dashed var(--pink-light)
 }
 .obj{transition:opacity .25s}
 .obj.dim{opacity:.12}
+.wmodal{position:fixed;inset:0;z-index:70;background:rgba(58,26,20,.38);display:grid;place-items:center;padding:20px}
+.wmodal[hidden]{display:none}
+.wm-box{position:relative;width:min(560px,100%);max-height:calc(100vh - 40px);overflow:auto;background:var(--bg);border-radius:26px;padding:30px 32px 28px;box-shadow:0 24px 60px rgba(58,26,20,.25)}
+.wm-x{position:absolute;right:16px;top:16px;width:38px;height:38px;border:0;border-radius:50%;background:var(--soft);color:var(--pink-deep);font-size:16px;cursor:pointer}
+.wm-head{display:flex;gap:18px;align-items:center;margin-bottom:18px;padding-right:30px}
+.wm-head img{width:92px;height:92px;border-radius:20px;object-fit:cover;flex:none;box-shadow:0 0 0 1px var(--line)}
+.wm-tag{font-size:12.5px;font-weight:800;color:var(--pink-deep)}
+.wm-head h3{margin:2px 0 6px;font-size:26px;font-weight:800}
+.wm-head p{margin:0;font-size:15px;color:var(--ink-soft);line-height:1.6}
+.wm-box h4{margin:18px 0 8px;font-size:15.5px;font-weight:800}
+.wm-box ul,.wm-box ol{margin:0;padding-left:20px;font-size:15px;line-height:1.75;color:var(--ink)}
+.wm-box li::marker{color:var(--pink);font-weight:800}
+.wm-dl{display:block;margin-top:22px;padding:14px;border-radius:14px;background:var(--pink);color:#fff;text-align:center;font-weight:800;font-size:16px;text-decoration:none}
+.wm-dl:hover{background:var(--pink-deep)}
 </style>
 
 <div class="frame" aria-hidden="true"></div>
@@ -608,7 +622,7 @@ function renderArchive(id){
       const tag=i.url?'a':'div', href=i.url?` href="${esc(i.url)}" target="_blank" rel="noopener"`:'';
       return `<${tag} class="card tone-0"${href} data-key="${esc(i.t)}"><div class="thumb">${thumb(i)}</div>
         <div class="card-body"><div class="card-meta"><span>${esc(i.tag)}</span><span>${esc(i.y)}</span></div><h3>${esc(i.t)}</h3>${i.d?`<p>${esc(i.d)}</p>`:''}
-        <span class="go${i.url?'':' soon'}">${i.url?(i.yt?'영상 보기 →':i.tag==='윈도우 앱'?'내려받기 →':'열어 보기 →'):'링크 준비 중'}</span></div></${tag}>`;
+        <span class="go${i.url?'':' soon'}">${i.url?(i.yt?'영상 보기 →':i.tag==='윈도우 앱'?'자세히 보기 →':'열어 보기 →'):'링크 준비 중'}</span></div></${tag}>`;
     }).join('');
     fl.querySelectorAll('.chip').forEach(c=>c.setAttribute('aria-pressed',c.dataset.t===cur));
   };
@@ -979,6 +993,34 @@ $('#copyMail').addEventListener('click',async()=>{
 /* 인스타그램: 아직 준비 중 */
 function toast(t){ let d=document.querySelector('.toast'); if(!d){ d=document.createElement('div'); d.className='toast'; document.body.appendChild(d); } d.textContent=t; d.classList.add('on'); clearTimeout(d._t); d._t=setTimeout(()=>d.classList.remove('on'),1800); }
 document.querySelectorAll('[data-sns="insta"]').forEach(a=>a.addEventListener('click',e=>{ e.preventDefault(); toast('인스타그램은 준비 중입니다'); }));
+
+/* 윈도우 앱: 누르면 설명 창 */
+const WINAPP={
+ 'RamClock':{lead:'교실 컴퓨터 바탕화면에 띄워 두는 시계 위젯이에요. 수업에 필요한 것을 한 화면에 모았어요.',
+  feat:['시간표·주간학습안내 PDF를 올리면 그 주 시간표로 바뀜','타이머·스톱워치·학생 뽑기·투표','선생님 안내 문구와 자주 쓰는 사이트 바로가기','새 버전은 자동으로 받아짐'],
+  how:['내려받기를 눌러 RamClock.exe를 받아요.','원하는 폴더(바탕화면 등)에 두고 실행해요. 설치는 필요 없어요.','“Windows의 PC 보호”가 뜨면 [추가 정보 → 실행]을 눌러요.'],
+  dl:'https://github.com/dpfkadpfka/RamClock/releases/latest/download/RamClock.exe'},
+ 'RamSpirit':{lead:'ChatGPT·Gemini·Grok·Claude 같은 AI와 다른 프로그램을 한 창에 나란히 띄우고, 질문 하나를 모두에게 한 번에 보내는 프로그램이에요.',
+  feat:['2·4·6·8칸, 칸마다 AI·웹사이트·설치된 프로그램 선택','아래 입력창에서 모두에게 한 번에 보내기','칸별·전체 새 대화, 크게 보기, 끌어서 자리 바꾸기','윈도우 10·11용 · 무료'],
+  how:['내려받기를 눌러 RamSpirit.exe를 받아요.','더블클릭하면 자동으로 설치되고 바탕화면에 아이콘이 생겨요.','처음 설정 창에서 칸 수와 칸마다 열 앱을 고르면 끝이에요.'],
+  dl:'https://github.com/dpfkadpfka/ramspirit/releases/latest/download/RamSpirit.exe'},
+ 'Ram Calendar':{lead:'구글 캘린더와 실시간으로 이어지는 윈도우 바탕화면 달력이에요. 달력에서 바로 일정을 넣고 고칠 수 있어요.',
+  feat:['구글 캘린더 일정이 바탕화면에 바로 보임','앱 안에서 일정 추가·수정','시간 정해진 일정 알림','새 버전은 자동으로 업데이트'],
+  how:['내려받기를 눌러 설치 파일(YeramCalendar-Setup)을 받아 실행해요.','“Windows의 PC 보호”가 뜨면 [추가 정보 → 실행]을 눌러요.','앱의 ⚙ 설정 → 구글 로그인을 눌러 연결해요.'],
+  dl:'https://github.com/dpfkadpfka/yeram-calendar/releases/latest'}
+};
+const wm=document.createElement('div'); wm.className='wmodal'; wm.hidden=true; document.body.appendChild(wm);
+function openWin(key){ const a=WINAPP[key], it=ARCHIVE.webapp.find(x=>x.t===key); if(!a) return;
+  wm.innerHTML=`<div class="wm-box" role="dialog" aria-modal="true" aria-label="${esc(key)}"><button class="wm-x" type="button" aria-label="닫기">✕</button>
+   <div class="wm-head"><img src="${esc(it?.img||'')}" alt=""><div><span class="wm-tag">윈도우 앱 · 무료</span><h3>${esc(key)}</h3><p>${esc(a.lead)}</p></div></div>
+   <h4>이런 걸 할 수 있어요</h4><ul>${a.feat.map(f=>`<li>${esc(f)}</li>`).join('')}</ul>
+   <h4>설치 방법</h4><ol>${a.how.map(f=>`<li>${esc(f)}</li>`).join('')}</ol>
+   <a class="wm-dl" href="${esc(a.dl)}" target="_blank" rel="noopener">내려받기</a></div>`;
+  wm.hidden=false; document.body.style.overflow='hidden'; wm.querySelector('.wm-x').focus(); }
+function closeWin(){ wm.hidden=true; document.body.style.overflow=''; }
+wm.addEventListener('click',e=>{ if(e.target===wm||e.target.closest('.wm-x')) closeWin(); });
+addEventListener('keydown',e=>{ if(e.key==='Escape'&&!wm.hidden) closeWin(); });
+document.addEventListener('click',e=>{ const c=e.target.closest('#webapp .cards .card'); if(!c||document.body.classList.contains('admin')) return; if(WINAPP[c.dataset.key]){ e.preventDefault(); openWin(c.dataset.key); } });
 </script>
 
 </html>
