@@ -874,7 +874,8 @@ function setTarget(px,py){
   if(py!==undefined){ const b=r.height; ty=(py-r.top)/b; }   // 0=머리끝 근처, 1=발끝
   lastMove=performance.now();
 }
-addEventListener('pointermove',e=>{ if(isHome()) setTarget(e.clientX,e.clientY); },{passive:true});
+let ptrIn=true; addEventListener('pointermove',e=>{ ptrIn=true; if(isHome()) setTarget(e.clientX,e.clientY); },{passive:true});
+document.documentElement.addEventListener('mouseleave',()=>{ ptrIn=false; }); addEventListener('blur',()=>{ ptrIn=false; });
 const colOf=x=>x<-.34?'left':x>.34?'right':'center';
 const colX={left:-1,center:0,right:1};
 function tIdx(set,x){ const s=META.sets[set], n=s.count, m=s.front??((n-1)>>1); return Math.round(x<0? m*(1+x) : m+(n-1-m)*x); }
@@ -905,7 +906,7 @@ function frame(now){
     }
     mode='live'; goIdle(now); vert='mid'; trans=null; lx=0;
   }
-  const moving=now-lastMove<2200;
+  const moving=ptrIn&&now-lastMove<12000;
   const want=poseWant?'menu_'+poseWant:clipQ;
 
   /* 1) 영상 한 편(대기 동작·클릭 반응·메뉴 자세) 재생 중 */
@@ -938,7 +939,7 @@ function frame(now){
   if(!fullOK) eV='none';
 
   if(trans){   // 고개 드는/숙이는 중
-    const s=META.sets[trans.name], dt=Math.min(.1,(now-trans.last)/1000)*s.fps*3.4; trans.last=now;
+    const s=META.sets[trans.name], dt=Math.min(.1,(now-trans.last)/1000)*s.fps*5; trans.last=now;
     if(trans.dir>0 && eV!==trans.v) trans.dir=-1;
     else if(trans.dir<0 && eV===trans.v && ready('turn_'+trans.v)) trans.dir=1;
     trans.f+=dt*trans.dir*(trans.dir<0?1.4:1);
