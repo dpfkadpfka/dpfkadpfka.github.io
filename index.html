@@ -717,6 +717,39 @@ button.card{font:inherit;text-align:left;cursor:pointer;width:100%;padding:0;bor
   body.is-home .obj[data-go="video"],body.is-home .obj[data-go="webapp"]{top:53%!important}
   body.is-home .obj[data-go="train"],body.is-home .obj[data-go="class"]{top:72%!important}
 }
+.hero.hero-wm{display:none!important}
+@media (min-width:901px){
+body.is-home{--H:min(58vh,580px);--cy:calc(100vh - 11vh - var(--H) * .5);--rx:calc(var(--H) * .78);--ry:calc(var(--H) * .6)}
+body.is-home .char-wrap{height:var(--H)!important;bottom:11vh!important}
+body.is-home .floor{bottom:calc(11vh + 2px)!important}
+body.is-home .obj[data-go="train"]{left:calc(50% + -0.978 * var(--rx))!important;top:calc(var(--cy) - 0.208 * var(--ry))!important}
+body.is-home .obj[data-go="video"]{left:calc(50% + -0.719 * var(--rx))!important;top:calc(var(--cy) - 0.695 * var(--ry))!important}
+body.is-home .obj[data-go="about"]{left:calc(50% + -0.242 * var(--rx))!important;top:calc(var(--cy) - 0.970 * var(--ry))!important}
+body.is-home .obj[data-go="promo"]{left:calc(50% + 0.242 * var(--rx))!important;top:calc(var(--cy) - 0.970 * var(--ry))!important}
+body.is-home .obj[data-go="webapp"]{left:calc(50% + 0.719 * var(--rx))!important;top:calc(var(--cy) - 0.695 * var(--ry))!important}
+body.is-home .obj[data-go="class"]{left:calc(50% + 0.978 * var(--rx))!important;top:calc(var(--cy) - 0.208 * var(--ry))!important}
+body.is-home .obj-ic{width:clamp(76px,9vh,100px)!important;height:clamp(76px,9vh,100px)!important}
+}
+.boss{position:absolute;left:50%;top:calc(var(--nav-h) - 14px);transform:translateX(-50%);z-index:6;width:min(560px,46vw);pointer-events:none}
+.boss-top{display:flex;align-items:baseline;gap:8px;padding:0 4px 6px}
+.boss-top b{font-family:"Black Han Sans","Freesentation",sans-serif;font-weight:400;font-size:24px;color:var(--ink);letter-spacing:.03em;line-height:1}
+.boss-top em{font-style:normal;font-size:14px;font-weight:800;color:var(--pink-deep)}
+.boss-top span{margin-left:auto;font-size:13px;font-weight:800;color:var(--ink-soft);font-variant-numeric:tabular-nums;letter-spacing:.04em}
+.boss-bar{position:relative;height:22px;padding:3px;border-radius:7px;background:#2B1712;box-shadow:0 0 0 1.5px #6B4339,0 8px 20px rgba(74,42,34,.22)}
+.boss-bar i{position:relative;display:block;height:100%;border-radius:4px;overflow:hidden;background:linear-gradient(180deg,#FF9CC4 0%,#FF4791 48%,#D92E76 100%)}
+.boss-bar i::before{content:"";position:absolute;left:0;right:0;top:0;height:42%;background:rgba(255,255,255,.25)}
+.boss-bar i::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 calc(10% - 2px),#2B1712 calc(10% - 2px) 10%)}
+body:not(.is-home) .boss{display:none}
+.band{background:var(--pink)!important;border-top:0!important}
+.band b{color:#fff!important}
+.band small{color:rgba(255,255,255,.86)!important}
+.band span+span{border-left-color:rgba(255,255,255,.35)!important}
+@media (max-width:700px){
+ .boss{top:calc(env(safe-area-inset-top,0px) + 64px);width:calc(100% - 120px);left:auto;right:16px;transform:none}
+ .boss-top{padding-bottom:4px}.boss-top b{font-size:18px}.boss-top em{font-size:11px}.boss-top span{font-size:10px}
+ .boss-bar{height:16px;padding:2px}
+ html body.is-home .objs{top:calc(env(safe-area-inset-top,0px) + 132px)!important}
+}
 </style>
 
 <div class="frame" aria-hidden="true"></div>
@@ -769,7 +802,7 @@ button.card{font:inherit;text-align:left;cursor:pointer;width:100%;padding:0;bor
     <a class="obj" href="#class" data-go="class" style="--f:1;top:68%"><span class="obj-in"><span class="obj-card"><span class="obj-ic"><img src="obj/class.webp?v=2" alt=""></span><span class="obj-tx"><b>수업 자료</b></span></span></span></a>
   </nav>
   <div class="tagline"><h1>김예람</h1><p>AI 교육 콘텐츠를 만들고 가르치는 초등교사</p></div>
-  <div class="hero hero-wm"><h1 aria-label="김예람"><span aria-hidden="true">김</span><span aria-hidden="true">예</span><span aria-hidden="true">람</span></h1></div>
+  <div class="hero hero-wm"><h1>김예람</h1></div><div class="boss" role="img" aria-label="김예람"><div class="boss-top"><b>김예람</b><em>Lv.99</em><span>9,999 / 9,999</span></div><div class="boss-bar"><i></i></div></div>
   <div class="band"><span><b>교육 콘텐츠 비평·자문</b><small>EBS 시청자평가원 · EBS 〈처음 배우는 AI〉 자문교사</small></span><span><b>AI 콘텐츠 제작</b><small>EBS 이솦 공식 크리에이터</small></span><span><b>AI·SW 교육</b><small>AIEDAP 마스터교원 · 영재교육원 지도교사</small></span><span><b>미디어·디지털 리터러시</b><small>미디어교육사 · 디지털 토론 D'talks</small></span></div>
 </main>
 <canvas class="lights" id="lights" aria-hidden="true"></canvas>
