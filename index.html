@@ -667,6 +667,8 @@ button.card{font:inherit;text-align:left;cursor:pointer;width:100%;padding:0;bor
 @media (max-width:600px){.pvw{padding:8px}.pvw-fr{aspect-ratio:4/5}}
 .sec-hd{margin:8px 0 0}
 #promo .press{margin-top:52px}
+.gv-bar{box-sizing:border-box;width:min(900px,calc(100% - 32px));margin:14px auto 0;border-radius:14px;box-shadow:0 6px 24px rgba(0,0,0,.25)!important;position:relative;z-index:2}
+.gv-x{background:var(--pink)!important;color:#fff!important;width:40px!important;height:40px!important;font-size:17px!important}
 </style>
 
 <div class="frame" aria-hidden="true"></div>
@@ -1264,7 +1266,7 @@ function openWin(key){ const a=WINAPP[key], it=Object.values(ARCHIVE).flat().fin
    ${(a.imgs||[it?.img]).filter(Boolean).length?`<div class="wm-gal">${(a.imgs||[it.img]).map(u=>`<img src="${esc(u)}" alt="" loading="lazy">`).join('')}</div>`:''}${a.logo?'':`<div class="wm-head"><div><span class="wm-tag">${a.web?'웹앱 · 무료':'윈도우 앱 · 무료'}</span><h3>${esc(key)}</h3><p>${esc(a.lead)}</p></div></div>`}
    <h4>이런 걸 할 수 있어요</h4><ul>${a.feat.map(f=>`<li>${esc(f)}</li>`).join('')}</ul>
    <h4>${a.web?'이렇게 써요':'설치 방법'}</h4><ol>${a.how.map(f=>`<li>${esc(f)}</li>`).join('')}</ol>
-   ${a.guide?`<div class="wm-guide"><button type="button" class="wm-gv" data-guide="${esc(a.guide)}" data-name="${esc(key)}">📖 앱 가이드 보기</button><a class="wm-gd" href="${esc(a.guide)}" download>가이드 PDF 내려받기</a></div>`:''}
+   ${a.guide?`<div class="wm-guide"><button type="button" class="wm-gv" data-guide="${esc(a.guide)}" data-name="${esc(key)}">📖 앱 가이드 보기</button></div>`:''}
    <a class="wm-dl" href="${esc(a.dl||it?.url||'#')}" target="_blank" rel="noopener">${a.web?'열어 보기':'앱 내려받기'}</a></div>`;
   wm.hidden=false; document.body.style.overflow='hidden'; wm.querySelector('.wm-x').focus(); }
 function closeWin(){ wm.hidden=true; document.body.style.overflow=''; }
