@@ -669,6 +669,18 @@ button.card{font:inherit;text-align:left;cursor:pointer;width:100%;padding:0;bor
 #promo .press{margin-top:52px}
 .gv-bar{box-sizing:border-box;width:min(900px,calc(100% - 32px));margin:14px auto 0;border-radius:14px;box-shadow:0 6px 24px rgba(0,0,0,.25)!important;position:relative;z-index:2}
 .gv-x{background:var(--pink)!important;color:#fff!important;width:40px!important;height:40px!important;font-size:17px!important}
+.hero h1 span{display:inline-block;transition:color .2s,transform .25s cubic-bezier(.3,1.6,.5,1);cursor:default;pointer-events:auto}
+.hero h1 span:hover{color:var(--pink);transform:translateY(-4px)}
+.wm-gal img{object-fit:contain!important;background:#F6F1F3}
+.wm-gw{position:relative;margin-bottom:18px}
+.wm-gw .wm-gal{margin-bottom:0}
+.wm-gal img{flex-basis:100%!important}
+.wm-ga{position:absolute;top:calc(50% - 22px);width:40px;height:40px;border:0;border-radius:50%;background:rgba(255,255,255,.95);color:var(--pink-deep);font-size:24px;line-height:1;font-weight:800;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.18);display:grid;place-items:center;padding-bottom:3px}
+.wm-ga.prev{left:12px}.wm-ga.next{right:12px}
+.wm-ga:hover{background:var(--pink);color:#fff}
+.wm-gd2{display:flex;justify-content:center;gap:6px;margin-top:10px}
+.wm-gd2 i{width:7px;height:7px;border-radius:50%;background:#EBD3DC;transition:all .2s}
+.wm-gd2 i.on{width:20px;border-radius:99px;background:var(--pink)}
 </style>
 
 <div class="frame" aria-hidden="true"></div>
@@ -721,7 +733,7 @@ button.card{font:inherit;text-align:left;cursor:pointer;width:100%;padding:0;bor
     <a class="obj" href="#class" data-go="class" style="--f:1;top:68%"><span class="obj-in"><span class="obj-card"><span class="obj-ic"><img src="obj/class.webp?v=2" alt=""></span><span class="obj-tx"><b>수업 자료</b></span></span></span></a>
   </nav>
   <div class="tagline"><h1>김예람</h1><p>AI 교육 콘텐츠를 만들고 가르치는 초등교사</p></div>
-  <div class="hero"><span class="hero-badge">초등교사</span><h1>김예람</h1></div>
+  <div class="hero"><h1 aria-label="김예람"><span aria-hidden="true">김</span><span aria-hidden="true">예</span><span aria-hidden="true">람</span></h1></div>
   <div class="band"><span><b>교육 콘텐츠 비평·자문</b><small>EBS 시청자평가원 · EBS 〈처음 배우는 AI〉 자문교사</small></span><span><b>AI 콘텐츠 제작</b><small>EBS 이솦 공식 크리에이터</small></span><span><b>AI·SW 교육</b><small>AIEDAP 마스터교원 · 영재교육원 지도교사</small></span><span><b>미디어·디지털 리터러시</b><small>미디어교육사 · 디지털 토론 D'talks</small></span></div>
 </main>
 <canvas class="lights" id="lights" aria-hidden="true"></canvas>
@@ -1224,11 +1236,11 @@ var WINAPP={
  'RamClock':{lead:'교실 컴퓨터 바탕화면에 띄워 두는 시계 위젯이에요. 수업에 필요한 것을 한 화면에 모았어요.',
   feat:['시간표·주간학습안내 PDF를 올리면 그 주 시간표로 바뀜','타이머·스톱워치·학생 뽑기·투표','선생님 안내 문구와 자주 쓰는 사이트 바로가기','새 버전은 자동으로 받아짐'],
   how:['내려받기를 눌러 RamClock.exe를 받아요.','원하는 폴더(바탕화면 등)에 두고 실행해요. 설치는 필요 없어요.','“Windows의 PC 보호”가 뜨면 [추가 정보 → 실행]을 눌러요.'],
-  dl:'https://github.com/dpfkadpfka/RamClock/releases/latest/download/RamClock.exe', logo:'apps/logo_ramclock.webp', guide:'apps/guide-ramclock.pdf'},
+  dl:'https://github.com/dpfkadpfka/RamClock/releases/latest/download/RamClock.exe', imgs:['apps/sc_ramclock_1.webp','apps/sc_ramclock_2.webp','apps/sc_ramclock_3.webp','apps/sc_ramclock_4.webp'], logo:'apps/logo_ramclock.webp', guide:'apps/guide-ramclock.pdf'},
  'RamSpirit':{lead:'ChatGPT·Gemini·Grok·Claude 같은 AI와 다른 프로그램을 한 창에 나란히 띄우고, 질문 하나를 모두에게 한 번에 보내는 프로그램이에요.',
   feat:['2·4·6·8칸, 칸마다 AI·웹사이트·설치된 프로그램 선택','아래 입력창에서 모두에게 한 번에 보내기','칸별·전체 새 대화, 크게 보기, 끌어서 자리 바꾸기','윈도우 10·11용 · 무료'],
   how:['내려받기를 눌러 RamSpirit.exe를 받아요.','더블클릭하면 자동으로 설치되고 바탕화면에 아이콘이 생겨요.','처음 설정 창에서 칸 수와 칸마다 열 앱을 고르면 끝이에요.'],
-  dl:'https://github.com/dpfkadpfka/ramspirit/releases/latest/download/RamSpirit.exe', logo:'apps/logo_ramspirit.webp', guide:'apps/guide-ramspirit.pdf'},
+  dl:'https://github.com/dpfkadpfka/ramspirit/releases/latest/download/RamSpirit.exe', imgs:['apps/sc_ramspirit_1.webp','apps/sc_ramspirit_2.webp','apps/sc_ramspirit_3.webp','apps/sc_ramspirit_4.webp'], logo:'apps/logo_ramspirit.webp', guide:'apps/guide-ramspirit.pdf'},
  'Ram Calendar':{lead:'구글 캘린더와 실시간으로 이어지는 윈도우 바탕화면 달력이에요. 달력에서 바로 일정을 넣고 고칠 수 있어요.',
   feat:['구글 캘린더 일정이 바탕화면에 바로 보임','앱 안에서 일정 추가·수정','시간 정해진 일정 알림','새 버전은 자동으로 업데이트'],
   how:['내려받기를 눌러 설치 파일(YeramCalendar-Setup)을 받아 실행해요.','“Windows의 PC 보호”가 뜨면 [추가 정보 → 실행]을 눌러요.','앱의 ⚙ 설정 → 구글 로그인을 눌러 연결해요.'],
@@ -1236,41 +1248,42 @@ var WINAPP={
  '예람쌤 AI 영상 제작소':{web:1,lead:'캐릭터 만들기부터 장면·대본·영상 프롬프트까지, 질문에 답하면 대화하듯 만들어 주는 AI 영상 제작 사이트예요.',
   feat:['피동장스 틀로 캐릭터 프롬프트 만들기','장면·대본 프롬프트를 챗봇처럼 만들기','만든 그림·영상 모아 보는 갤러리','AI 영상 도구 비교'],
   how:['열어 보기를 눌러 사이트에 들어가요.','캐릭터 → 장면 → 대본 순서로 질문에 답해요.','만들어진 프롬프트를 복사해 AI 도구에 붙여 넣어요.'],
-  dl:'https://dpfkadpfka.github.io/yeram-ai-video/', logo:'apps/logo_aivideo.webp', guide:'apps/guide-aivideo.pdf'}
+  dl:'https://dpfkadpfka.github.io/yeram-ai-video/', imgs:['apps/sc_aivideo_1.webp','apps/sc_aivideo_2.webp','apps/sc_aivideo_3.webp','apps/sc_aivideo_4.webp'], logo:'apps/logo_aivideo.webp', guide:'apps/guide-aivideo.pdf'}
 };
 
 Object.assign(WINAPP,{
  '나도 장영실! 시계 발명가':{web:1,lead:'아이가 그린 시계 그림을 AI가 진짜로 움직이는 시계로 만들어 주는 수업 앱이에요.',
   feat:['바늘시계·디지털시계 중에서 골라 만들기','손으로 그린 그림 사진이나 AI 그림으로 시계 만들기','우리 반 전시관에 올리고 좋아요·댓글로 응원하기','선생님은 학교·학년·반과 비밀번호로 우리 반 작품만 관리'],
-  how:['반·번호·이름을 쓰고 시작해요.','만들 시계 종류를 고르고 시계 그림을 올려요.','완성된 시계를 전시관에 올려 친구들과 함께 봐요.'], logo:'apps/logo_clock.webp', guide:'apps/guide-clock.pdf'},
+  how:['반·번호·이름을 쓰고 시작해요.','만들 시계 종류를 고르고 시계 그림을 올려요.','완성된 시계를 전시관에 올려 친구들과 함께 봐요.'], imgs:['apps/sc_clock_1.webp','apps/sc_clock_2.webp','apps/sc_clock_3.webp','apps/sc_clock_4.webp'], logo:'apps/logo_clock.webp', guide:'apps/guide-clock.pdf'},
  '해시계 물시계 실험실':{web:1,lead:'해시계와 물시계가 어떻게 시간을 재는지 직접 움직여 보며 이해하는 실험 앱이에요.',
   feat:['해의 위치를 바꾸면 그림자가 움직이는 해시계','물이 차오르는 높이로 시간을 읽는 물시계','장영실 인물 수업과 시계 만들기 수업에 바로 연결'],
-  how:['해시계나 물시계를 골라요.','해나 물을 직접 움직이며 변화를 살펴봐요.','알게 된 원리를 수업 활동과 이어 가요.'], logo:'apps/logo_sundial.webp', guide:'apps/guide-sundial.pdf'},
+  how:['해시계나 물시계를 골라요.','해나 물을 직접 움직이며 변화를 살펴봐요.','알게 된 원리를 수업 활동과 이어 가요.'], imgs:['apps/sc_sundial_1.webp','apps/sc_sundial_2.webp','apps/sc_sundial_3.webp','apps/sc_sundial_4.webp'], logo:'apps/logo_sundial.webp', guide:'apps/guide-sundial.pdf'},
  '나도 발명가! 생활 발명 연구소':{web:1,lead:'생활 속 불편함에서 출발해 AI 친구와 아이디어를 키우고, 내 발명품을 그림으로 완성하는 수업 앱이에요.',
   feat:['불편했던 일을 고르거나 직접 쓰기','AI 친구와 대화하며 발명 아이디어 다듬기','내 발명품을 AI 그림으로 완성','반 발명 갤러리에서 친구 작품 구경하기'],
-  how:['반·번호·이름을 쓰고 시작해요.','불편함 → 아이디어 → 그림 순서로 따라가요.','완성한 발명품을 갤러리에 올려요.'], logo:'apps/logo_invent.webp', guide:'apps/guide-invent.pdf'},
+  how:['반·번호·이름을 쓰고 시작해요.','불편함 → 아이디어 → 그림 순서로 따라가요.','완성한 발명품을 갤러리에 올려요.'], imgs:['apps/sc_invent_1.webp','apps/sc_invent_2.webp','apps/sc_invent_3.webp','apps/sc_invent_4.webp'], logo:'apps/logo_invent.webp', guide:'apps/guide-invent.pdf'},
  '피자로 배우는 삼권분립':{web:1,lead:'피자를 나누는 상황으로 권력을 왜 셋으로 나누는지 알아보는 사회 수업 앱이에요.',
   feat:['피자 한 판을 공평하게 나누는 이야기로 시작','입법·행정·사법이 하는 일을 역할로 체험','캐릭터 말풍선 안내로 혼자서도 차근차근'],
-  how:['[다음]을 눌러 이야기를 따라가요.','단계마다 내 생각을 골라 보며 생각을 넓혀요.','마지막 퀴즈로 배운 내용을 확인해요.'], logo:'apps/logo_pizza.webp', guide:'apps/guide-pizza.pdf'},
+  how:['[다음]을 눌러 이야기를 따라가요.','단계마다 내 생각을 골라 보며 생각을 넓혀요.','마지막 퀴즈로 배운 내용을 확인해요.'], imgs:['apps/sc_pizza_1.webp','apps/sc_pizza_2.webp','apps/sc_pizza_3.webp','apps/sc_pizza_4.webp'], logo:'apps/logo_pizza.webp', guide:'apps/guide-pizza.pdf'},
  '글자 조합 놀이터':{web:1,lead:'친구들이 모은 낱말을 글자 하나하나로 쪼개서 새로운 낱말을 만들어 보는 국어 놀이 앱이에요.',
   feat:['학생들이 태블릿으로 낱말 보내기','모인 낱말을 글자 단위로 나눠 바구니에 담기','글자를 조합해 새 낱말 만들기'],
-  how:['선생님이 화면을 열고 학생들이 낱말을 보내요.','모인 글자를 골라 새 낱말을 만들어요.','만든 낱말을 함께 읽고 이야기 나눠요.'], logo:'apps/logo_jamo.webp', guide:'apps/guide-jamo.pdf'},
+  how:['선생님이 화면을 열고 학생들이 낱말을 보내요.','모인 글자를 골라 새 낱말을 만들어요.','만든 낱말을 함께 읽고 이야기 나눠요.'], imgs:['apps/sc_jamo_1.webp','apps/sc_jamo_2.webp','apps/sc_jamo_3.webp','apps/sc_jamo_4.webp'], logo:'apps/logo_jamo.webp', guide:'apps/guide-jamo.pdf'},
  '자리 바꾸기 레이스':{web:1,lead:'태블릿을 연타해 동물 친구를 달리게 하고, 도착한 순서대로 자리를 고르는 학급 자리 바꾸기 앱이에요.',
   feat:['학생마다 동물 캐릭터로 달리기 경주','빨리 누를수록 빨리 달려요','도착 순서대로 원하는 자리 고르기'],
-  how:['선생님 화면에서 경주를 시작해요.','학생들은 태블릿을 열심히 눌러 달려요.','결승선에 들어온 순서대로 자리를 골라요.'], logo:'apps/logo_seatrace.webp', guide:'apps/guide-seatrace.pdf'}
+  how:['선생님 화면에서 경주를 시작해요.','학생들은 태블릿을 열심히 눌러 달려요.','결승선에 들어온 순서대로 자리를 골라요.'], imgs:['apps/sc_seatrace_1.webp','apps/sc_seatrace_2.webp','apps/sc_seatrace_3.webp','apps/sc_seatrace_4.webp'], logo:'apps/logo_seatrace.webp', guide:'apps/guide-seatrace.pdf'}
 });
 const wm=document.createElement('div'); wm.className='wmodal'; wm.hidden=true; document.body.appendChild(wm);
 function openWin(key){ const a=WINAPP[key], it=Object.values(ARCHIVE).flat().find(x=>x&&x.t===key); if(!a) return;
   wm.innerHTML=`<div class="wm-box" role="dialog" aria-modal="true" aria-label="${esc(key)}"><button class="wm-x" type="button" aria-label="닫기">✕</button>
    ${a.logo?`<div class="wm-head wm-top">${a.logo?`<img class="wm-logo" src="${esc(a.logo)}" alt="${esc(key)} 로고">`:''}<div><span class="wm-tag">${a.web?'웹앱 · 무료':'윈도우 앱 · 무료'}</span><h3>${esc(key)}</h3><p>${esc(a.lead)}</p></div></div>`:''}
-   ${(a.imgs||[it?.img]).filter(Boolean).length?`<div class="wm-gal">${(a.imgs||[it.img]).map(u=>`<img src="${esc(u)}" alt="" loading="lazy">`).join('')}</div>`:''}${a.logo?'':`<div class="wm-head"><div><span class="wm-tag">${a.web?'웹앱 · 무료':'윈도우 앱 · 무료'}</span><h3>${esc(key)}</h3><p>${esc(a.lead)}</p></div></div>`}
+   ${(a.imgs||[it?.img]).filter(Boolean).length?`<div class="wm-gw"><div class="wm-gal">${(a.imgs||[it.img]).map(u=>`<img src="${esc(u)}" alt="" loading="lazy">`).join('')}</div>${(a.imgs||[]).length>1?`<button type="button" class="wm-ga prev" aria-label="이전 사진">‹</button><button type="button" class="wm-ga next" aria-label="다음 사진">›</button><div class="wm-gd2">${a.imgs.map((_,k)=>`<i${k?'':' class="on"'}></i>`).join('')}</div>`:''}</div>`:''}${a.logo?'':`<div class="wm-head"><div><span class="wm-tag">${a.web?'웹앱 · 무료':'윈도우 앱 · 무료'}</span><h3>${esc(key)}</h3><p>${esc(a.lead)}</p></div></div>`}
    <h4>이런 걸 할 수 있어요</h4><ul>${a.feat.map(f=>`<li>${esc(f)}</li>`).join('')}</ul>
    <h4>${a.web?'이렇게 써요':'설치 방법'}</h4><ol>${a.how.map(f=>`<li>${esc(f)}</li>`).join('')}</ol>
    ${a.guide?`<div class="wm-guide"><button type="button" class="wm-gv" data-guide="${esc(a.guide)}" data-name="${esc(key)}">📖 앱 가이드 보기</button></div>`:''}
    <a class="wm-dl" href="${esc(a.dl||it?.url||'#')}" target="_blank" rel="noopener">${a.web?'열어 보기':'앱 내려받기'}</a></div>`;
-  wm.hidden=false; document.body.style.overflow='hidden'; wm.querySelector('.wm-x').focus(); }
+  wm.hidden=false; document.body.style.overflow='hidden'; wm.querySelector('.wm-x').focus();
+  const gl=wm.querySelector('.wm-gal'), dots=wm.querySelectorAll('.wm-gd2 i'); if(gl&&dots.length) gl.addEventListener('scroll',()=>{ const ims=gl.querySelectorAll('img'); let k=0,best=1e9; ims.forEach((im,j)=>{ const d=Math.abs(im.offsetLeft-gl.scrollLeft); if(d<best){best=d;k=j;} }); dots.forEach((d,j)=>d.classList.toggle('on',j===k)); },{passive:true}); }
 function closeWin(){ wm.hidden=true; document.body.style.overflow=''; }
-wm.addEventListener('click',e=>{ const g=e.target.closest('.wm-gv'); if(g){ openGuide(g.dataset.guide,g.dataset.name); return; } if(e.target===wm||e.target.closest('.wm-x')) closeWin(); });
+wm.addEventListener('click',e=>{ const ga=e.target.closest('.wm-ga'); if(ga){ const gl=wm.querySelector('.wm-gal'); gl.scrollBy({left:(ga.classList.contains('next')?1:-1)*gl.clientWidth*.9,behavior:'smooth'}); return; } const g=e.target.closest('.wm-gv'); if(g){ openGuide(g.dataset.guide,g.dataset.name); return; } if(e.target===wm||e.target.closest('.wm-x')) closeWin(); });
 const gv=document.createElement('div'); gv.className='gview'; gv.hidden=true; document.body.appendChild(gv);
 let pdfLib=null;
 function loadPdfJs(){ if(pdfLib) return pdfLib; pdfLib=new Promise((ok,no)=>{ const sc=document.createElement('script'); sc.src='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js'; sc.onload=()=>{ pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js'; ok(pdfjsLib); }; sc.onerror=no; document.head.appendChild(sc); }); return pdfLib; }
