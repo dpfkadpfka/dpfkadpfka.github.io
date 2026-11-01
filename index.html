@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
-<script>(function(){var B="1793541353";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
+<script>(function(){var B="1793541407";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
 <meta name="color-scheme" content="light only">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="초등교사 김예람(예람쌤) — AI 영상·교육 콘텐츠 제작 연수, 영상·웹앱 콘텐츠, 연수 교안과 수업 자료">
@@ -702,7 +702,6 @@ button.card{font:inherit;text-align:left;cursor:pointer;width:100%;padding:0;bor
 /* 카드 썸네일: 은은한 빛 지나감 + 반짝이 */
 .page .cards .card .thumb{position:relative;overflow:hidden}
 .page .cards .card .thumb::after{content:"";position:absolute;inset:-20% auto -20% -60%;width:45%;z-index:2;pointer-events:none;background:linear-gradient(105deg,rgba(255,255,255,0) 0%,rgba(255,255,255,.55) 40%,rgba(255,255,255,.95) 50%,rgba(255,255,255,.55) 60%,rgba(255,255,255,0) 100%);transform:skewX(-18deg);animation:th-shine 4.5s ease-in-out infinite;animation-delay:calc(var(--i,0) * .18s + .15s)}
-.page .cards .card .thumb::before{content:"";position:absolute;right:10px;top:9px;z-index:3;width:20px;height:20px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 0C13 7 17 11 24 12C17 13 13 17 12 24C11 17 7 13 0 12C7 11 11 7 12 0Z' fill='%23fff' stroke='%23FF4791' stroke-width='1.2'/%3E%3C/svg%3E") center/contain no-repeat;filter:drop-shadow(0 0 4px rgba(255,71,145,.7));pointer-events:none;animation:th-twinkle 2.6s ease-in-out infinite;animation-delay:calc(var(--i,0) * .3s)}
 @keyframes th-shine{0%{left:-60%}22%,100%{left:130%}}
 @keyframes th-twinkle{0%,100%{opacity:0;transform:scale(.4) rotate(0)}45%{opacity:1;transform:scale(1) rotate(20deg)}70%{opacity:.2;transform:scale(.7) rotate(40deg)}}
 .page .cards .card{transition:transform .25s cubic-bezier(.3,1.4,.5,1),box-shadow .25s}
