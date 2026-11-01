@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
-<script>(function(){var B="1793539922";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
+<script>(function(){var B="1793539950";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
 <meta name="color-scheme" content="light only">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="초등교사 김예람(예람쌤) — AI 영상·교육 콘텐츠 제작 연수, 영상·웹앱 콘텐츠, 연수 교안과 수업 자료">
@@ -1055,6 +1055,7 @@ html .bl-grid{grid-template-columns:repeat(5,minmax(0,1fr))!important}
 #askBtn{display:none}
 body:not(.is-home) #askBtn{display:block;position:fixed;right:clamp(8px,1.5vw,28px);bottom:24px;z-index:45;width:150px;height:190px;border:0;background:none;padding:0;cursor:pointer}
 body:not(.is-home) #askBtn #sideCv{display:block!important;position:absolute!important;inset:auto 0 0 auto!important;height:150px!important;width:auto!important;top:auto!important;right:0!important;bottom:0!important;left:auto!important;transition:transform .25s cubic-bezier(.3,1.6,.5,1)}
+body:not(.is-home) #askBtn #sideCv{filter:drop-shadow(2px 0 0 #fff) drop-shadow(-2px 0 0 #fff) drop-shadow(0 2px 0 #fff) drop-shadow(0 -2px 0 #fff) drop-shadow(0 4px 8px rgba(74,42,34,.2))}
 body:not(.is-home) #askBtn:hover #sideCv{transform:translateY(-4px) scale(1.04)}
 .ask-x{position:absolute;left:6px;top:6px;z-index:2;width:24px;height:24px;border-radius:50%;background:#fff;color:var(--ink-soft);font-size:11px;font-weight:800;line-height:24px;text-align:center;box-shadow:0 0 0 1px var(--line),0 2px 6px rgba(74,42,34,.15);cursor:pointer;opacity:.85}
 .ask-x:hover{opacity:1;color:var(--pink-deep)}
