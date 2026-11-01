@@ -459,6 +459,29 @@ body.admin .page .cards .card{cursor:grab;outline:1.5px dashed var(--pink-light)
 .wm-box li::marker{color:var(--pink);font-weight:800}
 .wm-dl{display:block;margin-top:22px;padding:14px;border-radius:14px;background:var(--pink);color:#fff;text-align:center;font-weight:800;font-size:16px;text-decoration:none}
 .wm-dl:hover{background:var(--pink-deep)}
+.wm-head img.wm-logo{width:84px;height:84px;border-radius:22px;object-fit:contain;box-shadow:none;background:#fff}
+.wm-box .wm-head.wm-top{padding-right:44px;margin-bottom:16px}
+.wm-guide{display:flex;gap:10px;margin-top:22px}
+.wm-gv,.wm-gd{flex:1;padding:13px 10px;border-radius:14px;font:inherit;font-weight:800;font-size:15px;text-align:center;text-decoration:none;cursor:pointer}
+.wm-gv{border:0;background:var(--soft);color:var(--pink-deep)}
+.wm-gv:hover{background:#ffd9e8}
+.wm-gd{background:#fff;color:var(--ink-soft);box-shadow:inset 0 0 0 1.5px var(--line)}
+.wm-gd:hover{color:var(--pink-deep)}
+.wm-guide+.wm-dl{margin-top:10px}
+.gview{position:fixed;inset:0;z-index:80;background:rgba(40,20,16,.72);display:flex;flex-direction:column}
+.gview[hidden]{display:none}
+.gv-bar{display:flex;align-items:center;gap:12px;padding:12px 16px;background:#fff;box-shadow:0 1px 0 var(--line)}
+.gv-bar b{font-size:16px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gv-pg{font-size:13px;color:var(--ink-soft);margin-right:auto}
+.gv-dl{padding:9px 16px;border-radius:12px;background:var(--pink);color:#fff;font-weight:800;font-size:14px;text-decoration:none;white-space:nowrap}
+.gv-dl:hover{background:var(--pink-deep)}
+.gv-x{width:38px;height:38px;border:0;border-radius:50%;background:var(--soft);color:var(--pink-deep);font-size:16px;cursor:pointer;flex:none}
+.gv-body{flex:1;overflow:auto;display:flex;flex-direction:column;align-items:center;gap:14px;padding:16px}
+.gv-body canvas{background:#fff;border-radius:6px;box-shadow:0 6px 24px rgba(0,0,0,.25);max-width:100%;height:auto}
+.gv-load{color:#fff;margin-top:40px;font-weight:700}
+.gv-frame{width:min(900px,100%);flex:1;border:0;border-radius:8px;background:#fff}
+@media (max-width:600px){.gv-bar b{font-size:14.5px}.wm-guide{flex-direction:column}}
+
 .thumb{position:relative}
 .thumb .st{position:absolute;left:10px;top:10px;padding:5px 12px;border-radius:999px;background:var(--pink);color:#fff;font-size:13px;font-weight:800;box-shadow:0 2px 8px rgba(226,58,128,.3)}
 .thumb .st.end{background:#7C6460;box-shadow:none}
@@ -1077,7 +1100,7 @@ var WINAPP={
  'Ram Calendar':{lead:'구글 캘린더와 실시간으로 이어지는 윈도우 바탕화면 달력이에요. 달력에서 바로 일정을 넣고 고칠 수 있어요.',
   feat:['구글 캘린더 일정이 바탕화면에 바로 보임','앱 안에서 일정 추가·수정','시간 정해진 일정 알림','새 버전은 자동으로 업데이트'],
   how:['내려받기를 눌러 설치 파일(YeramCalendar-Setup)을 받아 실행해요.','“Windows의 PC 보호”가 뜨면 [추가 정보 → 실행]을 눌러요.','앱의 ⚙ 설정 → 구글 로그인을 눌러 연결해요.'],
-  dl:'https://github.com/dpfkadpfka/yeram-calendar/releases/latest', imgs:['apps/rc_1.webp','apps/rc_2.webp','apps/rc_3.webp','apps/rc_4.webp']}
+  dl:'https://github.com/dpfkadpfka/yeram-calendar/releases/latest', imgs:['apps/rc_1.webp','apps/rc_2.webp','apps/rc_3.webp','apps/rc_4.webp'], logo:'apps/rc_logo.webp', guide:'apps/ram-calendar-guide.pdf'}
 };
 
 Object.assign(WINAPP,{
@@ -1103,15 +1126,35 @@ Object.assign(WINAPP,{
 const wm=document.createElement('div'); wm.className='wmodal'; wm.hidden=true; document.body.appendChild(wm);
 function openWin(key){ const a=WINAPP[key], it=ARCHIVE.webapp.find(x=>x.t===key); if(!a) return;
   wm.innerHTML=`<div class="wm-box" role="dialog" aria-modal="true" aria-label="${esc(key)}"><button class="wm-x" type="button" aria-label="닫기">✕</button>
-   ${(a.imgs||[it?.img]).filter(Boolean).length?`<div class="wm-gal">${(a.imgs||[it.img]).map(u=>`<img src="${esc(u)}" alt="" loading="lazy">`).join('')}</div>`:''}<div class="wm-head"><div><span class="wm-tag">${a.web?'웹앱 · 무료':'윈도우 앱 · 무료'}</span><h3>${esc(key)}</h3><p>${esc(a.lead)}</p></div></div>
+   ${a.logo?`<div class="wm-head wm-top">${a.logo?`<img class="wm-logo" src="${esc(a.logo)}" alt="${esc(key)} 로고">`:''}<div><span class="wm-tag">${a.web?'웹앱 · 무료':'윈도우 앱 · 무료'}</span><h3>${esc(key)}</h3><p>${esc(a.lead)}</p></div></div>`:''}
+   ${(a.imgs||[it?.img]).filter(Boolean).length?`<div class="wm-gal">${(a.imgs||[it.img]).map(u=>`<img src="${esc(u)}" alt="" loading="lazy">`).join('')}</div>`:''}${a.logo?'':`<div class="wm-head"><div><span class="wm-tag">${a.web?'웹앱 · 무료':'윈도우 앱 · 무료'}</span><h3>${esc(key)}</h3><p>${esc(a.lead)}</p></div></div>`}
    <h4>이런 걸 할 수 있어요</h4><ul>${a.feat.map(f=>`<li>${esc(f)}</li>`).join('')}</ul>
    <h4>${a.web?'이렇게 써요':'설치 방법'}</h4><ol>${a.how.map(f=>`<li>${esc(f)}</li>`).join('')}</ol>
-   <a class="wm-dl" href="${esc(a.dl||it?.url||'#')}" target="_blank" rel="noopener">${a.web?'열어 보기':'내려받기'}</a></div>`;
+   ${a.guide?`<div class="wm-guide"><button type="button" class="wm-gv" data-guide="${esc(a.guide)}" data-name="${esc(key)}">📖 앱 가이드 보기</button><a class="wm-gd" href="${esc(a.guide)}" download>가이드 PDF 내려받기</a></div>`:''}
+   <a class="wm-dl" href="${esc(a.dl||it?.url||'#')}" target="_blank" rel="noopener">${a.web?'열어 보기':'앱 내려받기'}</a></div>`;
   wm.hidden=false; document.body.style.overflow='hidden'; wm.querySelector('.wm-x').focus(); }
 function closeWin(){ wm.hidden=true; document.body.style.overflow=''; }
-wm.addEventListener('click',e=>{ if(e.target===wm||e.target.closest('.wm-x')) closeWin(); });
-addEventListener('keydown',e=>{ if(e.key==='Escape'&&!wm.hidden) closeWin(); });
+wm.addEventListener('click',e=>{ const g=e.target.closest('.wm-gv'); if(g){ openGuide(g.dataset.guide,g.dataset.name); return; } if(e.target===wm||e.target.closest('.wm-x')) closeWin(); });
+const gv=document.createElement('div'); gv.className='gview'; gv.hidden=true; document.body.appendChild(gv);
+let pdfLib=null;
+function loadPdfJs(){ if(pdfLib) return pdfLib; pdfLib=new Promise((ok,no)=>{ const sc=document.createElement('script'); sc.src='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js'; sc.onload=()=>{ pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js'; ok(pdfjsLib); }; sc.onerror=no; document.head.appendChild(sc); }); return pdfLib; }
+async function openGuide(url,name){
+  gv.innerHTML=`<div class="gv-bar"><b>${esc(name)} 사용 가이드</b><span class="gv-pg"></span><a class="gv-dl" href="${esc(url)}" download>내려받기</a><button type="button" class="gv-x" aria-label="닫기">✕</button></div><div class="gv-body" tabindex="0"><p class="gv-load">가이드를 불러오는 중…</p></div>`;
+  gv.hidden=false; gv.querySelector('.gv-x').focus();
+  const body=gv.querySelector('.gv-body'), pg=gv.querySelector('.gv-pg');
+  try{ const lib=await loadPdfJs(); const doc=await lib.getDocument(url).promise; if(gv.hidden) return;
+    body.innerHTML=''; pg.textContent=`${doc.numPages}쪽`;
+    const w=Math.min(body.clientWidth-32,900), dpr=Math.min(devicePixelRatio||1,2);
+    const io=new IntersectionObserver(es=>es.forEach(async en=>{ if(!en.isIntersecting) return; const c=en.target; io.unobserve(c);
+      const page=await doc.getPage(+c.dataset.n); const v=page.getViewport({scale:w/page.getViewport({scale:1}).width*dpr});
+      c.width=v.width; c.height=v.height; await page.render({canvasContext:c.getContext('2d'),viewport:v}).promise; }),{root:body,rootMargin:'800px 0px'});
+    const first=await doc.getPage(1), r=first.getViewport({scale:1}); 
+    for(let n=1;n<=doc.numPages;n++){ const c=document.createElement('canvas'); c.dataset.n=n; c.style.width=w+'px'; c.style.aspectRatio=r.width+'/'+r.height; body.appendChild(c); io.observe(c); }
+  }catch(err){ body.innerHTML=`<iframe class="gv-frame" src="${esc(url)}" title="${esc(name)} 사용 가이드"></iframe>`; }
+}
+function closeGuide(){ gv.hidden=true; gv.innerHTML=''; }
+gv.addEventListener('click',e=>{ if(e.target===gv||e.target.closest('.gv-x')) closeGuide(); });
+addEventListener('keydown',e=>{ if(e.key!=='Escape') return; if(!gv.hidden) closeGuide(); else if(!wm.hidden) closeWin(); });
 document.addEventListener('click',e=>{ const c=e.target.closest('#webapp .cards .card'); if(!c||document.body.classList.contains('admin')) return; if(WINAPP[c.dataset.key]){ e.preventDefault(); openWin(c.dataset.key); } });
 </script>
-
 </html>
