@@ -7,6 +7,19 @@
 <meta property="og:title" content="예람쌤 홈">
 <meta property="og:description" content="AI 영상·교육 콘텐츠 제작 연수와 수업 자료를 나누는 초등교사 김예람">
 <meta property="og:image" content="https://dpfkadpfka.github.io/brand.png">
+<script>
+(function(){var ua=navigator.userAgent||'',u=location.href,and=/Android/i.test(ua),ios=/iPhone|iPad|iPod/i.test(ua);
+ if(/KAKAOTALK/i.test(ua)){location.href='kakaotalk://web/openExternal?url='+encodeURIComponent(u);return;}
+ var inapp=/NAVER\(inapp|NAVER|Line\/|Instagram|FBAN|FBAV|DaumApps|everytimeApp|BAND\/|KAKAOSTORY/i.test(ua);
+ if(!inapp) return;
+ if(and){location.href='intent://'+u.replace(/^https?:\/\//,'')+'#Intent;scheme=https;package=com.android.chrome;end';return;}
+ if(ios){document.addEventListener('DOMContentLoaded',function(){var d=document.createElement('div');
+  d.style.cssText='position:fixed;left:12px;right:12px;top:12px;z-index:999;background:#fff;border-radius:16px;padding:14px 16px;box-shadow:0 8px 30px rgba(0,0,0,.18);font:600 14px/1.5 sans-serif;color:#3A1A14';
+  d.innerHTML='이 화면에서는 일부 기능이 제대로 안 보여요.<br>오른쪽 아래 <b>⋯</b> 또는 공유 버튼을 눌러 <b>Safari·크롬으로 열기</b>를 눌러 주세요. <button style="margin-left:6px;border:0;border-radius:10px;background:#FF4791;color:#fff;font:inherit;padding:4px 10px">주소 복사</button>';
+  d.querySelector('button').onclick=function(){navigator.clipboard&&navigator.clipboard.writeText(u);this.textContent='복사됨';};
+  document.body.appendChild(d);});}
+})();
+</script>
 <title>예람쌤 홈</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="icon" type="image/png" href="favicon.png">
@@ -930,9 +943,9 @@ function frame(now){
   let eTx=pending?0:tx, eV=pending?'none':vWant;
   if(!pending){
     if(!moving){ tx=0; ty=.4; eTx=0; }
-    if(vWant==='none'){ if(ty<.06) vWant='up'; else if(ty>.68) vWant='down'; }
-    else if(vWant==='up'){ if(ty>.14) vWant='none'; }
-    else { if(ty<.6) vWant='none'; }
+    if(vWant==='none'){ if(ty<.2) vWant='up'; else if(ty>.7) vWant='down'; }
+    else if(vWant==='up'){ if(ty>.28) vWant='none'; }
+    else { if(ty<.62) vWant='none'; }
     eV=moving?vWant:'none';
   }
   const fullOK=!coarse;
@@ -995,7 +1008,7 @@ async function boot(){
   hit.style.left=(META.box[0]/META.vw*100)+'%'; hit.style.width=(META.box[2]/META.vw*100)+'%';
   const idleP=loadSet('idle'); await loadSet('intro_pop');
   $('#loading').hidden=true;
-  (async()=>{ await idleP; await loadSet('turn_mid'); if(!coarse) for(const k of ['career','promo','video','webapp','lecture','class']) await loadSet('menu_'+k); for(const k of CORE) await loadSet(k); })();
+  (async()=>{ await idleP; await loadSet('turn_mid'); for(const k of ['turn_up','look_up_center','look_up_left','look_up_right','turn_down','look_down_center','look_down_left','look_down_right']) if(CORE.includes(k)) await loadSet(k); if(!coarse) for(const k of ['career','promo','video','webapp','lecture','class']) await loadSet('menu_'+k); for(const k of CORE) await loadSet(k); })();
   if(reduce){ mode='live'; goIdle(performance.now()); } else { mode='intro'; introPop=false; introStart=performance.now(); }
   requestAnimationFrame(frame);
 }
