@@ -1031,6 +1031,10 @@ html .bl-grid{grid-template-columns:repeat(5,minmax(0,1fr))!important}
 body:not(.is-home) #askBtn{display:block;position:fixed;right:clamp(8px,1.5vw,28px);bottom:24px;z-index:45;width:150px;height:190px;border:0;background:none;padding:0;cursor:pointer}
 body:not(.is-home) #askBtn #sideCv{display:block!important;position:absolute!important;inset:auto 0 0 auto!important;height:150px!important;width:auto!important;top:auto!important;right:0!important;bottom:0!important;left:auto!important;transition:transform .25s cubic-bezier(.3,1.6,.5,1)}
 body:not(.is-home) #askBtn:hover #sideCv{transform:translateY(-4px) scale(1.04)}
+.ask-x{position:absolute;left:6px;top:6px;z-index:2;width:24px;height:24px;border-radius:50%;background:#fff;color:var(--ink-soft);font-size:11px;font-weight:800;line-height:24px;text-align:center;box-shadow:0 0 0 1px var(--line),0 2px 6px rgba(74,42,34,.15);cursor:pointer;opacity:.85}
+.ask-x:hover{opacity:1;color:var(--pink-deep)}
+body.ask-off #askBtn{display:none!important}
+@media (max-width:900px){ .ask-x{left:auto;right:-6px;top:-8px;width:22px;height:22px;line-height:22px;font-size:10px} }
 .ask-bub{position:absolute;right:8px;top:0;white-space:nowrap;background:#fff;border-radius:14px;padding:7px 12px;font-size:12.5px;font-weight:800;line-height:1.35;color:var(--ink);box-shadow:0 0 0 1.5px var(--pink),0 6px 14px rgba(255,71,145,.15);text-align:center}
 .ask-bub::after{content:"";position:absolute;left:50%;bottom:-8px;transform:translateX(-50%);border-left:7px solid transparent;border-right:7px solid transparent;border-top:9px solid var(--pink)}
 .chat{position:fixed;right:clamp(8px,1.5vw,28px);bottom:224px;z-index:60;width:min(380px,calc(100vw - 24px));height:min(560px,calc(100vh - 260px));display:flex;flex-direction:column;background:#fff;border-radius:22px;overflow:hidden;box-shadow:0 20px 50px rgba(74,42,34,.25),0 0 0 1px #F2DCE4}
@@ -1085,6 +1089,16 @@ html,body{background-color:#FFFAFC}
  html body:not(.is-home) .press-l .pr-m{padding:0 4px}
  html body:not(.is-home) .press-l .pr-s a{font-size:11px!important;padding:2px 7px!important}
  html body:not(.is-home) .blogs .bl .bl-im{aspect-ratio:1/1!important}
+ html body:not(.is-home) .blogs .bl-grid{margin:0!important;padding:1px 1px 4px!important;gap:10px!important}
+ html body:not(.is-home) .blogs .bl{flex:0 0 calc((100% - 10px)/2)!important;padding:8px 8px 12px!important;gap:8px;background:#fff!important;border-radius:16px!important;box-shadow:0 0 0 1px var(--line)!important;overflow:hidden}
+ html body:not(.is-home) .blogs .bl .bl-im{border-radius:12px!important}
+ html body:not(.is-home) .blogs .bl-b{padding:0 4px!important;gap:3px!important}
+ html body:not(.is-home) .blogs .bl-m{font-size:11px!important;gap:6px!important}
+ html body:not(.is-home) .blogs .bl-m em{font-size:11px!important;padding:0 8px!important}
+ html body:not(.is-home) .blogs .bl-b b{font-size:13.5px!important;line-height:1.4!important}
+ html body:not(.is-home) .page .cards .card .card-meta span:first-child{font-size:11px!important;padding:0 8px!important}
+ html body:not(.is-home) .bl-nav{width:32px!important;height:32px!important;font-size:20px!important;top:calc(50% - 50px)!important}
+ html body:not(.is-home) .bl-nav.prev{left:-6px!important}html body:not(.is-home) .bl-nav.next{right:-6px!important}
  html body:not(.is-home) .ab-sns a{display:flex!important;flex-direction:column!important;align-items:center!important;min-width:0}
  html body:not(.is-home) .ab-sns a b,html body:not(.is-home) .ab-sns a .sb{align-self:center!important;text-align:center;margin:0!important}
  html body:not(.is-home) #askBtn #sideCv{filter:drop-shadow(1.5px 0 0 #fff) drop-shadow(-1.5px 0 0 #fff) drop-shadow(0 1.5px 0 #fff) drop-shadow(0 -1.5px 0 #fff) drop-shadow(0 3px 6px rgba(74,42,34,.22))!important}
@@ -1757,7 +1771,7 @@ document.addEventListener('click',e=>{ const c=e.target.closest('#webapp .cards 
  function gate(b,t,act){
   const go=()=>{ logOpen(t); if(act){ close(); act(); } else show(b,t); };
   if(U) return go();
-  pv.innerHTML=`<div class="pvw-box pvw-login" role="dialog" aria-modal="true" aria-label="로그인"><div class="pvw-bar"><b>${t.replace(/^\[수업 자료\] /,'')}</b><button type="button" class="pvw-x" aria-label="닫기">✕</button></div><div class="pl-in"><img src="obj/lecture.webp" alt=""><h3>${act?'자료는 로그인 후 내려받을 수 있어요':'연수 자료는 로그인 후 볼 수 있어요'}</h3><p>구글 계정으로 로그인해 주세요.</p><button type="button" class="pl-go" disabled>Google 계정으로 로그인</button><small>로그인하면 자료 ${act?'다운로드':'열람'} 기록(이름·이메일·시간)이 남아요.</small></div></div>`;
+  pv.innerHTML=`<div class="pvw-box pvw-login" role="dialog" aria-modal="true" aria-label="로그인"><div class="pvw-bar"><b>${t.replace(/^\[수업 자료\] /,'')}</b><button type="button" class="pvw-x" aria-label="닫기">✕</button></div><div class="pl-in"><img src="obj/lecture.webp" alt=""><h3>${act?'자료는 로그인 후 내려받을 수 있어요':'연수 자료는 로그인 후 볼 수 있어요'}</h3><p>구글 계정으로 로그인해 주세요.</p><button type="button" class="pl-go" disabled>Google 계정으로 로그인</button></div></div>`;
   pv.hidden=false; document.body.style.overflow='hidden';
   const btn=pv.querySelector('.pl-go');
   fbReady().then(f=>{ if(U){ go(); return; } btn.disabled=false;
@@ -1825,7 +1839,9 @@ document.addEventListener('click',e=>{ const c=e.target.closest('#webapp .cards 
    setTimeout(()=>{fromPop=false;},0);
  },true);
 })();
-</script><button type="button" class="askme" id="askBtn" aria-label="예람쌤에게 물어보기"><span class="ask-bub">예람쌤에게<br>물어보세요!</span></button>
+</script><button type="button" class="askme" id="askBtn" aria-label="예람쌤에게 물어보기"><span class="ask-bub">예람쌤에게<br>물어보세요!</span><span class="ask-x" role="button" tabindex="0" aria-label="챗봇 캐릭터 닫기">✕</span></button><script>(function(){ const b=document.getElementById('askBtn'), x=b.querySelector('.ask-x'); try{ if(sessionStorage.getItem('askOff')) document.body.classList.add('ask-off'); }catch{}
+ const off=e=>{ e.preventDefault(); e.stopPropagation(); document.body.classList.add('ask-off'); const c=document.getElementById('chat'); if(c) c.hidden=true; try{ sessionStorage.setItem('askOff','1'); }catch{} };
+ x.addEventListener('click',off); x.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' ') off(e); }); })();</script>
 <div class="chat" id="chat" hidden role="dialog" aria-label="예람쌤 챗봇">
  <div class="ch-hd"><img src="obj/career.webp?v=5" alt=""><div><b>예람쌤 챗봇</b><small>예람쌤에 대해 궁금한 걸 물어보세요</small></div><button type="button" class="ch-x" aria-label="닫기">✕</button></div>
  <div class="ch-body" id="chBody"></div>
