@@ -774,7 +774,7 @@ function frame(now){
   if(clip){
     const s=META.sets[clip], dt=Math.min(.1,(now-clipLast)/1000)*s.fps; clipLast=now;
     if(clip.startsWith('menu_')){
-      if(want===clip) clipF=Math.min(s.count-1,clipF+dt*2);
+      if(want===clip) clipF=Math.min(s.count-1,clipF+dt*2.6);
       else { clipF-=dt*2.5; if(clipF<=(s.start||0)){ clip=null; goIdle(now); draw('idle',0); return; } }
     } else {
       if(clip.startsWith('idle_') && (lastMove>clipStart || want)) rewind=true;   // 마우스가 움직이면 하던 동작을 되감아 바로 멈춤
@@ -786,6 +786,7 @@ function frame(now){
 
   /* 2) 고개 움직임: 영상을 시작해야 하면 먼저 정면으로 돌아옴 */
   const pending = want && ready(want);
+  if(pending && want.startsWith('menu_')){ trans=null; vert='mid'; startClip(want,now); draw(want,clipF); return; }
   let eTx=pending?0:tx, eV=pending?'none':vWant;
   if(!pending){
     if(!moving){ tx=0; ty=.4; eTx=0; }
