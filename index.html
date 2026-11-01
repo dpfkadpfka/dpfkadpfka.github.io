@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
-<script>(function(){var B="1793545627";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
+<script>(function(){var B="1793546157";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
 <meta name="color-scheme" content="light only">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="초등교사 김예람(예람쌤) — AI 영상·교육 콘텐츠 제작 연수, 영상·웹앱 콘텐츠, 연수 교안과 수업 자료">
@@ -2025,9 +2025,10 @@ Object.assign(WINAPP,{
 });
 const wm=document.createElement('div'); wm.className='wmodal'; wm.hidden=true; document.body.appendChild(wm);
 function openWin(key){ const a=WINAPP[key], it=Object.values(ARCHIVE).flat().find(x=>x&&x.t===key); if(!a) return;
+  const GI=[...new Set([it&&it.img,...(a.imgs||[])].filter(Boolean))];
   wm.innerHTML=`<div class="wm-box" role="dialog" aria-modal="true" aria-label="${esc(key)}"><button class="wm-x" type="button" aria-label="닫기">✕</button>
    ${a.logo?`<div class="wm-head wm-top">${a.logo?`<img class="wm-logo" src="${esc(a.logo)}" alt="${esc(key)} 로고">`:''}<div><span class="wm-tag">${a.web?'웹앱 · 무료':'윈도우 앱 · 무료'}</span><h3>${esc(key)}</h3><p>${esc(a.lead)}</p></div></div>`:''}
-   ${(a.imgs||[it?.img]).filter(Boolean).length?`<div class="wm-gw"><div class="wm-gal">${(a.imgs||[it.img]).map(u=>`<img src="${esc(u)}" alt="" loading="lazy">`).join('')}</div>${(a.imgs||[]).length>1?`<button type="button" class="wm-ga prev" aria-label="이전 사진">‹</button><button type="button" class="wm-ga next" aria-label="다음 사진">›</button><div class="wm-gd2">${a.imgs.map((_,k)=>`<i${k?'':' class="on"'}></i>`).join('')}</div>`:''}</div>`:''}${a.logo?'':`<div class="wm-head"><div><span class="wm-tag">${a.web?'웹앱 · 무료':'윈도우 앱 · 무료'}</span><h3>${esc(key)}</h3><p>${esc(a.lead)}</p></div></div>`}
+   ${GI.length?`<div class="wm-gw"><div class="wm-gal">${GI.map(u=>`<img src="${esc(u)}" alt="" loading="lazy">`).join('')}</div>${GI.length>1?`<button type="button" class="wm-ga prev" aria-label="이전 사진">‹</button><button type="button" class="wm-ga next" aria-label="다음 사진">›</button><div class="wm-gd2">${GI.map((_,k)=>`<i${k?'':' class="on"'}></i>`).join('')}</div>`:''}</div>`:''}${a.logo?'':`<div class="wm-head"><div><span class="wm-tag">${a.web?'웹앱 · 무료':'윈도우 앱 · 무료'}</span><h3>${esc(key)}</h3><p>${esc(a.lead)}</p></div></div>`}
    <h4>이런 걸 할 수 있어요</h4><ul>${a.feat.map(f=>`<li>${esc(f)}</li>`).join('')}</ul>
    <h4>${a.web?'이렇게 써요':'설치 방법'}</h4><ol>${a.how.map(f=>`<li>${esc(f)}</li>`).join('')}</ol>
    ${a.guide?`<div class="wm-guide"><button type="button" class="wm-gv" data-guide="${esc(a.guide)}" data-name="${esc(key)}">📖 앱 가이드 보기</button></div>`:''}
