@@ -592,7 +592,7 @@ const ARCHIVE={
   ],
   promo:[
     {"st": "신청 중", "t": "AI 시대, 교사를 위한 디자인·영상 콘텐츠 제작 실전 과정", "d": "생성형 AI × 캔바 × 캡컷", "tag": "T셀파 원격교육연수원", "y": "직무연수 15시간 · 디지털역량", "url": "https://edu.tsherpa.co.kr/Product/Detail/2016?BoardDetail.BoardNo=&CourseType=0", "img": "https://edu.tsherpa.co.kr/Files/20261022124647/Course/20261022124628666.jpg"},
-    {"st": "종료", "t": "맞춤형 AI 영상 제작 원데이 클래스", "d": "교실을 사로잡는 수업 영상 만들기 · 브루(Vrew) 실습", "tag": "천재 T셀파 × Q.U.O.K.A", "y": "오프라인 워크숍 · 2026.10.24(토)", "url": "https://ele.tsherpa.co.kr/event/2922710/index.html", "img": "https://dpfkadpfka.github.io/yeram-ai-video/assets/tr_oneday.jpg"},
+    {"st": "종료", "t": "맞춤형 AI 영상 제작 원데이 클래스", "d": "교실을 사로잡는 수업 영상 만들기 · 브루(Vrew) 실습", "tag": "천재 T셀파 × Q.U.O.K.A", "y": "오프라인 워크숍 · 2026.10.24(토)", "url": "https://ele.tsherpa.co.kr/event/2922710/index.html", "img": "apps/tr_oneday.jpg"},
   ],
   train:[
     {t:"예람쌤 AI 영상 제작소",d:"캐릭터부터 대본·이미지·영상 프롬프트까지 대화하듯 만들어 주는 사이트",tag:"AI 영상",y:"2026",img:"apps/aivideo.webp",url:"https://dpfkadpfka.github.io/yeram-ai-video/"},
@@ -716,7 +716,7 @@ function loadSet(name){
 }
 const ready=n=>SETS[n]?.ready;
 function draw(name,idx){
-  const s=SETS[name]; if(!s||!s.ready) return false;
+  const s=SETS[name]; if(!s||!s.ready){ const p=SETS.intro_pop; if(name!=='intro_pop'&&p&&p.ready) return draw('intro_pop',p.count-1); return false; }
   s.used=performance.now();
   const i=Math.max(0,Math.min(s.count-1,idx|0)), c=i%s.cols, r=(i/s.cols)|0;
   cx2.drawImage(s.img,c*s.cw,r*s.ch,s.cw,s.ch,s.x,0,s.w,META.box[3]); return true;
@@ -852,9 +852,9 @@ async function boot(){
   CORE=coarse?['idle','turn_mid']:['idle','turn_mid','turn_up','turn_down',...['up','down'].flatMap(v=>['left','center','right'].map(c=>`look_${v}_${c}`))];
   cv.width=META.vw; cv.height=META.box[3]; cx2.imageSmoothingEnabled=true; cx2.imageSmoothingQuality='high';
   hit.style.left=(META.box[0]/META.vw*100)+'%'; hit.style.width=(META.box[2]/META.vw*100)+'%';
-  await Promise.all([loadSet('idle'),loadSet('intro_pop')]);
+  const idleP=loadSet('idle'); await loadSet('intro_pop');
   $('#loading').hidden=true;
-  (async()=>{ for(const k of CORE) await loadSet(k); if(!coarse) for(const k of ['career','promo','video','webapp','lecture','class']) await loadSet('menu_'+k); })();
+  (async()=>{ await idleP; for(const k of CORE) await loadSet(k); if(!coarse) for(const k of ['career','promo','video','webapp','lecture','class']) await loadSet('menu_'+k); })();
   if(reduce){ mode='live'; goIdle(performance.now()); } else { mode='intro'; introPop=false; introStart=performance.now(); }
   requestAnimationFrame(frame);
 }
