@@ -752,6 +752,7 @@ function frame(now){
   const want=poseWant?'menu_'+poseWant:clipQ;
 
   /* 1) 영상 한 편(대기 동작·클릭 반응·메뉴 자세) 재생 중 */
+  if(clip && poseWant && !clip.startsWith('menu_') && ready('menu_'+poseWant)){ startClip('menu_'+poseWant,now); }
   if(clip){
     const s=META.sets[clip], dt=Math.min(.1,(now-clipLast)/1000)*s.fps; clipLast=now;
     if(clip.startsWith('menu_')){
