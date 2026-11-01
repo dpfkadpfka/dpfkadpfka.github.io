@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
-<script>(function(){var B="1793548222";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
+<script>(function(){var B="1793548464";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
 <meta name="color-scheme" content="light only">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="초등교사 김예람(예람쌤) — AI 영상·교육 콘텐츠 제작 연수, 영상·웹앱 콘텐츠, 연수 교안과 수업 자료">
@@ -864,6 +864,7 @@ body.editing .page .cards .card:hover{transform:none!important}
 .prw-card img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:14px}
 .prw-card h3{margin:8px 0 6px;font-size:19px;line-height:1.4}.prw-card p{margin:0 0 14px;color:var(--ink-soft);font-size:13.5px}
 .prw-card .pl-go{display:inline-block;text-decoration:none}
+.prw-card.prw-ebs{grid-template-columns:1fr}
 @media (max-width:600px){.prw-card{grid-template-columns:1fr;padding:16px}.prw-a{height:74vh}.prw-new{display:none}}
 .pvw-fr{position:relative}
 .pvw-fr.ld::before{content:"자료를 불러오는 중…";position:absolute;inset:0;display:grid;place-items:center;font-size:14px;font-weight:700;color:var(--ink-soft);z-index:0}
@@ -1385,7 +1386,7 @@ html,body{background-color:#FFFAFC}
   <div class="wrap">
     <div class="page-head">
       <div><h2>예람쌤 소개</h2>
-      <p class="ab-lead">부천북초등학교 교사 김예람입니다. AI로 교육 콘텐츠를 만들고, 그 방법을 선생님들과 나누고 있습니다.</p></div>
+      <p class="ab-lead">초등학교 교사 김예람입니다. AI로 교육 콘텐츠를 만들고, 그 방법을 선생님들과 나누고 있습니다.</p></div>
     </div>
     <div class="ab-sns" aria-label="예람쌤 채널"><a data-sns="kakao" href="https://open.kakao.com/o/sQjNnOnh" target="_blank" rel="noopener"><img class="sb" src="sns/kakao.jpg" alt=""><b>오픈카톡</b><small>오픈채팅 문의</small></a><a data-sns="blog" href="https://blog.naver.com/dpfkadpfka2" target="_blank" rel="noopener"><img class="sb" src="sns/blog.png" alt=""><b>블로그</b><small>예쁜사람, 예람쌤</small></a><a data-sns="youtube" href="https://www.youtube.com/@%EC%98%88%EB%9E%8C%EC%8C%A4" target="_blank" rel="noopener"><img class="sb" src="sns/youtube.png" alt=""><b>유튜브</b><small>예람쌤 채널</small></a><a data-sns="esop" href="https://ebssw.kr/dpfkadpfka2" target="_blank" rel="noopener"><img class="sb" src="sns/esop.jpg" alt=""><b>EBS 이솦</b><small>크리에이터 강의</small></a><a data-sns="insta" href="#"><span class="sb"><svg viewBox="0 0 40 40" aria-hidden="true"><defs><radialGradient id="igg" cx="30%" cy="107%" r="150%"><stop offset="0" stop-color="#FDF497"/><stop offset=".05" stop-color="#FDF497"/><stop offset=".45" stop-color="#FD5949"/><stop offset=".6" stop-color="#D6249F"/><stop offset=".9" stop-color="#285AEB"/></radialGradient></defs><rect width="40" height="40" rx="11" fill="url(#igg)"/><rect x="9" y="9" width="22" height="22" rx="6.5" fill="none" stroke="#fff" stroke-width="2.6"/><circle cx="20" cy="20" r="5.2" fill="none" stroke="#fff" stroke-width="2.6"/><circle cx="26.6" cy="13.4" r="1.6" fill="#fff"/></svg></span><b>인스타그램</b><small>준비 중</small></a></div>
     <div class="ab-cv" id="cvBody"></div>
@@ -2312,6 +2313,10 @@ document.addEventListener('click',e=>{ const c=e.target.closest('#webapp .cards 
   W.innerHTML=`<div class="pvw-box" role="dialog" aria-modal="true" aria-label="${e(t)}"><div class="pvw-bar"><b><span class="prw-o">${e(out)}</span> ${e(t)}</b><a class="prw-new" href="${e(u.href)}" target="_blank" rel="noopener">새 창 ↗</a><button type="button" class="pvw-x" aria-label="닫기">✕</button></div>${body}</div>`;
   W.hidden=false; document.body.style.overflow='hidden';
  }
+ document.addEventListener('click',ev=>{ const a=ev.target.closest('a.cv-ln'); if(!a) return; ev.preventDefault();
+  const t=a.textContent.trim();
+  W.innerHTML=`<div class="pvw-box" role="dialog" aria-modal="true" aria-label="${e(t)}"><div class="pvw-bar"><b><span class="prw-o">EBS</span> ${e(t)}</b><button type="button" class="pvw-x" aria-label="닫기">✕</button></div><div class="prw-card prw-ebs"><div><span class="prw-o">EBS</span><h3>${e(t)}</h3><a class="pl-go" href="${e(a.href)}" target="_blank" rel="noopener">EBS 시청자평가원 보기 ↗</a></div></div></div>`;
+  W.hidden=false; document.body.style.overflow='hidden'; });
  document.addEventListener('click',ev=>{ const a=ev.target.closest('.press-l a'); if(!a||document.body.classList.contains('editing')) return; ev.preventDefault(); open(a); });
  W.addEventListener('click',ev=>{ if(ev.target===W||ev.target.closest('.pvw-x')) close(); });
  addEventListener('keydown',ev=>{ if(ev.key==='Escape'&&!W.hidden) close(); });
@@ -2333,7 +2338,7 @@ document.addEventListener('click',e=>{ const c=e.target.closest('#webapp .cards 
  const go=(h,t)=>`<a href="#${h}" class="ch-go" data-close>${t} →</a>`;
  const apps=()=> (typeof ARCHIVE!=='undefined'&&ARCHIVE.webapp)||[];
  const R=[
-  {k:['안녕','하이','누구','소개','어떤 사람','어떤 분','어떤분','어떤사람','뭐하는','무슨 일','하는 일','선생님','예람쌤','김예람','자기소개','프로필','전문','분야'],a:()=>`부천북초등학교 교사 <b>김예람</b>입니다. AI로 교육 콘텐츠를 만들고, 그 방법을 선생님들과 연수로 나누고 있어요.<br>전문 분야는 <b>교육 콘텐츠 비평·자문 · AI 콘텐츠 제작 · AI·SW 교육 · 미디어·디지털 리터러시</b>예요. ${go('about','소개 보기')}`},
+  {k:['안녕','하이','누구','소개','어떤 사람','어떤 분','어떤분','어떤사람','뭐하는','무슨 일','하는 일','선생님','예람쌤','김예람','자기소개','프로필','전문','분야'],a:()=>`초등학교 교사 <b>김예람</b>입니다. AI로 교육 콘텐츠를 만들고, 그 방법을 선생님들과 연수로 나누고 있어요.<br>전문 분야는 <b>교육 콘텐츠 비평·자문 · AI 콘텐츠 제작 · AI·SW 교육 · 미디어·디지털 리터러시</b>예요. ${go('about','소개 보기')}`},
   {k:['연락','문의','컨택','어떻게 만나','섭외','요청','메일','이메일','카톡','오픈채팅','연락처','강의 요청','출강 문의'],a:()=>`연수·강의 요청, 콘텐츠 제작, 자문 문의는 아래로 편하게 연락 주세요.<br>· 메일 <b>dpfkadpfka@gmail.com</b><br>· <a href="https://open.kakao.com/o/sQjNnOnh" target="_blank" rel="noopener">카카오톡 오픈채팅 ↗</a>`},
   {k:['연수','강의','강사','출강','강연','워크숍'],a:()=>`주로 <b>AI 영상·교육 콘텐츠 제작 연수</b>를 해요. 최근 강의 이력이에요.${li(sec('강사').slice(0,8))}${go('promo','신청 가능한 연수 보기')}`},
   {k:['ebs','시청자','평가원','처음 배우는','이솦','방송'],a:()=>`EBS 관련 활동이에요.${li(sec('기관 활동').filter(x=>/EBS/.test(x[0])))}`},
