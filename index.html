@@ -695,7 +695,7 @@ function frame(now){
     if(!introPop && p>.55){ introPop=true; burst(sx,sy-r.height*.35,22); }
     if(t<1.05){
       cx2.save(); cx2.beginPath(); cx2.rect(0,0,cv.width,FOOT); cx2.clip();
-      cx2.translate(0,(1-e)*FOOT*.92); draw('idle',0); cx2.restore(); return;
+      cx2.translate(0,Math.max(0,1-e)*FOOT*.92); draw('idle',0); cx2.restore(); return;
     }
     mode='live'; goIdle(now); vert='mid'; trans=null; lx=0;
   }
