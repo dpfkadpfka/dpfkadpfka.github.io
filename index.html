@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
-<script>(function(){var B="1793541461";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
+<script>(function(){var B="1793541595";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
 <meta name="color-scheme" content="light only">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="초등교사 김예람(예람쌤) — AI 영상·교육 콘텐츠 제작 연수, 영상·웹앱 콘텐츠, 연수 교안과 수업 자료">
@@ -714,7 +714,9 @@ body.is-home .obj .obj-ic img{animation:ob-pump 4.2s ease-in-out infinite;animat
 body.is-home .obj[data-go="about"]{--pd:0}body.is-home .obj[data-go="promo"]{--pd:1}body.is-home .obj[data-go="video"]{--pd:2}body.is-home .obj[data-go="webapp"]{--pd:3}body.is-home .obj[data-go="train"]{--pd:4}body.is-home .obj[data-go="class"]{--pd:5}
 @keyframes ob-pump{0%,74%,100%{transform:scale(1) rotate(0)}79%{transform:scale(1.07) rotate(-5deg)}84%{transform:scale(1.05) rotate(4deg)}89%{transform:scale(1.02) rotate(-3deg)}94%{transform:scale(1) rotate(1.5deg)}}
 body.is-home .obj.dim .obj-ic img{animation:none}
-@media (prefers-reduced-motion:reduce){body.is-home .obj .obj-ic img{animation:none}}
+html body.is-home .obj .obj-in{animation:ob-float calc(3.6s + var(--pd,0) * .35s) ease-in-out infinite!important;animation-delay:calc(var(--pd,0) * -.9s)!important}
+@keyframes ob-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@media (prefers-reduced-motion:reduce){body.is-home .obj .obj-ic img,html body.is-home .obj .obj-in{animation:none!important}}
 .prw .pvw-bar b{font-size:14.5px}.prw-o{display:inline-block;font-size:12px;font-weight:800;color:var(--pink-deep);background:var(--soft);border-radius:99px;padding:1px 9px;margin-right:4px;vertical-align:1px}
 .prw-new{flex:none;font-size:13px;font-weight:700;color:var(--ink-soft);text-decoration:none;padding:6px 10px;border-radius:10px;background:#F7F1F3}
 .prw-new:hover{color:var(--pink-deep)}
