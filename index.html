@@ -1050,6 +1050,7 @@ body:not(.is-home) #askBtn:hover #sideCv{transform:translateY(-4px) scale(1.04)}
  .chat{right:10px;left:10px;width:auto;bottom:calc(176px + env(safe-area-inset-bottom,0px));height:min(520px,calc(100svh - 250px))}
 }
 .ch-note{margin:8px 0 0;font-size:11.5px;color:#9A7F86;line-height:1.5}
+.ch-quick{flex-wrap:wrap!important;overflow:visible!important}
 </style>
 
 <div class="frame" aria-hidden="true"></div>
@@ -1781,16 +1782,16 @@ document.addEventListener('click',e=>{ const c=e.target.closest('#webapp .cards 
  const go=(h,t)=>`<a href="#${h}" class="ch-go" data-close>${t} →</a>`;
  const apps=()=> (typeof ARCHIVE!=='undefined'&&ARCHIVE.webapp)||[];
  const R=[
-  {k:['안녕','하이','누구','소개','어떤 사람','뭐하는','선생님'],a:()=>`부천북초등학교 교사 <b>김예람</b>입니다. AI로 교육 콘텐츠를 만들고, 그 방법을 선생님들과 연수로 나누고 있어요.<br>전문 분야는 <b>교육 콘텐츠 비평·자문 · AI 콘텐츠 제작 · AI·SW 교육 · 미디어·디지털 리터러시</b>예요. ${go('about','소개 보기')}`},
-  {k:['연락','문의','섭외','요청','메일','이메일','카톡','오픈채팅','연락처','강의 요청','출강 문의'],a:()=>`연수·강의 요청, 콘텐츠 제작, 자문 문의는 아래로 편하게 연락 주세요.<br>· 메일 <b>dpfkadpfka@gmail.com</b><br>· <a href="https://open.kakao.com/o/sQjNnOnh" target="_blank" rel="noopener">카카오톡 오픈채팅 ↗</a>`},
+  {k:['안녕','하이','누구','소개','어떤 사람','어떤 분','어떤분','어떤사람','뭐하는','무슨 일','하는 일','선생님','예람쌤','김예람','자기소개','프로필','전문','분야'],a:()=>`부천북초등학교 교사 <b>김예람</b>입니다. AI로 교육 콘텐츠를 만들고, 그 방법을 선생님들과 연수로 나누고 있어요.<br>전문 분야는 <b>교육 콘텐츠 비평·자문 · AI 콘텐츠 제작 · AI·SW 교육 · 미디어·디지털 리터러시</b>예요. ${go('about','소개 보기')}`},
+  {k:['연락','문의','컨택','어떻게 만나','섭외','요청','메일','이메일','카톡','오픈채팅','연락처','강의 요청','출강 문의'],a:()=>`연수·강의 요청, 콘텐츠 제작, 자문 문의는 아래로 편하게 연락 주세요.<br>· 메일 <b>dpfkadpfka@gmail.com</b><br>· <a href="https://open.kakao.com/o/sQjNnOnh" target="_blank" rel="noopener">카카오톡 오픈채팅 ↗</a>`},
   {k:['연수','강의','강사','출강','강연','워크숍'],a:()=>`주로 <b>AI 영상·교육 콘텐츠 제작 연수</b>를 해요. 최근 강의 이력이에요.${li(sec('강사').slice(0,8))}${go('promo','신청 가능한 연수 보기')}`},
   {k:['ebs','시청자','평가원','처음 배우는','이솦','방송'],a:()=>`EBS 관련 활동이에요.${li(sec('기관 활동').filter(x=>/EBS/.test(x[0])))}`},
-  {k:['수상','표창','상 받','교육감'],a:()=>`수상·표창 이력이에요.${li(sec('자격 및 수상'))}`},
+  {k:['수상','표창','상 받','받은 상','교육감'],a:()=>`수상·표창 이력이에요.${li(sec('자격 및 수상'))}`},
   {k:['자격','자격증','미디어교육사'],a:()=>`<b>국가공인 미디어교육사 자격증(2급)</b>을 갖고 있어요.`},
   {k:['연구회','학회','소속','단체','외부'],a:()=>`외부 기관·연구회 소속이에요.${li(sec('외부 기관 및 연구회'))}`},
   {k:['콘텐츠 개발','제작한','집필','개발'],a:()=>`콘텐츠 개발 이력이에요.${li(sec('콘텐츠 개발').slice(0,8))}`},
   {k:['기관','교육청','위원','지원단','자문'],a:()=>`기관 활동 일부예요.${li(sec('기관 활동').slice(0,10))}${go('about','전체 이력 보기')}`},
-  {k:['앱','웹앱','바이브','코딩','프로그램','만든'],a:()=>`수업·연수용으로 직접 만든 앱이에요.<ul>${apps().map(x=>`<li><b>${e(x.t)}</b> — ${e(x.d)}</li>`).join('')}</ul>${go('webapp','앱 보러 가기')}`},
+  {k:['앱 ','앱?','앱을','앱은','앱이','웹앱','윈도우','바이브','코딩','프로그램','만든'],a:()=>`수업·연수용으로 직접 만든 앱이에요.<ul>${apps().map(x=>`<li><b>${e(x.t)}</b> — ${e(x.d)}</li>`).join('')}</ul>${go('webapp','앱 보러 가기')}`},
   {k:['영상','유튜브','숏폼','뮤직비디오'],a:()=>`교육 영상, 강좌, 홍보 숏폼, AI 뮤직비디오를 만들어요. <a href="https://www.youtube.com/@%EC%98%88%EB%9E%8C%EC%8C%A4" target="_blank" rel="noopener">유튜브 ↗</a> ${go('video','영상 보기')}`},
   {k:['블로그','근황','최근','소식','기사','보도'],a:()=>`최근 활동과 언론 보도는 활동 소식에 모여 있어요. <a href="https://blog.naver.com/dpfkadpfka2" target="_blank" rel="noopener">블로그 ↗</a> ${go('promo','활동 소식 보기')}`},
   {k:['자료','수업 자료','연수 자료','교안','ppt'],a:()=>`연수 자료와 수업 자료를 나누고 있어요. ${go('train','연수 자료')} ${go('class','수업 자료')}`},
@@ -1803,7 +1804,10 @@ document.addEventListener('click',e=>{ const c=e.target.closest('#webapp .cards 
  const quick=['어떤 분이에요?','어떤 연수를 하나요?','연락은 어떻게 해요?','만든 앱 보여 줘','수상 이력은?'];
  function answer(q){
   const t=q.toLowerCase().replace(/\s+/g,' ');
-  for(const r of R){ if(r.k.some(k=>t.includes(k))) return r.a(); }
+  const ns=t.replace(/\s/g,'');
+  const ap=apps().find(x=>ns.includes(x.t.toLowerCase().replace(/[\s!]/g,''))||ns.includes(x.t.toLowerCase().replace(/[\s!]/g,'').slice(0,6)));
+  if(ap){ const w=(typeof WINAPP!=='undefined'&&WINAPP[ap.t])||{}; return `<b>${e(ap.t)}</b> — ${e(w.lead||ap.d)}${w.feat?'<ul>'+w.feat.map(f=>`<li>${e(f)}</li>`).join('')+'</ul>':''}${go('webapp','앱 보러 가기')}`; }
+  for(const r of R){ if(r.k.some(k=>t.includes(k)||ns.includes(k.replace(/\s/g,'')))) return r.a(); }
   const toks=t.split(/[\s,.?!]+/).map(w=>w.replace(/(은|는|이|가|을|를|에|에서|의|도|요|나요|해요|있나요)$/,'')).filter(w=>w.length>=2);
   const all=CV.flatMap(x=>x[1].map(y=>[y[0],y[1],x[0]])).concat(apps().map(a=>[a.t+' — '+a.d,a.y,'앱']));
   const hit=all.filter(x=>toks.some(w=>x[0].toLowerCase().includes(w))).slice(0,6);
