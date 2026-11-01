@@ -1009,6 +1009,11 @@ html body:not(.is-home) .page .filters,html body:not(.is-home) .page .ytfil{marg
 html body:not(.is-home) #sideCv{height:190px!important;bottom:4px!important;right:8px!important}
 html body:not(.is-home) .page .page-head{padding-right:240px!important}
 }
+html .blogs .bl-im{aspect-ratio:1/1!important}
+html .bl-grid{grid-template-columns:repeat(5,minmax(0,1fr))!important}
+@media (max-width:1200px){html .bl-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important}}
+@media (max-width:1000px){html .bl-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
+@media (max-width:700px){html body:not(.is-home) .blogs .bl{flex:0 0 52%!important}}
 </style>
 
 <div class="frame" aria-hidden="true"></div>
