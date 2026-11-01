@@ -1320,7 +1320,7 @@ function loadSet(name){
   const s=META.sets[name]; if(!s) return Promise.resolve();
   const img=new Image(); img.decoding='async';
   const o=SETS[name]={...s,img,ready:false,used:performance.now()};
-  o.p=new Promise(res=>{ img.onload=()=>{ const done=()=>{ o.ready=true; res(); }; if(window.createImageBitmap) createImageBitmap(img).then(bm=>{ o.img=bm; done(); },()=>{ (img.decode?img.decode():Promise.resolve()).catch(()=>{}).then(done); }); else (img.decode?img.decode():Promise.resolve()).catch(()=>{}).then(done); }; img.onerror=()=>res(); });
+  o.p=new Promise(res=>{ img.onload=()=>{ const done=()=>{ o.ready=true; res(); }; if(window.createImageBitmap) createImageBitmap(img).then(bm=>{ o.img=bm; done(); },()=>{ (img.decode?img.decode():Promise.resolve()).catch(()=>{}).then(done); }); else (img.decode?img.decode():Promise.resolve()).catch(()=>{}).then(done); }; let tries=0; img.onerror=()=>{ if(++tries<4) setTimeout(()=>{ img.src=`frames2/${name}.webp?v=${META.v||1}&r=${tries}`; },600*tries); else res(); }; });
   img.src=`frames2/${name}.webp?v=${META.v||1}`;
   // 한 번에 쓰는 일이 드문 영상은 최대 6개만 메모리에 둠
   const extra=Object.keys(SETS).filter(k=>!CORE.includes(k)&&!k.startsWith('menu_')&&k!=='intro_pop');
@@ -1463,12 +1463,13 @@ function frame(now){
 function startClip(n,now){ clip=n; if(clipQ===n) clipQ=null; clipF=META.sets[n].start||0; clipLast=now; clipStart=now; rewind=false; idle=false; lx=0; shown=-1; }
 const coarse=!fine;
 async function boot(){
-  META=await fetch('frames2/meta.json?t='+Date.now()).then(r=>r.json());
+  for(let t=0;!META;t++){ try{ META=await fetch('frames2/meta.json?t='+Date.now()).then(r=>{ if(!r.ok) throw 0; return r.json(); }); }catch(_){ if(t>5) return; await new Promise(r=>setTimeout(r,800*(t+1))); } }
   if(!isHome()) sideStart(location.hash.slice(1));
   CORE=coarse?['idle','turn_mid']:['idle','turn_mid','turn_up','turn_down',...['up','down'].flatMap(v=>['left','center','right'].map(c=>`look_${v}_${c}`))];
   cv.width=META.vw; cv.height=META.box[3]; cx2.imageSmoothingEnabled=true; cx2.imageSmoothingQuality='high';
   hit.style.left=(META.box[0]/META.vw*100)+'%'; hit.style.width=(META.box[2]/META.vw*100)+'%';
-  const idleP=loadSet('idle'); await loadSet('intro_pop');
+  const idleP=loadSet('idle'), popP=loadSet('intro_pop');
+  await Promise.race([popP, idleP.then(()=>new Promise(r=>setTimeout(r,1500)))]);   // 인트로가 늦으면 기본 모습부터
   $('#loading').hidden=true;
   (async()=>{ await idleP; await loadSet('turn_mid'); for(const k of ['turn_up','look_up_center','look_up_left','look_up_right','turn_down','look_down_center','look_down_left','look_down_right']) if(CORE.includes(k)) await loadSet(k); if(!coarse) for(const k of ['career','promo','video','webapp','lecture','class']) await loadSet('menu_'+k); for(const k of CORE) await loadSet(k); })();
   if(reduce){ mode='live'; goIdle(performance.now()); } else { mode='intro'; introPop=false; introStart=performance.now(); }
