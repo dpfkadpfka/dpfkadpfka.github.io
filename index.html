@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
-<script>(function(){var B="1794049814";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
+<script>(function(){var B="1794064931";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
 <meta name="color-scheme" content="light only">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="초등교사 김예람(예람쌤) — AI 영상·교육 콘텐츠 제작 연수, 영상·웹앱 콘텐츠, 연수 교안과 수업 자료">
@@ -1628,13 +1628,14 @@ async function openSettings(first){
   const KIND=['자유','수강 후기','응원'];
   const NAV=[['사이트',[['menu','메뉴 표시','M4 6h16M4 12h16M4 18h10'],['course','연수명 관리','M4 5h16v14H4zM8 9h8M8 13h5']]],
              ['방명록',[['gb','작성 기록·IP','M5 4h14v11l-5 5H5zM14 20v-5h5'],['ban','차단 목록','M12 3a9 9 0 100 18 9 9 0 000-18zM5.6 5.6l12.8 12.8']]],
-             ['기록',[['train','자료 열람·다운로드','M12 4v11M7 10l5 5 5-5M5 20h14'],['chat','챗봇 질문','M4 5h16v10H9l-5 4z']]]];
-  const TITLE={menu:['메뉴 표시','끈 메뉴는 홈 화면, 위쪽 탭, 휴대폰 아래 메뉴에서 모두 숨겨져요.'],course:['연수명 관리','방명록에서 수강 후기를 고를 때 나오는 연수 목록이에요.'],gb:['방명록 작성 기록','포스트잇을 붙인 시간, 내용, 접속 IP, 로그인 이메일이에요. 문제가 있는 IP는 바로 차단할 수 있어요.'],ban:['차단 목록','차단한 IP에서는 방명록을 붙일 수 없어요.'],train:['자료 열람·다운로드 기록','연수 자료와 수업 자료를 연 사람과 시간이에요.'],chat:['챗봇 질문 기록','방문자가 챗봇에 물어본 질문이에요.']};
+             ['기록',[['train','자료 열람·다운로드','M12 4v11M7 10l5 5 5-5M5 20h14'],['chat','챗봇 질문','M4 5h16v10H9l-5 4z'],['visit','방문자 수','M4 20V10M10 20V4M16 20v-7M2 20h20']]]];
+  const TITLE={menu:['메뉴 표시','끈 메뉴는 홈 화면, 위쪽 탭, 휴대폰 아래 메뉴에서 모두 숨겨져요.'],course:['연수명 관리','방명록에서 수강 후기를 고를 때 나오는 연수 목록이에요.'],gb:['방명록 작성 기록','포스트잇을 붙인 시간, 내용, 접속 IP, 로그인 이메일이에요. 문제가 있는 IP는 바로 차단할 수 있어요.'],ban:['차단 목록','차단한 IP에서는 방명록을 붙일 수 없어요.'],train:['자료 열람·다운로드 기록','연수 자료와 수업 자료를 연 사람과 시간이에요.'],chat:['챗봇 질문 기록','방문자가 챗봇에 물어본 질문이에요.'],visit:['방문자 수','날짜별로 홈페이지에 들어온 사람 수예요. 한 사람이 하루에 여러 번 들어와도 한 번만 세요.']};
   const {F,db}=await fbLoad();
   let tab=first||'menu', D={}, hidden=[...(window.MENU_HIDE||[])], courses=(window.GB?GB.getCourses():[]).map(c=>typeof c==='string'?{d:'',t:c}:{...c}), bans=null, note='', dirty=false;
   const get=async(col,key)=>{ try{ return (await F.getDocs(F.query(F.collection(db,col),F.orderBy(key,'desc'),F.limit(500)))).docs.map(d=>({_id:d.id,...d.data()})); }catch(x){ return {err:x.code||x.message}; } };
   async function need(){
     if(tab==='train'&&!D.train){ D.train=await get('train_log','at'); draw(); }
+    if(tab==='visit'&&!D.visit){ try{ D.visit=(await F.getDocs(F.collection(db,'hv_stats'))).docs.map(d=>({_id:d.id,n:+(d.data().n||0)})); }catch(x){ D.visit={err:x.code||x.message}; } draw(); }
     if(tab==='chat'&&!D.chat){ D.chat=await get('chat_log','t'); draw(); }
     if((tab==='gb'||tab==='ban')&&!D.ip){ [D.ip,D.gb,D.gl]=await Promise.all([get('gb_ip','t'),get('guestbook','t'),get('guest_log','t')]); draw(); }
     if((tab==='gb'||tab==='ban')&&!bans){ try{ const r=await fetch('https://firestore.googleapis.com/v1/projects/yeram-ai-video/databases/(default)/documents/config/hv_ban?t='+Date.now()); const j=r.ok?await r.json():null; bans=JSON.parse(j?.fields?.json?.stringValue||'[]'); }catch(_){ bans=[]; } draw(); }
@@ -1644,6 +1645,9 @@ async function openSettings(first){
     if(tab==='menu') return `<div class="st-list">${MENUS.map(([k,t])=>`<label class="st-row"><span>${t}</span><input type="checkbox" class="st-sw" data-m="${k}" ${hidden.includes(k)?'':'checked'}><i class="st-tg"></i></label>`).join('')}</div>`;
     if(tab==='course') return `<div class="st-add st-add2"><input type="date" id="stCD" aria-label="연수 날짜"><input id="stCIn" maxlength="70" placeholder="연수명 (예: 브루 AI 영상 연수)"><button type="button" data-act="cadd">추가</button></div><div class="st-list">${courses.length?courses.map((c,i)=>`<div class="st-row"><span class="st-cd">${e(c.d||'날짜 없음')}</span><span>${e(c.t)}</span><button type="button" class="st-x" data-ci="${i}" aria-label="삭제">✕</button></div>`).join(''):'<p class="lg-empty">아직 등록한 연수가 없어요.</p>'}</div>`;
     if(tab==='train'){ const r=D.train; return wait(r)||`<div class="lg-sum">${Object.entries(r.reduce((m,x)=>(m[x.t]=(m[x.t]||0)+1,m),{})).sort((a,b)=>b[1]-a[1]).map(([k,n])=>`<span>${e(k)} <b>${n}</b></span>`).join('')}</div><table><thead><tr><th>시간</th><th>이름</th><th>이메일</th><th>자료</th></tr></thead><tbody>${r.map(x=>`<tr><td>${fmt(x.at)}</td><td>${e(x.name)}</td><td>${e(x.email)}</td><td>${e(x.t)}</td></tr>`).join('')}</tbody></table>`; }
+    if(tab==='visit'){ const r=D.visit; if(wait(r)) return wait(r); const tot=(r.find(x=>x._id==='total')||{}).n||0; const days=r.filter(x=>/^d\d{8}$/.test(x._id)).sort((a,b)=>a._id<b._id?1:-1); const mx=Math.max(1,...days.map(x=>x.n)); const W=['일','월','화','수','목','금','토'];
+      const dl=x=>{ const y=x._id.slice(1,5),m=x._id.slice(5,7),d=x._id.slice(7,9); return `${y}.${m}.${d} (${W[new Date(+y,+m-1,+d).getDay()]})`; };
+      return `<div class="lg-sum"><span>전체 <b>${tot.toLocaleString('ko-KR')}</b></span><span>오늘 <b>${((days[0]&&days[0]._id===('d'+new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Seoul'}).format(new Date()).replace(/-/g,'')))?days[0].n:0).toLocaleString('ko-KR')}</b></span><span>기록한 날 <b>${days.length}</b>일</span></div><table><thead><tr><th>날짜</th><th>방문자</th><th style="width:55%"></th></tr></thead><tbody>${days.map(x=>`<tr><td>${dl(x)}</td><td><b>${x.n.toLocaleString('ko-KR')}</b></td><td><i style="display:block;height:10px;border-radius:5px;background:var(--pink);width:${Math.max(2,Math.round(x.n/mx*100))}%"></i></td></tr>`).join('')}</tbody></table>`; }
     if(tab==='chat'){ const r=D.chat; return wait(r)||`<table><thead><tr><th>시간</th><th>보던 화면</th><th>질문</th></tr></thead><tbody>${r.map(x=>`<tr><td>${fmt(x.t)}</td><td>${e(PG[x.p]??x.p)}</td><td>${e(x.q)}</td></tr>`).join('')}</tbody></table>`; }
     if(tab==='gb'){ const r=D.ip; if(wait(r)) return wait(r); const G={}; (D.gb&&!D.gb.err?D.gb:[]).forEach(x=>G[x._id]=x); const L={}; (D.gl&&!D.gl.err?D.gl:[]).forEach(x=>L[x.gid]=x);
       return `<table><thead><tr><th>시간</th><th>닉네임 · 내용</th><th>IP</th><th>로그인</th><th></th></tr></thead><tbody>${r.map(x=>{ const g=G[x._id], l=L[x._id], b=(bans||[]).includes(x.h);
