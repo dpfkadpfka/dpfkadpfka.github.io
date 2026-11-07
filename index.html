@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
-<script>(function(){var B="1794049648";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
+<script>(function(){var B="1794049814";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
 <meta name="color-scheme" content="light only">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="초등교사 김예람(예람쌤) — AI 영상·교육 콘텐츠 제작 연수, 영상·웹앱 콘텐츠, 연수 교안과 수업 자료">
@@ -309,6 +309,7 @@ body.is-home footer.ft{display:none}
 .ft-bot{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:20px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px}
 .ft-bot a{color:inherit;text-decoration:none}
 .ft-bot a:hover{color:var(--pink-deep)}
+.ft-bot .vc b{font-weight:800;color:var(--pink-deep)}
 
 /* ───── 메인 시안 A: 가운데 캐릭터 + 위 이름 + 아래 분야 띠 ───── */
 .stage{background:#FFFAFC}
@@ -1487,7 +1488,7 @@ html,body{background-color:#FFFAFC}
       <a href="#" data-sns="insta" title="인스타그램" aria-label="인스타그램"><svg viewBox="0 0 40 40" aria-hidden="true"><defs><radialGradient id="igf" cx="30%" cy="107%" r="150%"><stop offset="0" stop-color="#FDF497"/><stop offset=".05" stop-color="#FDF497"/><stop offset=".45" stop-color="#FD5949"/><stop offset=".6" stop-color="#D6249F"/><stop offset=".9" stop-color="#285AEB"/></radialGradient></defs><rect width="40" height="40" rx="11" fill="url(#igf)"/><rect x="9" y="9" width="22" height="22" rx="6.5" fill="none" stroke="#fff" stroke-width="2.6"/><circle cx="20" cy="20" r="5.2" fill="none" stroke="#fff" stroke-width="2.6"/><circle cx="26.6" cy="13.4" r="1.6" fill="#fff"/></svg></a>
     </div>
   </div>
-  <div class="ft-bot"><span>© 2026 예람쌤 · dpfkadpfka@gmail.com</span><span><a href="https://dpfkadpfka.github.io/yeram-ai-video/" target="_blank" rel="noopener">예람쌤 AI 영상 제작소</a> · <a href="#" id="adminLogin">관리자</a></span></div>
+  <div class="ft-bot"><span>© 2026 예람쌤 · dpfkadpfka@gmail.com<span class="vc" hidden> · 오늘 <b id="vcT"></b> · 전체 <b id="vcA"></b></span></span><span><a href="https://dpfkadpfka.github.io/yeram-ai-video/" target="_blank" rel="noopener">예람쌤 AI 영상 제작소</a> · <a href="#" id="adminLogin">관리자</a></span></div>
 </div></footer>
 
 <script>
@@ -2457,5 +2458,19 @@ ${kb()}`;
  addEventListener('keydown',ev=>{ if(ev.key==='Escape'&&!C.hidden) close(); });
 })();
 </script>
-
+<script>
+/* 방문자 수: 하루에 한 번 세고(브라우저마다), 오늘·전체를 맨 아래에 보여 줌 */
+(function(){
+ const D='projects/yeram-ai-video/databases/(default)/documents', B='https://firestore.googleapis.com/v1/';
+ const day='d'+new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Seoul'}).format(new Date()).replace(/-/g,'');
+ const k='hv_v_'+day; let seen=false; try{ seen=!!localStorage.getItem(k); }catch(_){}
+ const inc=n=>({transform:{document:D+'/hv_stats/'+n,fieldTransforms:[{fieldPath:'n',increment:{integerValue:'1'}}]}});
+ const num=j=>+(j&&j.fields&&j.fields.n&&j.fields.n.integerValue||0);
+ const show=()=>Promise.all(['total',day].map(n=>fetch(B+D+'/hv_stats/'+n+'?t='+Date.now()).then(r=>r.ok?r.json():null).catch(()=>null))).then(([a,t])=>{
+   if(!a) return; document.getElementById('vcA').textContent=num(a).toLocaleString('ko-KR'); document.getElementById('vcT').textContent=num(t).toLocaleString('ko-KR'); document.querySelector('.ft-bot .vc').hidden=false; });
+ const go=()=>{ if(seen||navigator.webdriver) return show();
+   fetch(B+D+':commit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({writes:[inc('total'),inc(day)]})}).then(r=>{ if(r.ok){ try{ localStorage.setItem(k,'1'); }catch(_){} } }).catch(()=>{}).then(show); };
+ if(document.readyState==='complete') setTimeout(go,1500); else addEventListener('load',()=>setTimeout(go,1500));
+})();
+</script>
 </html>
