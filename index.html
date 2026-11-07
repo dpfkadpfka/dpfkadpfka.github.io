@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
-<script>(function(){var B="1794064931";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
+<script>(function(){var B="1794079934";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
 <meta name="color-scheme" content="light only">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="초등교사 김예람(예람쌤) — AI 영상·교육 콘텐츠 제작 연수, 영상·웹앱 콘텐츠, 연수 교안과 수업 자료">
@@ -1732,6 +1732,7 @@ function loadSet(name){
   const img=new Image(); img.decoding='async';
   const o=SETS[name]={...s,img,ready:false,used:performance.now()};
   o.p=new Promise(res=>{ img.onload=()=>{ const done=()=>{ o.ready=true; res(); }; if(window.createImageBitmap) createImageBitmap(img).then(bm=>{ o.img=bm; done(); },()=>{ (img.decode?img.decode():Promise.resolve()).catch(()=>{}).then(done); }); else (img.decode?img.decode():Promise.resolve()).catch(()=>{}).then(done); }; let tries=0; img.onerror=()=>{ if(++tries<4) setTimeout(()=>{ img.src=`frames2/${name}.webp?v=${META.v||1}&r=${tries}`; },600*tries); else res(); }; });
+  img.onerror=()=>{ (window.__dbgE=window.__dbgE||[]).push('imgerr '+name); };
   img.src=`frames2/${name}.webp?v=${META.v||1}`;
   // 한 번에 쓰는 일이 드문 영상은 최대 6개만 메모리에 둠
   const extra=Object.keys(SETS).filter(k=>!CORE.includes(k)&&!k.startsWith('menu_')&&k!=='intro_pop');
@@ -2476,5 +2477,20 @@ ${kb()}`;
    fetch(B+D+':commit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({writes:[inc('total'),inc(day)]})}).then(r=>{ if(r.ok){ try{ localStorage.setItem(k,'1'); }catch(_){} } }).catch(()=>{}).then(show); };
  if(document.readyState==='complete') setTimeout(go,1500); else addEventListener('load',()=>setTimeout(go,1500));
 })();
+</script>
+<script>
+/* 문제 확인용: 주소 끝에 ?dbg=1 을 붙이면 캐릭터 상태를 화면에 보여 줌 */
+if(/[?&]dbg=1/.test(location.search)){
+ const E=window.__dbgE=window.__dbgE||[];
+ addEventListener('error',e=>E.push('err '+(e.message||(e.target&&e.target.src)||'?')),true);
+ addEventListener('unhandledrejection',e=>E.push('rej '+(e.reason&&(e.reason.message||e.reason))));
+ const d=document.createElement('pre'); d.style.cssText='position:fixed;left:6px;right:6px;top:70px;z-index:99999;background:rgba(0,0,0,.82);color:#0f0;font:11px/1.35 monospace;padding:8px;border-radius:8px;white-space:pre-wrap;max-height:60vh;overflow:auto;pointer-events:none';
+ document.body.appendChild(d);
+ setInterval(()=>{ try{ const c=document.getElementById('charCanvas'), r=c&&c.getBoundingClientRect();
+  const S=typeof SETS!=='undefined'?Object.fromEntries(Object.entries(SETS).map(([k,v])=>[k,(v.ready?'OK ':'.. ')+(v.img?(v.img.width+'x'+v.img.height):'')])):'-';
+  d.textContent='mode '+(typeof mode!=='undefined'?mode:'?')+' | meta '+(typeof META!=='undefined'&&META?('v'+META.v):'X')+' | coarse '+(typeof coarse!=='undefined'?coarse:'?')+
+  '\ncanvas '+(c?c.width+'x'+c.height+' rect '+[r.x|0,r.y|0,r.width|0,r.height|0].join(',')+' disp '+getComputedStyle(c).display+' vis '+getComputedStyle(c).visibility+' op '+getComputedStyle(c).opacity:'none')+
+  '\nlast '+(typeof lastDrawn!=='undefined'?lastDrawn:'?')+' | dpr '+devicePixelRatio+' mem '+(navigator.deviceMemory||'?')+'\nsets '+JSON.stringify(S)+'\nerrs '+E.slice(-8).join(' / ')+'\n'+navigator.userAgent.slice(0,120); }catch(x){ d.textContent='dbg fail '+x.message; } },1000);
+}
 </script>
 </html>
