@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
-<script>(function(){var B="1794039819";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
+<script>(function(){var B="1794041108";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
 <meta name="color-scheme" content="light only">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="초등교사 김예람(예람쌤) — AI 영상·교육 콘텐츠 제작 연수, 영상·웹앱 콘텐츠, 연수 교안과 수업 자료">
@@ -413,6 +413,17 @@ body.editing #ytBody .ytc,body.editing .press-l li{cursor:grab;outline:1.5px das
 .adminbar .ab-cancel{border:1px solid rgba(255,255,255,.35);border-radius:10px;padding:8px 14px;font:inherit;background:none;color:#fff;cursor:pointer}
 .adminbar [hidden]{display:none!important}
 .adminbar .ab-msg:empty{display:none}
+.adminbar .ab-x{display:none}
+@media (max-width:900px){
+ .adminbar.ab-main{left:auto;right:12px;top:calc(env(safe-area-inset-top,0px) + 12px);bottom:auto;transform:none;max-width:calc(100vw - 24px);padding:6px;gap:6px;border-radius:16px;flex-wrap:wrap;justify-content:flex-end;align-items:center;font-size:13px;z-index:60}
+ .adminbar.ab-main b{padding:6px 6px 6px 8px;font-size:13px;cursor:pointer}
+ .adminbar.ab-main button{padding:7px 11px!important;font-size:13px!important;border-radius:10px}
+ .adminbar.ab-main .ab-msg{order:9;flex-basis:100%;font-size:12px;line-height:1.45;padding:0 6px 4px;word-break:keep-all}
+ .adminbar.ab-main .ab-x{display:flex;align-items:center;justify-content:center;width:30px;height:30px;padding:0!important;border:0;border-radius:50%!important;background:rgba(255,255,255,.14);color:#fff;font-size:13px;cursor:pointer}
+ .adminbar.ab-main.ab-fold{padding:0;border-radius:999px;gap:0}
+ .adminbar.ab-main.ab-fold > :not(b){display:none!important}
+ .adminbar.ab-main.ab-fold b{display:block;padding:8px 14px}
+}
 .del-x{position:absolute;top:6px;right:6px;z-index:6;width:26px;height:26px;border-radius:50%;background:#E5484D;color:#fff;font-size:12px;font-weight:800;line-height:26px;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,.25);cursor:pointer}
 .del-x:hover{transform:scale(1.12)}
 body.editing .page .cards .card,body.editing #ytBody .ytc,body.editing .press-l > li{position:relative}
@@ -1570,7 +1581,8 @@ function adminOn(user){
   if(document.body.classList.contains('admin')) return;
   document.body.classList.add('admin');
   const bar=document.createElement('div'); bar.className='adminbar ab-main';
-  bar.innerHTML=`<b>관리자</b><span class="ab-msg"></span><button class="ab-edit" type="button">수정</button><button class="ab-save" type="button" hidden>저장하기</button><button class="ab-cancel" type="button" hidden>취소</button><button class="ab-log" type="button">설정</button><button class="ab-out" type="button">로그아웃</button>`;
+  bar.innerHTML=`<b>관리자</b><span class="ab-msg"></span><button class="ab-edit" type="button">수정</button><button class="ab-save" type="button" hidden>저장하기</button><button class="ab-cancel" type="button" hidden>취소</button><button class="ab-log" type="button">설정</button><button class="ab-out" type="button">로그아웃</button><button class="ab-x" type="button" aria-label="관리자 메뉴 접기">✕</button>`;
+  bar.classList.add('ab-fold'); bar.querySelector('b').addEventListener('click',()=>bar.classList.remove('ab-fold')); bar.querySelector('.ab-x').addEventListener('click',()=>bar.classList.add('ab-fold'));
   document.body.appendChild(bar);
   const msg=bar.querySelector('.ab-msg');
   const sc2=document.createElement('script'); sc2.src='sortable.min.js';
@@ -1582,7 +1594,7 @@ function adminOn(user){
   const unSort=()=>document.querySelectorAll('.page .cards, #ytBody .ytgrid, .press-l').forEach(box=>{ if(box._srt){ box._srt.destroy(); box._srt=null; } });
   new MutationObserver(()=>{ mkSort(); deco(); }).observe(document.getElementById('ytBody'),{childList:true});
   const ed=bar.querySelector('.ab-edit'), sv=bar.querySelector('.ab-save'), cn=bar.querySelector('.ab-cancel');
-  const setEdit=on=>{ document.body.classList.toggle('editing',on); ed.hidden=on; sv.hidden=!on; cn.hidden=!on; msg.textContent=on?'끌어서 순서를 바꾸고, ✕를 누르면 삭제돼요.':'';
+  const setEdit=on=>{ document.body.classList.toggle('editing',on); if(on) bar.classList.remove('ab-fold'); ed.hidden=on; sv.hidden=!on; cn.hidden=!on; msg.textContent=on?'끌어서 순서를 바꾸고, ✕를 누르면 삭제돼요.':'';
     if(!on) document.querySelectorAll('.del-x').forEach(x=>x.remove());
     unSort(); Object.values(DRAW).forEach(d=>d()); if(typeof renderYT==='function') renderYT(); if(on){ mkSort(); deco(); } };
   let pressSnap=[];
