@@ -884,6 +884,7 @@ body.editing .page .cards .card:hover{transform:none!important}
 #promo .press{margin-top:52px}
 .gv-bar{box-sizing:border-box;width:min(900px,calc(100% - 32px));margin:14px auto 0;border-radius:14px;box-shadow:0 6px 24px rgba(0,0,0,.25)!important;position:relative;z-index:2}
 .gv-x{background:var(--pink)!important;color:#fff!important;width:40px!important;height:40px!important;font-size:17px!important}
+.gv-body{scrollbar-gutter:stable both-edges}
 .hero h1 span{display:inline-block;transition:color .2s,transform .25s cubic-bezier(.3,1.6,.5,1);cursor:default;pointer-events:auto}
 .hero h1 span:hover{color:var(--pink);transform:translateY(-4px)}
 .wm-gal img{object-fit:contain!important;background:#F6F1F3}
@@ -2028,11 +2029,11 @@ var WINAPP={
  'RamSpirit':{lead:'ChatGPT·Gemini·Grok·Claude 같은 AI와 다른 프로그램을 한 창에 나란히 띄우고, 질문 하나를 모두에게 한 번에 보내는 프로그램이에요.',
   feat:['2·4·6·8칸, 칸마다 AI·웹사이트·설치된 프로그램 선택','한 번에 보내기 — 글과 파일을 켜 둔 칸 모두에','탭으로 칸 구성 여러 개(AI 탭·이미지 탭)','칸 크기 조절·자리 바꾸기·크게 보기, 테마 색 5가지','윈도우 10·11용 · 무료 · 자동 업데이트'],
   how:['내려받기를 눌러 RamSpirit.exe를 받아요.','“Windows의 PC 보호”가 뜨면 [추가 정보 → 실행]을 눌러요. 자동으로 설치되고 바탕화면에 아이콘이 생겨요.','처음 설정 창에서 칸 수와 칸마다 열 앱을 고르면 끝이에요.'],
-  dl:'https://github.com/dpfkadpfka/ramspirit/releases/latest/download/RamSpirit.exe', imgs:['apps/sc_ramspirit_2.webp?v=2','apps/sc_ramspirit_3.webp?v=2','apps/sc_ramspirit_4.webp?v=2','apps/sc_ramspirit_5.webp?v=2','apps/sc_ramspirit_6.webp?v=2','apps/sc_ramspirit_7.webp?v=2','apps/sc_ramspirit_8.webp?v=2','apps/sc_ramspirit_9.webp?v=2','apps/sc_ramspirit_10.webp?v=2'], logo:'apps/logo_ramspirit.webp', guide:'apps/guide-ramspirit.pdf?v=2'},
+  dl:'https://github.com/dpfkadpfka/ramspirit/releases/latest/download/RamSpirit.exe', imgs:['apps/sc_ramspirit_2.webp?v=2','apps/sc_ramspirit_3.webp?v=2','apps/sc_ramspirit_4.webp?v=2','apps/sc_ramspirit_5.webp?v=2','apps/sc_ramspirit_6.webp?v=2','apps/sc_ramspirit_7.webp?v=2','apps/sc_ramspirit_8.webp?v=2','apps/sc_ramspirit_9.webp?v=2','apps/sc_ramspirit_10.webp?v=2'], logo:'apps/logo_ramspirit.webp?v=2', guide:'apps/guide-ramspirit.pdf?v=2'},
  'Ram Calendar':{lead:'메신저에 온 공지, 이제 달력에 옮겨 적지 마세요. 복사해서 붙여넣기만 하면 날짜와 마감을 찾아 구글 캘린더에 바로 넣어 주는 바탕화면 달력이에요.',
   feat:['💬 메신저·공문 글을 그대로 붙여넣으면 마감·회의 날짜를 찾아 일정으로 — 한 번에 여러 개도','🔁 "기한이 변경되었습니다"도 OK — 이미 넣은 일정을 찾아 날짜만 옮겨 줘요, 두 번 들어가지 않아요','📅 구글 캘린더와 실시간 연동 — 휴대폰에서 넣은 일정도 바탕화면 달력에 바로','🔔 시작 30분 전 화면 오른쪽 아래 알림 — 휴대폰은 조용히','🎨 포스트잇 메모 · 날짜 칸 꾸미기 · 스킨 40가지 넘게 · 무료 · 자동 업데이트'],
   how:['내려받기를 눌러 설치 파일(RamCalendar-Setup-버전.exe)을 받아 실행해요.','“Windows의 PC 보호”가 뜨면 [추가 정보 → 실행]을 눌러요.','앱의 ⚙ 설정 → 계정 → 구글 로그인을 눌러 연결해요.'],
-  dl:'https://github.com/dpfkadpfka/yeram-calendar/releases/latest', imgs:['apps/rc_1.webp?v=3','apps/rc_2.webp?v=3','apps/rc_3.webp?v=3','apps/rc_4.webp?v=3','apps/rc_5.webp?v=3','apps/rc_6.webp?v=3','apps/rc_7.webp?v=3','apps/rc_8.webp?v=3','apps/rc_9.webp?v=3','apps/rc_10.webp?v=3'], logo:'apps/rc_logo.webp', guide:'apps/ram-calendar-guide.pdf?v=3'},
+  dl:'https://github.com/dpfkadpfka/yeram-calendar/releases/latest', imgs:['apps/rc_1.webp?v=3','apps/rc_2.webp?v=3','apps/rc_3.webp?v=3','apps/rc_4.webp?v=3','apps/rc_5.webp?v=3','apps/rc_6.webp?v=3','apps/rc_7.webp?v=3','apps/rc_8.webp?v=3','apps/rc_9.webp?v=3','apps/rc_10.webp?v=3'], logo:'apps/rc_logo.webp?v=2', guide:'apps/ram-calendar-guide.pdf?v=3'},
  '예람쌤 AI 영상 제작소':{web:1,lead:'캐릭터 만들기부터 장면·대본·영상 프롬프트까지, 질문에 답하면 대화하듯 만들어 주는 AI 영상 제작 사이트예요.',
   feat:['피동장스 틀로 캐릭터 프롬프트 만들기','장면·대본 프롬프트를 챗봇처럼 만들기','만든 그림·영상 모아 보는 갤러리','AI 영상 도구 비교'],
   how:['열어 보기를 눌러 사이트에 들어가요.','캐릭터 → 장면 → 대본 순서로 질문에 답해요.','만들어진 프롬프트를 복사해 AI 도구에 붙여 넣어요.'],
