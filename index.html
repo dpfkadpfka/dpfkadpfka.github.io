@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
-<script>(function(){var B="1794041108";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
+<script>(function(){var B="1794049648";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
 <meta name="color-scheme" content="light only">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="초등교사 김예람(예람쌤) — AI 영상·교육 콘텐츠 제작 연수, 영상·웹앱 콘텐츠, 연수 교안과 수업 자료">
@@ -2081,11 +2081,11 @@ function openWin(key){ const a=WINAPP[key], it=Object.values(ARCHIVE).flat().fin
    <h4>이런 걸 할 수 있어요</h4><ul>${a.feat.map(f=>`<li>${esc(f)}</li>`).join('')}</ul>
    <h4>${a.web?'이렇게 써요':'설치 방법'}</h4><ol>${a.how.map(f=>`<li>${esc(f)}</li>`).join('')}</ol>
    ${a.guide?`<div class="wm-guide"><button type="button" class="wm-gv" data-guide="${esc(a.guide)}" data-name="${esc(key)}">📖 앱 가이드 보기</button></div>`:''}
-   <a class="wm-dl" href="${esc(a.dl||it?.url||'#')}" target="_blank" rel="noopener">${a.web?'열어 보기':'앱 내려받기'}</a></div>`;
+   <a class="wm-dl" href="${esc(a.dl||it?.url||'#')}" target="_blank" rel="noopener"${a.web?'':` data-app="${esc(key)}"`}>${a.web?'열어 보기':'앱 내려받기'}</a></div>`;
   wm.hidden=false; document.body.style.overflow='hidden'; wm.querySelector('.wm-x').focus();
   const gl=wm.querySelector('.wm-gal'), dots=wm.querySelectorAll('.wm-gd2 i'); if(gl&&dots.length) gl.addEventListener('scroll',()=>{ const ims=gl.querySelectorAll('img'); let k=0,best=1e9; ims.forEach((im,j)=>{ const d=Math.abs(im.offsetLeft-gl.scrollLeft); if(d<best){best=d;k=j;} }); dots.forEach((d,j)=>d.classList.toggle('on',j===k)); },{passive:true}); }
 function closeWin(){ wm.hidden=true; document.body.style.overflow=''; }
-wm.addEventListener('click',e=>{ const ga=e.target.closest('.wm-ga'); if(ga){ const gl=wm.querySelector('.wm-gal'); gl.scrollBy({left:(ga.classList.contains('next')?1:-1)*gl.clientWidth*.9,behavior:'smooth'}); return; } const g=e.target.closest('.wm-gv'); if(g){ openGuide(g.dataset.guide,g.dataset.name); return; } if(e.target===wm||e.target.closest('.wm-x')) closeWin(); });
+wm.addEventListener('click',e=>{ const dlb=e.target.closest('.wm-dl'); if(dlb&&dlb.dataset.app&&window.loginGate){ e.preventDefault(); const u=dlb.href; window.loginGate('[앱 내려받기] '+dlb.dataset.app,u); return; } const ga=e.target.closest('.wm-ga'); if(ga){ const gl=wm.querySelector('.wm-gal'); gl.scrollBy({left:(ga.classList.contains('next')?1:-1)*gl.clientWidth*.9,behavior:'smooth'}); return; } const g=e.target.closest('.wm-gv'); if(g){ openGuide(g.dataset.guide,g.dataset.name); return; } if(e.target===wm||e.target.closest('.wm-x')) closeWin(); });
 const gv=document.createElement('div'); gv.className='gview'; gv.hidden=true; document.body.appendChild(gv);
 let pdfLib=null;
 function loadPdfJs(){ if(pdfLib) return pdfLib; pdfLib=new Promise((ok,no)=>{ const sc=document.createElement('script'); sc.src='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js'; sc.onload=()=>{ pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js'; ok(pdfjsLib); }; sc.onerror=no; document.head.appendChild(sc); }); return pdfLib; }
@@ -2150,13 +2150,16 @@ document.addEventListener('click',e=>{ const c=e.target.closest('#webapp .cards 
  function gate(b,t,act){
   const go=()=>{ logOpen(t); if(act){ close(); act(); } else show(b,t); };
   if(U) return go();
-  pv.innerHTML=`<div class="pvw-box pvw-login" role="dialog" aria-modal="true" aria-label="로그인"><div class="pvw-bar"><b>${t.replace(/^\[수업 자료\] /,'')}</b><button type="button" class="pvw-x" aria-label="닫기">✕</button></div><div class="pl-in"><img src="obj/lecture.webp" alt=""><h3>${b.dataset.dl?'자료는 로그인 후 내려받을 수 있어요':(b.closest('#class')?'수업 자료는 로그인 후 볼 수 있어요':'연수 자료는 로그인 후 볼 수 있어요')}</h3><p>구글 계정으로 로그인해 주세요.</p><button type="button" class="pl-go" disabled>Google 계정으로 로그인</button></div></div>`;
+  pv.innerHTML=`<div class="pvw-box pvw-login" role="dialog" aria-modal="true" aria-label="로그인"><div class="pvw-bar"><b>${t.replace(/^\[(수업 자료|앱 내려받기)\] /,'')}</b><button type="button" class="pvw-x" aria-label="닫기">✕</button></div><div class="pl-in"><img src="obj/lecture.webp" alt=""><h3>${b.dataset.app?'앱은 로그인 후 내려받을 수 있어요':b.dataset.dl?'자료는 로그인 후 내려받을 수 있어요':(b.closest('#class')?'수업 자료는 로그인 후 볼 수 있어요':'연수 자료는 로그인 후 볼 수 있어요')}</h3><p>구글 계정으로 로그인해 주세요.</p><button type="button" class="pl-go" disabled>Google 계정으로 로그인</button></div></div>`;
   pv.hidden=false; document.body.style.overflow='hidden';
   const btn=pv.querySelector('.pl-go');
   fbReady().then(f=>{ if(U){ go(); return; } btn.disabled=false;
    btn.onclick=()=>{ btn.disabled=true; btn.textContent='로그인 중…'; f.Au.signInWithPopup(f.auth,new f.Au.GoogleAuthProvider()).then(r=>{ U=r.user; go(); }).catch(x=>{ btn.disabled=false; btn.textContent='Google 계정으로 로그인'; if(!/popup-closed|cancelled/.test(x.code||'')) alertBox('로그인하지 못했어요 ('+(x.code||x.message)+')'); }); };
   }).catch(()=>{ btn.textContent='잠시 후 다시 시도해 주세요'; });
  }
+ window.loginGate=(t,url)=>{ const b=document.createElement('span'); b.dataset.app='1'; const nm=t.replace(/^\[앱 내려받기\] /,'');
+  gate(b,t,()=>{ const w=window.open(url,'_blank'); if(w){ w.opener=null; return; }
+   pv.innerHTML=`<div class="pvw-box pvw-login" role="dialog" aria-modal="true"><div class="pvw-bar"><b>${nm}</b><button type="button" class="pvw-x" aria-label="닫기">✕</button></div><div class="pl-in"><h3>로그인됐어요</h3><a class="pl-go" href="${url}" target="_blank" rel="noopener" style="text-decoration:none">앱 내려받기</a></div></div>`; pv.hidden=false; document.body.style.overflow='hidden'; pv.querySelector('.pl-go').addEventListener('click',()=>close()); }); };
  function show(b,t){
   pv.innerHTML=`<div class="pvw-box" role="dialog" aria-modal="true" aria-label="${t}"><div class="pvw-bar"><b>${t}</b><button type="button" class="pvw-fs">전체 화면</button><button type="button" class="pvw-x" aria-label="닫기">✕</button></div><div class="pvw-fr"><iframe title="${t}" allow="fullscreen; clipboard-write" allowfullscreen referrerpolicy="no-referrer"></iframe></div></div>`;
   const fr=pv.querySelector('.pvw-fr'); fr.classList.add('ld'); const ifr=pv.querySelector('iframe'); ifr.addEventListener('load',()=>fr.classList.remove('ld'),{once:true}); ifr.src=dec(b.dataset.pv);
