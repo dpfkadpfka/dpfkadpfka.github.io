@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
-<script>(function(){var B="1794079934";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
+<script>(function(){var B="1794080557";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
 <meta name="color-scheme" content="light only">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="초등교사 김예람(예람쌤) — AI 영상·교육 콘텐츠 제작 연수, 영상·웹앱 콘텐츠, 연수 교안과 수업 자료">
@@ -1725,18 +1725,22 @@ const stage=$('#stage'), cv=$('#charCanvas'), cx2=cv.getContext('2d'), anim=$('#
 const isHome=()=>document.body.classList.contains('is-home');
 
 /* ═══ 영상 장면 캐릭터 (frames/meta.json) ═══ */
+const FRAME_MODE=matchMedia('(pointer: coarse)').matches;
 const SETS={}; let META=null; const VW=1280;
 function loadSet(name){
   if(SETS[name]) return SETS[name].p;
   const s=META.sets[name]; if(!s) return Promise.resolve();
   const img=new Image(); img.decoding='async';
   const o=SETS[name]={...s,img,ready:false,used:performance.now()};
-  o.p=new Promise(res=>{ img.onload=()=>{ const done=()=>{ o.ready=true; res(); }; if(window.createImageBitmap) createImageBitmap(img).then(bm=>{ o.img=bm; done(); },()=>{ (img.decode?img.decode():Promise.resolve()).catch(()=>{}).then(done); }); else (img.decode?img.decode():Promise.resolve()).catch(()=>{}).then(done); }; let tries=0; img.onerror=()=>{ if(++tries<4) setTimeout(()=>{ img.src=`frames2/${name}.webp?v=${META.v||1}&r=${tries}`; },600*tries); else res(); }; });
+  o.p=new Promise(res=>{ img.onload=()=>{ const done=()=>{ o.ready=true; res(); };
+    // 휴대폰: 큰 그림 한 장을 통째로 그리면 화면에 안 나오는 기기가 있어서 장면 하나씩 잘라 둠
+    if(FRAME_MODE&&window.createImageBitmap){ Promise.all(Array.from({length:o.count},(_,i)=>createImageBitmap(img,(i%o.cols)*o.cw,((i/o.cols)|0)*o.ch,o.cw,o.ch))).then(fr=>{ o.frames=fr; done(); },()=>{ (img.decode?img.decode():Promise.resolve()).catch(()=>{}).then(done); }); return; }
+    if(window.createImageBitmap) createImageBitmap(img).then(bm=>{ o.img=bm; done(); },()=>{ (img.decode?img.decode():Promise.resolve()).catch(()=>{}).then(done); }); else (img.decode?img.decode():Promise.resolve()).catch(()=>{}).then(done); }; let tries=0; img.onerror=()=>{ if(++tries<4) setTimeout(()=>{ img.src=`frames2/${name}.webp?v=${META.v||1}&r=${tries}`; },600*tries); else res(); }; });
   img.onerror=()=>{ (window.__dbgE=window.__dbgE||[]).push('imgerr '+name); };
   img.src=`frames2/${name}.webp?v=${META.v||1}`;
   // 한 번에 쓰는 일이 드문 영상은 최대 6개만 메모리에 둠
   const extra=Object.keys(SETS).filter(k=>!CORE.includes(k)&&!k.startsWith('menu_')&&k!=='intro_pop');
-  if(extra.length>3){ extra.sort((a,b)=>SETS[a].used-SETS[b].used); for(const k of extra.slice(0,extra.length-3)) if(k!==clip&&k!==clipQ&&k!==name&&k!==sAct&&k!==nextIdle){ const im=SETS[k].img; if(im&&im.close) im.close(); delete SETS[k]; } }
+  if(extra.length>3){ extra.sort((a,b)=>SETS[a].used-SETS[b].used); for(const k of extra.slice(0,extra.length-3)) if(k!==clip&&k!==clipQ&&k!==name&&k!==sAct&&k!==nextIdle){ const im=SETS[k].img; (SETS[k].frames||[]).forEach(f=>f.close&&f.close()); if(im&&im.close) im.close(); delete SETS[k]; } }
   return o.p;
 }
 const ready=n=>SETS[n]?.ready;
@@ -1745,7 +1749,7 @@ function draw(name,idx){
   s.used=performance.now();
   const i=Math.max(0,Math.min(s.count-1,idx|0)), c=i%s.cols, r=(i/s.cols)|0;
   const key=name+i; if(key===lastDrawn) return true; lastDrawn=key; cx2.clearRect(0,0,cv.width,cv.height);
-  cx2.drawImage(s.img,c*s.cw,r*s.ch,s.cw,s.ch,s.x,0,s.w,META.box[3]); return true;
+  if(s.frames) cx2.drawImage(s.frames[i],0,0,s.cw,s.ch,s.x,0,s.w,META.box[3]); else cx2.drawImage(s.img,c*s.cw,r*s.ch,s.cw,s.ch,s.x,0,s.w,META.box[3]); return true;
 }
 let CORE=[], lastDrawn='';
 let mode='loading', introStart=0, lx=0,tx=0,ty=0,lastMove=-1e9, idle=false, idleT0=0, idleNext=0, nextIdle=null;
@@ -1993,7 +1997,7 @@ let sidePage=null, sideWant=null, sideCur=null, sPh='in', sF=0, sLast=0, sUntil=
 function sideStart(id){ const p=POSE_OF[id]; if(!p||!META) return; sidePage=sideWant=sideCur='menu_'+p; sPh='in'; sF=0; sLast=performance.now(); loadSet(sideCur); }
 let sideDrawn=''; function drawSide(n,i){ const s=SETS[n]; if(!s||!s.ready) return false; s.used=performance.now(); i=Math.max(0,Math.min(s.count-1,Math.round(i))); const c=i%s.cols, r=(i/s.cols)|0; if(sideDrawn===n+i) return true; sideDrawn=n+i;
   const x0=300, x1=1240, k=Math.min(1,Math.max(.12,((sc.clientHeight||160)*Math.min(2,devicePixelRatio||1))/META.box[3])), W=Math.round((x1-x0)*k), H=Math.round(META.box[3]*k); if(sc.width!==W||sc.height!==H){ sc.width=W; sc.height=H; sx2.imageSmoothingQuality='high'; }
-  sx2.clearRect(0,0,W,H); sx2.drawImage(s.img,c*s.cw,r*s.ch,s.cw,s.ch,(s.x-x0)*k,0,s.w*k,H); return true; }
+  sx2.clearRect(0,0,W,H); if(s.frames) sx2.drawImage(s.frames[c+r*s.cols],0,0,s.cw,s.ch,(s.x-x0)*k,0,s.w*k,H); else sx2.drawImage(s.img,c*s.cw,r*s.ch,s.cw,s.ch,(s.x-x0)*k,0,s.w*k,H); return true; }
 document.querySelectorAll('.menu a').forEach(a=>{
   const p=POSE_OF[a.dataset.go];
   a.addEventListener('pointerenter',()=>{ if(!isHome()&&p){ sideWant='menu_'+p; loadSet(sideWant); } });
@@ -2487,10 +2491,10 @@ if(/[?&]dbg=1/.test(location.search)){
  const d=document.createElement('pre'); d.style.cssText='position:fixed;left:6px;right:6px;top:70px;z-index:99999;background:rgba(0,0,0,.82);color:#0f0;font:11px/1.35 monospace;padding:8px;border-radius:8px;white-space:pre-wrap;max-height:60vh;overflow:auto;pointer-events:none';
  document.body.appendChild(d);
  setInterval(()=>{ try{ const c=document.getElementById('charCanvas'), r=c&&c.getBoundingClientRect();
-  const S=typeof SETS!=='undefined'?Object.fromEntries(Object.entries(SETS).map(([k,v])=>[k,(v.ready?'OK ':'.. ')+(v.img?(v.img.width+'x'+v.img.height):'')])):'-';
+  const S=typeof SETS!=='undefined'?Object.fromEntries(Object.entries(SETS).map(([k,v])=>[k,(v.ready?'OK ':'.. ')+(v.frames?('fr'+v.frames.length):(v.img?(v.img.width+'x'+v.img.height):''))])):'-';
   d.textContent='mode '+(typeof mode!=='undefined'?mode:'?')+' | meta '+(typeof META!=='undefined'&&META?('v'+META.v):'X')+' | coarse '+(typeof coarse!=='undefined'?coarse:'?')+
   '\ncanvas '+(c?c.width+'x'+c.height+' rect '+[r.x|0,r.y|0,r.width|0,r.height|0].join(',')+' disp '+getComputedStyle(c).display+' vis '+getComputedStyle(c).visibility+' op '+getComputedStyle(c).opacity:'none')+
-  '\nlast '+(typeof lastDrawn!=='undefined'?lastDrawn:'?')+' | dpr '+devicePixelRatio+' mem '+(navigator.deviceMemory||'?')+'\nsets '+JSON.stringify(S)+'\nerrs '+E.slice(-8).join(' / ')+'\n'+navigator.userAgent.slice(0,120); }catch(x){ d.textContent='dbg fail '+x.message; } },1000);
+  '\nlast '+(typeof lastDrawn!=='undefined'?lastDrawn:'?')+' | px '+(()=>{ try{ const g=c.getContext('2d').getImageData(0,0,c.width,c.height).data; let n=0; for(let i=3;i<g.length;i+=4000) if(g[i]) n++; return n; }catch(x){ return 'x'; } })()+' | dpr '+devicePixelRatio+' mem '+(navigator.deviceMemory||'?')+'\nsets '+JSON.stringify(S)+'\nerrs '+E.slice(-8).join(' / ')+'\n'+navigator.userAgent.slice(0,120); }catch(x){ d.textContent='dbg fail '+x.message; } },1000);
 }
 </script>
 </html>
