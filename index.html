@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
-<script>(function(){var B="1794101320";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
+<script>(function(){var B="1794102186";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
 <meta name="color-scheme" content="light only">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="초등교사 김예람(예람쌤) — AI 영상·교육 콘텐츠 제작 연수, 영상·웹앱 콘텐츠, 연수 교안과 수업 자료">
@@ -135,7 +135,8 @@ body.is-home .menu{visibility:hidden}
 .halo{position:absolute;left:50%;top:50%;width:min(80vh,100vw);aspect-ratio:1;border-radius:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,var(--halo-strong) 0%,var(--halo) 32%,transparent 66%);pointer-events:none;z-index:1}
 .floor{position:absolute;left:50%;bottom:calc(15vh + 2px);width:min(22vh,30vw);height:2.2vh;border-radius:50%;transform:translateX(-50%);background:var(--pink);opacity:.28;filter:blur(7px);pointer-events:none;z-index:2}
 .char-wrap{position:absolute;left:50%;bottom:15vh;height:min(60vh,535px);transform:translateX(-50%);z-index:3}
-.char-anim{height:100%;transform-origin:50% 100%}
+.char-anim{height:100%;transform-origin:50% 100%;position:relative}
+#charSpr{position:absolute;top:0;bottom:0;background-repeat:no-repeat;pointer-events:none}
 #charCanvas{height:100%;display:block;transition:filter 1.4s ease}
 
 .hit{position:absolute;top:0;height:100%;cursor:pointer}
@@ -1734,10 +1735,10 @@ function loadSet(name){
   const s=META.sets[name]; if(!s) return Promise.resolve();
   const img=new Image(); img.decoding='async';
   const o=SETS[name]={...s,img,ready:false,used:performance.now()};
-  o.p=new Promise(res=>{ img.onload=()=>{ const done=()=>{ o.ready=true; res(); }; if(window.createImageBitmap) createImageBitmap(img).then(bm=>{ o.img=bm; done(); },()=>{ (img.decode?img.decode():Promise.resolve()).catch(()=>{}).then(done); }); else (img.decode?img.decode():Promise.resolve()).catch(()=>{}).then(done); }; let tries=0; img.onerror=()=>{ if(++tries<4) setTimeout(()=>{ img.src=`${FRAME_MODE&&META.m?'frames2m':'frames2'}/${name}.webp?v=${META.v||1}&r=${tries}`; },600*tries); else res(); }; });
+  o.p=new Promise(res=>{ img.onload=()=>{ const done=()=>{ o.ready=true; res(); }; if(FRAME_MODE){ (img.decode?img.decode():Promise.resolve()).catch(()=>{}).then(done); return; } if(window.createImageBitmap) createImageBitmap(img).then(bm=>{ o.img=bm; done(); },()=>{ (img.decode?img.decode():Promise.resolve()).catch(()=>{}).then(done); }); else (img.decode?img.decode():Promise.resolve()).catch(()=>{}).then(done); }; let tries=0; img.onerror=()=>{ if(++tries<4) setTimeout(()=>{ img.src=`${FRAME_MODE&&META.m?'frames2m':'frames2'}/${name}.webp?v=${META.v||1}&r=${tries}`; },600*tries); else res(); }; });
   img.onerror=()=>{ (window.__dbgE=window.__dbgE||[]).push('imgerr '+name); };
   if(FRAME_MODE&&META.m&&META.m[name]){ o.cw=META.m[name][0]; o.ch=META.m[name][1]; }
-  img.src=`${FRAME_MODE&&META.m?'frames2m':'frames2'}/${name}.webp?v=${META.v||1}`;
+  img.src=o.url=`${FRAME_MODE&&META.m?'frames2m':'frames2'}/${name}.webp?v=${META.v||1}`;
   // 한 번에 쓰는 일이 드문 영상은 최대 6개만 메모리에 둠
   const extra=Object.keys(SETS).filter(k=>!CORE.includes(k)&&!k.startsWith('menu_')&&k!=='intro_pop');
   const KEEP=FRAME_MODE?1:3; if(extra.length>KEEP){ extra.sort((a,b)=>SETS[a].used-SETS[b].used); for(const k of extra.slice(0,extra.length-KEEP)) if(k!==clip&&k!==clipQ&&k!==name&&k!==sAct&&k!==nextIdle){ const im=SETS[k].img; if(im&&im.close) im.close(); delete SETS[k]; } }
@@ -1748,8 +1749,20 @@ function draw(name,idx){
   const s=SETS[name]; if(!s||!s.ready){ const p=SETS.intro_pop; if(name!=='intro_pop'&&p&&p.ready) return draw('intro_pop',p.count-1); return false; }
   s.used=performance.now();
   const i=Math.max(0,Math.min(s.count-1,idx|0)), c=i%s.cols, r=(i/s.cols)|0;
-  const key=name+i; if(key===lastDrawn) return true; lastDrawn=key; cx2.clearRect(0,0,cv.width,cv.height);
+  const key=name+i; if(key===lastDrawn) return true; lastDrawn=key;
+  if(FRAME_MODE){ sprDraw(s,c,r); return true; }
+  cx2.clearRect(0,0,cv.width,cv.height);
   cx2.drawImage(s.img,c*s.cw,r*s.ch,s.cw,s.ch,s.x,0,s.w,META.box[3]); return true;
+}
+/* 휴대폰·태블릿: 캔버스 대신 그림 칸(배경 위치 바꾸기)으로 캐릭터를 보여 줌 — 기기마다 캔버스가 안 그려지는 문제를 피함 */
+let SPR=null, sprUrl='';
+function sprDraw(s,c,r){
+  if(!SPR){ SPR=document.createElement('div'); SPR.id='charSpr'; cv.parentElement.appendChild(SPR); cv.style.opacity='0'; }
+  const rows=Math.ceil(s.count/s.cols);
+  if(sprUrl!==s.url){ sprUrl=s.url; SPR.style.backgroundImage=`url("${s.url}")`; }
+  SPR.style.left=(s.x/META.vw*100)+'%'; SPR.style.width=(s.w/META.vw*100)+'%';
+  SPR.style.backgroundSize=`${s.cols*100}% ${rows*100}%`;
+  SPR.style.backgroundPosition=`${s.cols>1?c/(s.cols-1)*100:0}% ${rows>1?r/(rows-1)*100:0}%`;
 }
 let CORE=[], lastDrawn='';
 let mode='loading', introStart=0, lx=0,tx=0,ty=0,lastMove=-1e9, idle=false, idleT0=0, idleNext=0, nextIdle=null;
@@ -1774,7 +1787,7 @@ function planIdle(now){ const mob=matchMedia('(max-width:700px)').matches; const
 function goIdle(now){ idle=true; idleT0=now; planIdle(now); }
 let spT=0, introPop=false, introFrom=3;
 function introSpark(now){
-  if(reduce||now-spT<60) return; spT=now;
+  if(reduce||FRAME_MODE||now-spT<60) return; spT=now;
   const w=cv.width,h=cv.height; if(!w) return;
   const row=cx2.getImageData(0,Math.floor(h*.5),w,1).data; let x0=-1,x1=-1;
   for(let x=0;x<w;x+=2){ if(row[x*4+3]>40){ if(x0<0)x0=x; x1=x; } }
