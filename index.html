@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
-<script>(function(){var B="1794080557";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
+<script>(function(){var B="1794098458";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
 <meta name="color-scheme" content="light only">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="초등교사 김예람(예람쌤) — AI 영상·교육 콘텐츠 제작 연수, 영상·웹앱 콘텐츠, 연수 교안과 수업 자료">
@@ -2494,7 +2494,7 @@ if(/[?&]dbg=1/.test(location.search)){
   const S=typeof SETS!=='undefined'?Object.fromEntries(Object.entries(SETS).map(([k,v])=>[k,(v.ready?'OK ':'.. ')+(v.frames?('fr'+v.frames.length):(v.img?(v.img.width+'x'+v.img.height):''))])):'-';
   d.textContent='mode '+(typeof mode!=='undefined'?mode:'?')+' | meta '+(typeof META!=='undefined'&&META?('v'+META.v):'X')+' | coarse '+(typeof coarse!=='undefined'?coarse:'?')+
   '\ncanvas '+(c?c.width+'x'+c.height+' rect '+[r.x|0,r.y|0,r.width|0,r.height|0].join(',')+' disp '+getComputedStyle(c).display+' vis '+getComputedStyle(c).visibility+' op '+getComputedStyle(c).opacity:'none')+
-  '\nlast '+(typeof lastDrawn!=='undefined'?lastDrawn:'?')+' | px '+(()=>{ try{ const g=c.getContext('2d').getImageData(0,0,c.width,c.height).data; let n=0; for(let i=3;i<g.length;i+=4000) if(g[i]) n++; return n; }catch(x){ return 'x'; } })()+' | dpr '+devicePixelRatio+' mem '+(navigator.deviceMemory||'?')+'\nsets '+JSON.stringify(S)+'\nerrs '+E.slice(-8).join(' / ')+'\n'+navigator.userAgent.slice(0,120); }catch(x){ d.textContent='dbg fail '+x.message; } },1000);
+  '\nlast '+(typeof lastDrawn!=='undefined'?lastDrawn:'?')+' | px '+(()=>{ try{ const g=c.getContext('2d').getImageData(0,0,c.width,c.height).data; let n=0; for(let i=3;i<g.length;i+=4000) if(g[i]) n++; return n; }catch(x){ return 'x'; } })()+' | dpr '+devicePixelRatio+' mem '+(navigator.deviceMemory||'?')+'\ntop '+(()=>{ const t=document.elementFromPoint(r.x+r.width/2,r.y+r.height*0.55); return t?(t.tagName+'#'+t.id+'.'+String(t.className).slice(0,30)):'none'; })()+'\nup '+(()=>{ let o=[],e=c.parentElement; while(e&&e!==document.body){ const g=getComputedStyle(e); o.push((e.id||e.className||e.tagName).toString().slice(0,12)+':'+g.opacity+'/'+g.visibility+'/'+(g.transform==='none'?'-':g.transform.slice(0,24))+'/'+(g.filter==='none'?'-':g.filter.slice(0,20))); e=e.parentElement; } return o.join(' > '); })()+' | cvfilter '+getComputedStyle(c).filter+'+'\nsets '+JSON.stringify(S)+'\nerrs '+E.slice(-8).join(' / ')+'\n'+navigator.userAgent.slice(0,120); }catch(x){ d.textContent='dbg fail '+x.message; } },1000);
 }
 </script>
 </html>
