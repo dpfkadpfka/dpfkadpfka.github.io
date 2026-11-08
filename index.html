@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
-<script>(function(){var B="1794079934";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
+<script>(function(){var B="1794099563";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
 <meta name="color-scheme" content="light only">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="초등교사 김예람(예람쌤) — AI 영상·교육 콘텐츠 제작 연수, 영상·웹앱 콘텐츠, 연수 교안과 수업 자료">
@@ -1725,18 +1725,21 @@ const stage=$('#stage'), cv=$('#charCanvas'), cx2=cv.getContext('2d'), anim=$('#
 const isHome=()=>document.body.classList.contains('is-home');
 
 /* ═══ 영상 장면 캐릭터 (frames/meta.json) ═══ */
+// 휴대폰·태블릿: 작은 그림(frames2m)을 써서 메모리·발열을 줄임
+const FRAME_MODE=matchMedia('(pointer: coarse)').matches;
 const SETS={}; let META=null; const VW=1280;
 function loadSet(name){
   if(SETS[name]) return SETS[name].p;
   const s=META.sets[name]; if(!s) return Promise.resolve();
   const img=new Image(); img.decoding='async';
   const o=SETS[name]={...s,img,ready:false,used:performance.now()};
-  o.p=new Promise(res=>{ img.onload=()=>{ const done=()=>{ o.ready=true; res(); }; if(window.createImageBitmap) createImageBitmap(img).then(bm=>{ o.img=bm; done(); },()=>{ (img.decode?img.decode():Promise.resolve()).catch(()=>{}).then(done); }); else (img.decode?img.decode():Promise.resolve()).catch(()=>{}).then(done); }; let tries=0; img.onerror=()=>{ if(++tries<4) setTimeout(()=>{ img.src=`frames2/${name}.webp?v=${META.v||1}&r=${tries}`; },600*tries); else res(); }; });
+  o.p=new Promise(res=>{ img.onload=()=>{ const done=()=>{ o.ready=true; res(); }; if(window.createImageBitmap) createImageBitmap(img).then(bm=>{ o.img=bm; done(); },()=>{ (img.decode?img.decode():Promise.resolve()).catch(()=>{}).then(done); }); else (img.decode?img.decode():Promise.resolve()).catch(()=>{}).then(done); }; let tries=0; img.onerror=()=>{ if(++tries<4) setTimeout(()=>{ img.src=`${FRAME_MODE&&META.m?'frames2m':'frames2'}/${name}.webp?v=${META.v||1}&r=${tries}`; },600*tries); else res(); }; });
   img.onerror=()=>{ (window.__dbgE=window.__dbgE||[]).push('imgerr '+name); };
-  img.src=`frames2/${name}.webp?v=${META.v||1}`;
+  if(FRAME_MODE&&META.m&&META.m[name]){ o.cw=META.m[name][0]; o.ch=META.m[name][1]; }
+  img.src=`${FRAME_MODE&&META.m?'frames2m':'frames2'}/${name}.webp?v=${META.v||1}`;
   // 한 번에 쓰는 일이 드문 영상은 최대 6개만 메모리에 둠
   const extra=Object.keys(SETS).filter(k=>!CORE.includes(k)&&!k.startsWith('menu_')&&k!=='intro_pop');
-  if(extra.length>3){ extra.sort((a,b)=>SETS[a].used-SETS[b].used); for(const k of extra.slice(0,extra.length-3)) if(k!==clip&&k!==clipQ&&k!==name&&k!==sAct&&k!==nextIdle){ const im=SETS[k].img; if(im&&im.close) im.close(); delete SETS[k]; } }
+  const KEEP=FRAME_MODE?1:3; if(extra.length>KEEP){ extra.sort((a,b)=>SETS[a].used-SETS[b].used); for(const k of extra.slice(0,extra.length-KEEP)) if(k!==clip&&k!==clipQ&&k!==name&&k!==sAct&&k!==nextIdle){ const im=SETS[k].img; if(im&&im.close) im.close(); delete SETS[k]; } }
   return o.p;
 }
 const ready=n=>SETS[n]?.ready;
