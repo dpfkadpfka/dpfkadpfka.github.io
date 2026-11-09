@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
-<script>(function(){var B="1794243104";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
+<script>(function(){var B="1794243962";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
 <meta name="color-scheme" content="light only">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="초등교사 김예람(예람쌤) — AI 영상·교육 콘텐츠 제작 연수, 영상·웹앱 콘텐츠, 연수 교안과 수업 자료">
@@ -281,6 +281,7 @@ a.card:hover .thumb img,.card:hover .thumb video{transform:scale(1.05)}
 .ytgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}
 .ytgrid.sh{grid-template-columns:repeat(auto-fill,minmax(170px,1fr))}
 .ytc{display:grid;gap:8px;text-decoration:none;color:var(--ink);min-width:0}
+.gtc{border:0;background:none;padding:0;font:inherit;text-align:left;cursor:pointer}
 .gt-note{margin:-6px 0 14px;font-size:13.5px;color:var(--ink-soft);background:var(--soft);border-radius:12px;padding:9px 13px;line-height:1.5}.gt-note b{color:var(--pink-deep);margin-right:6px}
 .ytc-im{position:relative;border-radius:14px;overflow:hidden;aspect-ratio:16/9;background:#111;display:grid;place-items:center}
 .ytgrid.sh .ytc-im{aspect-ratio:9/16}
@@ -1560,7 +1561,7 @@ function renderArchive(id){
     let n=0;
     const HD=(ORDER.hide&&ORDER.hide[id])||[]; const list=ARCHIVE[id].filter(x=>!HD.includes(x.t)); if(document.body.classList.contains('editing')&&!NOALL) cur='전체';
     let ix=0; const card=i=>{
-      const tag=i.url?'a':((i.pv||i.dl)?'button':'div'), href=i.url?` href="${esc(i.url)}" target="_blank" rel="noopener"`:(i.pv?` type="button" data-pv="${i.pv}"`:(i.dl?` type="button" data-dl="${esc(i.dl)}"`:''));
+      const tag=i.url?'a':((i.pv||i.dl)?'button':'div'), href=i.url?` href="${esc(i.url)}" target="_blank" rel="noopener"${i.tag==='웹사이트'?' data-pop="1"':''}`:(i.pv?` type="button" data-pv="${i.pv}"`:(i.dl?` type="button" data-dl="${esc(i.dl)}"`:''));
       return `<${tag} class="card tone-0"${href} data-key="${esc(i.t)}" style="--i:${(ix++)%7}"><div class="thumb">${thumb(i)}${i.st?`<span class="st${i.st==='종료'?' end':''}">${esc(i.st)}</span>`:''}</div>
         <div class="card-body"><div class="card-meta"><span>${esc(i.tag)}</span><span>${esc(i.y)}</span></div><h3>${esc(i.t)}</h3>${i.d?`<p>${esc(i.d)}</p>`:''}
         <span class="go${i.url||i.pv||i.dl?'':' soon'}">${i.dl?'내려받기 →':i.pv?'자료 보기 →':i.url?(i.yt?'영상 보기 →':(id==='webapp')?'자세히 보기 →':'열어 보기 →'):'링크 준비 중'}</span></div></${tag}>`;
@@ -1722,7 +1723,8 @@ function ytCard(v){const sh=v[2]==="short";const url=(sh?'https://www.youtube.co
   return `<a class="ytc" href="${url}" target="_blank" rel="noopener" data-yt="${v[0]}" data-sh="${sh?1:0}" data-title="${esc(v[1])}"><span class="ytc-im">${v[3]?`<span class="ytc-n">${v[3]}${v[2]==="ar"?"차시":"강"}</span>`:""}<img src="https://i.ytimg.com/vi/${v[0]}/${sh?"oar2":"hqdefault"}.jpg" alt="" loading="lazy" data-fb="thumbs/${v[0]}.jpg" onerror="if(this.dataset.fb){this.src=this.dataset.fb;this.dataset.fb=''}else{this.replaceWith(Object.assign(document.createElement('span'),{className:'ph',textContent:'영상'}))}"></span><b>${esc(v[1])}</b></a>`}
 const GT_BASE='https://www.gtie.go.kr/lh/mc/ch/selectMcMlcHomePopup.do?cuiId=1000000004&cntsIemId=';
 const GT=[[1,'AR 체험! 증강현실 세상 만나기','operCntsId=3000081365&cntsId=3000020851&playtmSs=607'],[2,'AR 콘텐츠 제작하기','operCntsId=3000081366&cntsId=3000020852&playtmSs=607'],[3,'AR 명함 디자인하기','operCntsId=3000081367&cntsId=3000020853&playtmSs=613'],[4,'AR 명함 완성하기','operCntsId=3000081368&cntsId=3000020854&playtmSs=614'],[5,'AI로 AR 명함 업그레이드하기','operCntsId=3000081369&cntsId=3000020855&playtmSs=612']];
-function gtCard(g){ return `<a class="ytc gtc" href="${GT_BASE}&${g[2]}" target="_blank" rel="noopener"><span class="ytc-im"><span class="ytc-n">${g[0]}차시</span><img src="apps/gt_jc${g[0]}.webp" alt="" loading="lazy"></span><b>${esc(g[1])}</b></a>`; }
+document.addEventListener('click',e=>{ const a=e.target.closest('a[data-pop]'); if(!a||document.body.classList.contains('editing')) return; const W=Math.min(1200,screen.availWidth-40), H=Math.min(800,screen.availHeight-60); const w=window.open(a.href,a.classList.contains('gtc')?'gtiePlayer':'sitePop',`popup=yes,width=${W},height=${H},left=${Math.max(0,(screen.availWidth-W)/2)},top=${Math.max(0,(screen.availHeight-H)/2)}`); if(w){ e.preventDefault(); w.focus(); } });
+function gtCard(g){ const pv=btoa([...(GT_BASE+'&'+g[2])].reverse().join('')); return `<button type="button" class="ytc gtc" data-pv="${pv}" data-title="${esc('진로크래프트 '+g[0]+'차시 · '+g[1])}"><span class="ytc-im"><span class="ytc-n">${g[0]}차시</span><img src="apps/gt_jc${g[0]}.webp" alt="" loading="lazy"></span><b>${esc(g[1])}</b></button>`; }
 const YTAUTO=new Map();
 fetch('yt.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{ if(!j||!j.items) return; const have=new Set(DATA.YTV.map(v=>v[0])); const add=[];
   j.items.forEach((x,i)=>{ if(have.has(x.id)) return; YTAUTO.set(x.id,i); add.push([x.id,x.t,x.k==='short'?'short':'edu']); });
@@ -1731,7 +1733,7 @@ function ytOrd(){ const o=(ORDER&&ORDER.yt)||[], hy=(ORDER.hide&&ORDER.hide.yt)|
 function renderYT(){if(document.body.classList.contains('editing')) ytF='all'; const V=ytOrd(),n=k=>V.filter(x=>x[2]===k).length;
   document.getElementById('ytFil').innerHTML=[["all","전체",V.length],["edu","교육 콘텐츠",n("edu")],["mv","AI 뮤직비디오",n("mv")],["lec","강의",n("ar")+n("esop")+GT.length],["short","숏폼",n("short")]].filter(([k,t,c])=>k==="all"||c).map(([k,t,c])=>`<button type="button" data-ytf="${k}" aria-pressed="${ytF===k}">${t}<i>${c}</i></button>`).join("");
   const keys=ytF==="all"?DATA.YTC.map(x=>x[0]):ytF==="lec"?["ar","gt","esop"]:[ytF];
-  document.getElementById('ytBody').innerHTML=keys.map(k=>{const c=DATA.YTC.find(x=>x[0]===k);if(k==="gt") return `<section class="ytsec"><h4>${c[1]}<small>${c[2]}</small></h4><p class="gt-note"><b>주의</b> 경기도교육청남부연수원 로그인이 필요해요. 누르면 새 탭에서 연수원 강의 창이 열려요.</p><div class="ytgrid">${GT.map(gtCard).join("")}</div></section>`;const L=V.filter(x=>x[2]===k);if(!L.length)return "";
+  document.getElementById('ytBody').innerHTML=keys.map(k=>{const c=DATA.YTC.find(x=>x[0]===k);if(k==="gt") return `<section class="ytsec"><h4>${c[1]}<small>${c[2]}</small></h4><p class="gt-note"><b>주의</b> 경기도교육청남부연수원 로그인이 필요해요. 누르면 이 화면 안에 강의 창이 열려요.</p><div class="ytgrid">${GT.map(gtCard).join("")}</div></section>`;const L=V.filter(x=>x[2]===k);if(!L.length)return "";
     return `<section class="ytsec"><h4>${c[1]}${c[2]?`<small>${c[2]}</small>`:""}</h4><div class="ytgrid${k==="short"?" sh":""}">${L.map(ytCard).join("")}</div></section>`}).join("");}
 document.getElementById('ytFil').addEventListener('click',e=>{const b=e.target.closest('[data-ytf]');if(b){ytF=b.dataset.ytf;renderYT();}});
 renderYT();
@@ -2184,7 +2186,7 @@ document.addEventListener('click',e=>{ const c=e.target.closest('#webapp .cards 
   if(lk&&!document.body.classList.contains('editing')){ e.preventDefault(); const t=lk.querySelector('h3')?.textContent||'자료', url=lk.href;
    return gate(lk,t,()=>{ const w=window.open(url,'_blank','noopener'); if(!w){ pv.innerHTML=`<div class="pvw-box pvw-login" role="dialog" aria-modal="true"><div class="pvw-bar"><b>${t}</b><button type="button" class="pvw-x" aria-label="닫기">✕</button></div><div class="pl-in"><h3>로그인됐어요</h3><a class="pl-go" href="${url}" target="_blank" rel="noopener" style="text-decoration:none">사이트 열기</a></div></div>`; pv.hidden=false; document.body.style.overflow='hidden'; pv.querySelector('.pl-go').addEventListener('click',()=>close()); } }); }
   const b=e.target.closest('[data-pv],[data-dl]'); if(!b||document.body.classList.contains('editing')) return;
-  e.preventDefault(); const t=b.querySelector('h3')?.textContent||'자료';
+  e.preventDefault(); const t=b.querySelector('h3')?.textContent||b.dataset.title||'자료';
   if(b.dataset.dl) return gate(b,'[수업 자료] '+t,()=>{ const a=document.createElement('a'); a.href=b.dataset.dl; a.download=''; document.body.appendChild(a); a.click(); a.remove(); });
   if(b.closest('#train')) return gate(b,t);
   show(b,t);
