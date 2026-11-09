@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
-<script>(function(){var B="1794230073";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
+<script>(function(){var B="1794231446";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
 <meta name="color-scheme" content="light only">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="초등교사 김예람(예람쌤) — AI 영상·교육 콘텐츠 제작 연수, 영상·웹앱 콘텐츠, 연수 교안과 수업 자료">
@@ -1270,7 +1270,7 @@ body.ask-off #askBtn{display:none!important}
 .ch-m.me{align-self:flex-end;background:var(--pink);color:#fff;border-top-right-radius:4px}
 .ch-m ul{margin:6px 0 4px;padding-left:16px}.ch-m li{margin:2px 0;font-size:13px}.ch-m em{font-style:normal;color:var(--pink-deep);font-size:11.5px;font-weight:700}
 .ch-m a{color:var(--pink-deep);font-weight:800;text-decoration:none}
-.ch-ask{display:grid;gap:7px;margin-top:6px}.ch-ask textarea{border:1px solid #F0E2E8;border-radius:10px;padding:8px 10px;font:inherit;font-size:13px;resize:vertical}#chQuick .ask-kt{background:var(--pink);color:#fff}.ch-ask input{border:1px solid #F0E2E8;border-radius:10px;padding:8px 10px;font:inherit;font-size:13px}
+.ch-ask{display:grid;gap:7px;margin-top:6px}.ch-ask .ch-note{margin:0;font-size:12px;line-height:1.5;color:#8a6b78}.ch-ask textarea{border:1px solid #F0E2E8;border-radius:10px;padding:8px 10px;font:inherit;font-size:13px;resize:vertical}#chQuick .ask-kt{background:var(--pink);color:#fff}.ch-ask input{border:1px solid #F0E2E8;border-radius:10px;padding:8px 10px;font:inherit;font-size:13px}
 .ch-ask button{border:0;border-radius:10px;padding:9px;font:inherit;font-weight:800;background:var(--pink);color:#fff;cursor:pointer}.ch-ask button:disabled{opacity:.6}
 .ch-m.ans{background:#FFF3F8;box-shadow:0 0 0 1px #F7C6DA}.ch-m.ans b.who{display:block;color:var(--pink-deep);font-size:12px;margin-bottom:2px}
 #askBtn.has-ans::after{content:'';position:absolute;top:4px;right:4px;width:12px;height:12px;border-radius:50%;background:#ff3b6b;box-shadow:0 0 0 2px #fff}
@@ -1635,14 +1635,15 @@ async function openSettings(first){
   const KIND=['자유','수강 후기','응원'];
   const NAV=[['사이트',[['menu','메뉴 표시','M4 6h16M4 12h16M4 18h10'],['course','연수명 관리','M4 5h16v14H4zM8 9h8M8 13h5']]],
              ['방명록',[['gb','작성 기록·IP','M5 4h14v11l-5 5H5zM14 20v-5h5'],['ban','차단 목록','M12 3a9 9 0 100 18 9 9 0 000-18zM5.6 5.6l12.8 12.8']]],
-             ['기록',[['train','자료 열람·다운로드','M12 4v11M7 10l5 5 5-5M5 20h14'],['chat','챗봇 질문','M4 5h16v10H9l-5 4z'],['visit','방문자 수','M4 20V10M10 20V4M16 20v-7M2 20h20']]]];
-  const TITLE={menu:['메뉴 표시','끈 메뉴는 홈 화면, 위쪽 탭, 휴대폰 아래 메뉴에서 모두 숨겨져요.'],course:['연수명 관리','방명록에서 수강 후기를 고를 때 나오는 연수 목록이에요.'],gb:['방명록 작성 기록','포스트잇을 붙인 시간, 내용, 접속 IP, 로그인 이메일이에요. 문제가 있는 IP는 바로 차단할 수 있어요.'],ban:['차단 목록','차단한 IP에서는 방명록을 붙일 수 없어요.'],train:['자료 열람·다운로드 기록','연수 자료와 수업 자료를 연 사람과 시간이에요.'],chat:['챗봇 질문 기록','방문자가 챗봇에 물어본 질문이에요.'],visit:['방문자 수','날짜별로 홈페이지에 들어온 사람 수예요. 한 사람이 하루에 여러 번 들어와도 한 번만 세요.']};
+             ['기록',[['train','자료 열람·다운로드','M12 4v11M7 10l5 5 5-5M5 20h14'],['ask','받은 질문(카톡)','M4 6h16v12H4zM4 7l8 6 8-6'],['chat','챗봇 질문','M4 5h16v10H9l-5 4z'],['visit','방문자 수','M4 20V10M10 20V4M16 20v-7M2 20h20']]]];
+  const TITLE={menu:['메뉴 표시','끈 메뉴는 홈 화면, 위쪽 탭, 휴대폰 아래 메뉴에서 모두 숨겨져요.'],course:['연수명 관리','방명록에서 수강 후기를 고를 때 나오는 연수 목록이에요.'],gb:['방명록 작성 기록','포스트잇을 붙인 시간, 내용, 접속 IP, 로그인 이메일이에요. 문제가 있는 IP는 바로 차단할 수 있어요.'],ban:['차단 목록','차단한 IP에서는 방명록을 붙일 수 없어요.'],train:['자료 열람·다운로드 기록','연수 자료와 수업 자료를 연 사람과 시간이에요.'],ask:['받은 질문','봇에서 "예람쌤께 카톡 보내기"로 받은 질문이에요. 답장은 카톡이나 메일의 [답장하기]로 하면 돼요.'],chat:['챗봇 질문 기록','방문자가 챗봇에 물어본 질문이에요.'],visit:['방문자 수','날짜별로 홈페이지에 들어온 사람 수예요. 한 사람이 하루에 여러 번 들어와도 한 번만 세요.']};
   const {F,db}=await fbLoad();
   let tab=first||'menu', D={}, hidden=[...(window.MENU_HIDE||[])], courses=(window.GB?GB.getCourses():[]).map(c=>typeof c==='string'?{d:'',t:c}:{...c}), bans=null, note='', dirty=false;
   const get=async(col,key)=>{ try{ return (await F.getDocs(F.query(F.collection(db,col),F.orderBy(key,'desc'),F.limit(500)))).docs.map(d=>({_id:d.id,...d.data()})); }catch(x){ return {err:x.code||x.message}; } };
   async function need(){
     if(tab==='train'&&!D.train){ D.train=await get('train_log','at'); draw(); }
     if(tab==='visit'&&!D.visit){ try{ D.visit=(await F.getDocs(F.collection(db,'hv_stats'))).docs.map(d=>({_id:d.id,n:+(d.data().n||0)})); }catch(x){ D.visit={err:x.code||x.message}; } draw(); }
+    if(tab==='ask'&&!D.ask){ const r=await get('ask_q','t'); if(Array.isArray(r)&&r.length){ const A={}; for(let i=0;i<r.length;i+=20){ try{ Object.assign(A,await (await fetch('https://yeram-ask.dpfkadpfka.workers.dev/a?ids='+r.slice(i,i+20).map(x=>x._id).join(','))).json()); }catch(_){} } r.forEach(x=>x.a=A[x._id]||''); } D.ask=r; draw(); }
     if(tab==='chat'&&!D.chat){ D.chat=await get('chat_log','t'); draw(); }
     if((tab==='gb'||tab==='ban')&&!D.ip){ [D.ip,D.gb,D.gl]=await Promise.all([get('gb_ip','t'),get('guestbook','t'),get('guest_log','t')]); draw(); }
     if((tab==='gb'||tab==='ban')&&!bans){ try{ const r=await fetch('https://firestore.googleapis.com/v1/projects/yeram-ai-video/databases/(default)/documents/config/hv_ban?t='+Date.now()); const j=r.ok?await r.json():null; bans=JSON.parse(j?.fields?.json?.stringValue||'[]'); }catch(_){ bans=[]; } draw(); }
@@ -1652,6 +1653,7 @@ async function openSettings(first){
     if(tab==='menu') return `<div class="st-list">${MENUS.map(([k,t])=>`<label class="st-row"><span>${t}</span><input type="checkbox" class="st-sw" data-m="${k}" ${hidden.includes(k)?'':'checked'}><i class="st-tg"></i></label>`).join('')}</div>`;
     if(tab==='course') return `<div class="st-add st-add2"><input type="date" id="stCD" aria-label="연수 날짜"><input id="stCIn" maxlength="70" placeholder="연수명 (예: 브루 AI 영상 연수)"><button type="button" data-act="cadd">추가</button></div><div class="st-list">${courses.length?courses.map((c,i)=>`<div class="st-row"><span class="st-cd">${e(c.d||'날짜 없음')}</span><span>${e(c.t)}</span><button type="button" class="st-x" data-ci="${i}" aria-label="삭제">✕</button></div>`).join(''):'<p class="lg-empty">아직 등록한 연수가 없어요.</p>'}</div>`;
     if(tab==='train'){ const r=D.train; return wait(r)||`<div class="lg-sum">${Object.entries(r.reduce((m,x)=>(m[x.t]=(m[x.t]||0)+1,m),{})).sort((a,b)=>b[1]-a[1]).map(([k,n])=>`<span>${e(k)} <b>${n}</b></span>`).join('')}</div><table><thead><tr><th>시간</th><th>이름</th><th>이메일</th><th>자료</th></tr></thead><tbody>${r.map(x=>`<tr><td>${fmt(x.at)}</td><td>${e(x.name)}</td><td>${e(x.email)}</td><td>${e(x.t)}</td></tr>`).join('')}</tbody></table>`; }
+    if(tab==='ask'){ const r=D.ask; if(wait(r)) return wait(r); const no=r.filter(x=>!x.a).length; return `<div class="lg-sum"><span>전체 <b>${r.length}</b></span><span>답 안 함 <b>${no}</b></span></div><table><thead><tr><th>시간</th><th>질문</th><th>메일</th><th>답</th></tr></thead><tbody>${r.map(x=>`<tr><td>${fmt(x.t)}</td><td style="white-space:pre-wrap">${e(x.q)}</td><td>${e(x.m||'')}</td><td style="white-space:pre-wrap">${x.a?e(x.a):'<b style="color:var(--pink-deep)">답 안 함</b>'}</td></tr>`).join('')}</tbody></table>`; }
     if(tab==='visit'){ const r=D.visit; if(wait(r)) return wait(r); const tot=(r.find(x=>x._id==='total')||{}).n||0; const days=r.filter(x=>/^d\d{8}$/.test(x._id)).sort((a,b)=>a._id<b._id?1:-1); const mx=Math.max(1,...days.map(x=>x.n)); const W=['일','월','화','수','목','금','토'];
       const dl=x=>{ const y=x._id.slice(1,5),m=x._id.slice(5,7),d=x._id.slice(7,9); return `${y}.${m}.${d} (${W[new Date(+y,+m-1,+d).getDay()]})`; };
       return `<div class="lg-sum"><span>전체 <b>${tot.toLocaleString('ko-KR')}</b></span><span>오늘 <b>${((days[0]&&days[0]._id===('d'+new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Seoul'}).format(new Date()).replace(/-/g,'')))?days[0].n:0).toLocaleString('ko-KR')}</b></span><span>기록한 날 <b>${days.length}</b>일</span></div><table><thead><tr><th>날짜</th><th>방문자</th><th style="width:55%"></th></tr></thead><tbody>${days.map(x=>`<tr><td>${dl(x)}</td><td><b>${x.n.toLocaleString('ko-KR')}</b></td><td><i style="display:block;height:10px;border-radius:5px;background:var(--pink);width:${Math.max(2,Math.round(x.n/mx*100))}%"></i></td></tr>`).join('')}</tbody></table>`; }
@@ -2070,7 +2072,7 @@ var WINAPP={
  'RamBot':{lead:'바탕화면에 사는 작은 캐릭터예요. 말을 걸면 글자를 대신 쳐 주고, 앱을 열어 주고, 클로드·GPT에게 대신 물어봐 줘요.',
   feat:['말로 글자 입력 — 음성은 이 PC 안에서만 처리, 인터넷으로 보내지 않음','"크롬 켜 줘"처럼 말로 앱 열기 — 목록을 적지 않아도 이 PC의 앱, 윈도우 설정, 폴더를 찾아 줌','"클로드한테 번역해 줘" — 클로드·GPT에게 말로 묻고, 대화는 각 AI 앱 기록에도 남음 (API 키 없이 구독 계정 그대로)','스킬 — 자주 하는 지시를 이름 하나로 부르고, 매일 정해진 시간에 자동으로','마법 모자로 숨기기 · 캐릭터·말풍선·포인트 색·앱 아이콘 7가지 꾸미기','윈도우 10·11용 · 무료 · 새 버전이 나오면 자동 업데이트 · OneDrive로 여러 컴퓨터의 설정과 스킬 맞추기'],
   how:['앱 내려받기를 누르면 깃허브 안내 페이지가 열려요. 안내를 따라 RamBot.zip을 받고 압축을 풀어요.','폴더 안의 RamBot.exe를 실행해요. “Windows의 PC 보호”가 뜨면 [추가 정보 → 실행]을 눌러요.','처음 한 번 음성 엔진을 내려받으면 끝 — 캐릭터를 눌러 듣기를 켜고 말해 보세요.'],
-  dl:'https://github.com/dpfkadpfka/RamBot#readme', imgs:['apps/sc_rambot_1.webp?v=1','apps/sc_rambot_2.webp?v=1','apps/sc_rambot_3.webp?v=1','apps/sc_rambot_4.webp?v=1','apps/sc_rambot_5.webp?v=1'], logo:'apps/logo_rambot.webp?v=1', guide:'apps/guide-rambot.pdf?v=5'},
+  dl:'https://github.com/dpfkadpfka/RamBot#readme', imgs:['apps/sc_rambot_1.webp?v=1','apps/sc_rambot_2.webp?v=1','apps/sc_rambot_3.webp?v=1','apps/sc_rambot_4.webp?v=1','apps/sc_rambot_5.webp?v=1'], logo:'apps/logo_rambot.webp?v=1', guide:'apps/guide-rambot.pdf?v=4'},
  'RamSpirit':{lead:'ChatGPT·Gemini·Grok·Claude 같은 AI와 다른 프로그램을 한 창에 나란히 띄우고, 질문 하나를 모두에게 한 번에 보내는 프로그램이에요.',
   feat:['2·4·6·8칸, 칸마다 AI·웹사이트·설치된 프로그램 선택','한 번에 보내기 — 글과 파일을 켜 둔 칸 모두에','탭으로 칸 구성 여러 개(AI 탭·이미지 탭)','칸 크기 조절·자리 바꾸기·크게 보기, 테마 색 5가지·앱 아이콘 7가지','윈도우 10·11용 · 무료 · 자동 업데이트'],
   how:['앱 내려받기를 누르면 깃허브 안내 페이지가 열려요. 안내를 따라 RamSpirit.exe를 받아요.','“Windows의 PC 보호”가 뜨면 [추가 정보 → 실행]을 눌러요. 자동으로 설치되고 바탕화면에 아이콘이 생겨요.','처음 설정 창에서 칸 수와 칸마다 열 앱을 고르면 끝이에요.'],
@@ -2474,7 +2476,8 @@ ${kb()}`;
   aiChat={c:model.startChat(),m:MODELS[mi]}; return aiChat;
  }
  function md(t){ return e(t).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/(https?:\/\/[^\s<)]+)/g,'<a href="$1" target="_blank" rel="noopener">링크 ↗</a>').replace(/\n/g,'<br>'); }
- function logQ(q){ try{ fetch('https://firestore.googleapis.com/v1/projects/yeram-ai-video/databases/(default)/documents/chat_log',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({fields:{q:{stringValue:q.slice(0,290)},p:{stringValue:(location.hash.slice(1)||'home').slice(0,40)},t:{timestampValue:new Date().toISOString()}}})}); }catch(_){} }
+ function logQ(q){ try{ fetch('https://firestore.googleapis.com/v1/projects/yeram-ai-video/databases/(default)/documents/chat_log',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({fields:{q:{stringValue:q.slice(0,290)},p:{stringValue:(location.hash.slice(1)||'home').slice(0,40)},t:{timestampValue:new Date().toISOString()}}})}).catch(()=>{}); }catch(_){} }
+ window.logQ=logQ;
  async function aiAnswer(q){
   while(mi<MODELS.length){
    try{ const {c}=await getChat(); const r=await c.sendMessage(q); return md(r.response.text()); }
@@ -2483,7 +2486,7 @@ ${kb()}`;
   throw new Error('no model');
  }
  function ask(q){ if(!q.trim()) return; add('me',e(q)); logQ(q); const d=document.createElement('div'); d.className='ch-m bot typing'; d.innerHTML='<i></i><i></i><i></i>'; B.appendChild(d); B.scrollTop=B.scrollHeight;
-  const done=h=>{ d.remove(); add('bot',h); if(window.ASK&&/정리돼 있지 않|정리되어 있지 않|잘 몰라요/.test(h)) ASK.offer(q,add,B); };
+  const done=h=>{ d.remove(); add('bot',h); if(window.ASK){ if(/연락|문의|카톡|카카오톡|직접|전달|메시지|섭외|출강|강의 요청|강사 요청|부탁/.test(q)) ASK.offer('',add,B,true); else if(/정리돼 있지 않|정리되어 있지 않|잘 몰라요/.test(h)) ASK.offer(q,add,B); } };
   aiAnswer(q).then(done).catch(()=>done(answer(q))); }
  Q.innerHTML=quick.map(q=>`<button type="button">${q}</button>`).join('');
  Q.addEventListener('click',ev=>{ const b=ev.target.closest('button'); if(b) ask(b.textContent); });
@@ -2538,7 +2541,7 @@ if(/[?&]dbg=1/.test(location.search)){
    const d=document.createElement('div'); d.className='ch-m bot';
    d.innerHTML=(free?'<b>예람쌤께 카톡 보내기</b><br>여기에 쓴 내용은 <b>예람쌤 카카오톡으로 바로 전달</b>돼요. 답이 오면 이 창에 보여 드려요.':'예람쌤께 이 질문을 카톡으로 직접 보내 드릴까요? 답이 오면 이 창에 보여 드려요.')
      +'<div class="ch-ask">'+(free?'<textarea maxlength="500" rows="4" placeholder="예람쌤께 보낼 내용을 써 주세요"></textarea>':'')
-     +'<input type="email" maxlength="100" placeholder="답을 메일로도 받으려면 메일 주소(선택)"><button type="button">예람쌤 카톡으로 보내기</button></div>';
+     +'<input type="email" maxlength="100" placeholder="메일 주소(선택) — 남기면 답을 메일로도 보내 드려요"><p class="ch-note">이 창을 닫으면 답이 와도 바로 알려 드릴 수 없어요. 메일 주소를 남기면 답이 메일로도 가요.</p><button type="button">예람쌤 카톡으로 보내기</button></div>';
    box.appendChild(d); box.scrollTop=box.scrollHeight;
    const btn=d.querySelector('button'), em=d.querySelector('input'), ta=d.querySelector('textarea');
    if(ta) setTimeout(()=>ta.focus(),50);
@@ -2548,8 +2551,9 @@ if(/[?&]dbg=1/.test(location.search)){
      try{ const r=await fetch(B+D+':commit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({writes:[{update:{name:D+'/ask_q/'+id,...body},currentDocument:{exists:false},updateTransforms:[{fieldPath:'t',setToServerValue:'REQUEST_TIME'}]}]})});
        if(!r.ok) throw 0;
        const w=await fetch(ASK_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id})}).then(x=>x.json()).catch(()=>({}));
+       try{ if(window.logQ) window.logQ('[카톡] '+text.slice(0,180)); }catch(_){}
        const mine=ls.get('ask_mine',[]); mine.push({id,q:text.slice(0,120)}); ls.set('ask_mine',mine.slice(-20));
-       d.innerHTML=w&&w.ok?'예람쌤 카카오톡으로 보냈어요! 답이 오면 이 창에 떠요. 나중에 다시 들어와도 볼 수 있어요.':'저장은 됐는데 카톡 알림이 늦어질 수 있어요. 급하면 카카오톡 오픈채팅으로도 연락 주세요: <a href="https://open.kakao.com/o/sQjNnOnh" target="_blank" rel="noopener">오픈채팅</a>';
+       const hasM=!!(em.value||'').trim(); d.innerHTML=w&&w.ok?('예람쌤 카카오톡으로 보냈어요! 답이 오면 이 창에 떠요. 같은 기기로 다시 들어와도 볼 수 있어요.'+(hasM?' 남겨 주신 메일로도 답을 보내 드릴게요.':'')):'저장은 됐는데 카톡 알림이 늦어질 수 있어요. 급하면 카카오톡 오픈채팅으로도 연락 주세요: <a href="https://open.kakao.com/o/sQjNnOnh" target="_blank" rel="noopener">오픈채팅</a>';
      }catch(_){ btn.disabled=false; btn.textContent='다시 보내기'; }
    };
  }};
