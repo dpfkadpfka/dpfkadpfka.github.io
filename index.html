@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
-<script>(function(){var B="1794242452";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
+<script>(function(){var B="1794242588";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
 <meta name="color-scheme" content="light only">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="초등교사 김예람(예람쌤) — AI 영상·교육 콘텐츠 제작 연수, 영상·웹앱 콘텐츠, 연수 교안과 수업 자료">
@@ -1550,7 +1550,7 @@ function thumb(i){
   return `<span class="ph">${esc(i.tag)}</span>`;
 }
 const DRAW={}; let ORDER={};
-function sortArchive(id){ const o=ORDER[id]; if(!o) return; const pos=t=>{const k=o.indexOf(t); return k<0?1e6:k;}; ARCHIVE[id]=ARCHIVE[id].map((x,i)=>[x,i]).sort((a,b)=>(pos(a[0].t)-pos(b[0].t))||(a[1]-b[1])).map(a=>a[0]); }
+function sortArchive(id){ const o=ORDER[id]; if(!o) return; let prev=-1, sub=0; const key=ARCHIVE[id].map(x=>{ const k=o.indexOf(x.t); if(k>=0){ prev=k; sub=0; return k; } sub+=.001; return prev+sub; }); ARCHIVE[id]=ARCHIVE[id].map((x,i)=>[x,key[i],i]).sort((a,b)=>(a[1]-b[1])||(a[2]-b[2])).map(a=>a[0]); }
 function renderArchive(id){
   const sec=document.getElementById(id), fl=sec.querySelector('.filters'), box=sec.querySelector('.cards');
   const NOALL=false, GROUP=id==='webapp'; const tags=[...(NOALL?[]:['전체']),...new Set(ARCHIVE[id].map(i=>i.tag))]; let cur=tags[0];
