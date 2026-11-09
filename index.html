@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
-<script>(function(){var B="1794224704";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
+<script>(function(){var B="1794228126";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
 <meta name="color-scheme" content="light only">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="초등교사 김예람(예람쌤) — AI 영상·교육 콘텐츠 제작 연수, 영상·웹앱 콘텐츠, 연수 교안과 수업 자료">
@@ -1270,6 +1270,16 @@ body.ask-off #askBtn{display:none!important}
 .ch-m.me{align-self:flex-end;background:var(--pink);color:#fff;border-top-right-radius:4px}
 .ch-m ul{margin:6px 0 4px;padding-left:16px}.ch-m li{margin:2px 0;font-size:13px}.ch-m em{font-style:normal;color:var(--pink-deep);font-size:11.5px;font-weight:700}
 .ch-m a{color:var(--pink-deep);font-weight:800;text-decoration:none}
+.ch-ask{display:grid;gap:7px;margin-top:6px}.ch-ask input{border:1px solid #F0E2E8;border-radius:10px;padding:8px 10px;font:inherit;font-size:13px}
+.ch-ask button{border:0;border-radius:10px;padding:9px;font:inherit;font-weight:800;background:var(--pink);color:#fff;cursor:pointer}.ch-ask button:disabled{opacity:.6}
+.ch-m.ans{background:#FFF3F8;box-shadow:0 0 0 1px #F7C6DA}.ch-m.ans b.who{display:block;color:var(--pink-deep);font-size:12px;margin-bottom:2px}
+#askBtn.has-ans::after{content:'';position:absolute;top:4px;right:4px;width:12px;height:12px;border-radius:50%;background:#ff3b6b;box-shadow:0 0 0 2px #fff}
+.rp-w{position:fixed;inset:0;z-index:200;background:rgba(40,20,30,.45);display:flex;align-items:center;justify-content:center;padding:16px}
+.rp-b{width:min(520px,100%);background:#fff;border-radius:18px;padding:20px;display:grid;gap:10px;font-size:14px}
+.rp-b h3{margin:0;font-size:17px}.rp-q{background:#FFF6FA;border-radius:12px;padding:12px;white-space:pre-wrap;line-height:1.6}
+.rp-b textarea{min-height:140px;border:1px solid #EBD9E1;border-radius:12px;padding:10px;font:inherit;resize:vertical}
+.rp-r{display:flex;gap:8px;justify-content:flex-end}.rp-r button{border:0;border-radius:10px;padding:10px 16px;font:inherit;font-weight:800;cursor:pointer}
+.rp-r .go{background:var(--pink);color:#fff}.rp-r .no{background:#F4ECF0}
 .ch-go{display:inline-block;margin-top:6px;padding:4px 10px;border-radius:99px;background:var(--soft)}
 .ch-m.typing{display:flex;gap:4px}.ch-m.typing i{width:6px;height:6px;border-radius:50%;background:#E3B6C8;animation:chd 1s infinite}.ch-m.typing i:nth-child(2){animation-delay:.15s}.ch-m.typing i:nth-child(3){animation-delay:.3s}
 @keyframes chd{50%{transform:translateY(-4px);opacity:.5}}
@@ -2470,7 +2480,7 @@ ${kb()}`;
   aiChat={c:model.startChat(),m:MODELS[mi]}; return aiChat;
  }
  function md(t){ return e(t).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/(https?:\/\/[^\s<)]+)/g,'<a href="$1" target="_blank" rel="noopener">링크 ↗</a>').replace(/\n/g,'<br>'); }
- function logQ(q){ try{ fetch('https://firestore.googleapis.com/v1/projects/yeram-ai-video/databases/(default)/documents/chat_log',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({fields:{q:{stringValue:q.slice(0,290)},p:{stringValue:location.hash.slice(1)||'home'},t:{timestampValue:new Date().toISOString()}}})}); }catch(_){} }
+ function logQ(q){ try{ fetch('https://firestore.googleapis.com/v1/projects/yeram-ai-video/databases/(default)/documents/chat_log',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({fields:{q:{stringValue:q.slice(0,290)},p:{stringValue:(location.hash.slice(1)||'home').slice(0,40)},t:{timestampValue:new Date().toISOString()}}})}); }catch(_){} }
  async function aiAnswer(q){
   while(mi<MODELS.length){
    try{ const {c}=await getChat(); const r=await c.sendMessage(q); return md(r.response.text()); }
@@ -2479,7 +2489,8 @@ ${kb()}`;
   throw new Error('no model');
  }
  function ask(q){ if(!q.trim()) return; add('me',e(q)); logQ(q); const d=document.createElement('div'); d.className='ch-m bot typing'; d.innerHTML='<i></i><i></i><i></i>'; B.appendChild(d); B.scrollTop=B.scrollHeight;
-  aiAnswer(q).then(h=>{ d.remove(); add('bot',h); }).catch(()=>{ d.remove(); add('bot',answer(q)); }); }
+  const done=h=>{ d.remove(); add('bot',h); if(window.ASK&&/정리돼 있지 않|정리되어 있지 않|잘 몰라요/.test(h)) ASK.offer(q,add,B); };
+  aiAnswer(q).then(done).catch(()=>done(answer(q))); }
  Q.innerHTML=quick.map(q=>`<button type="button">${q}</button>`).join('');
  Q.addEventListener('click',ev=>{ const b=ev.target.closest('button'); if(b) ask(b.textContent); });
  F.addEventListener('submit',ev=>{ ev.preventDefault(); ask(T.value); T.value=''; });
@@ -2519,5 +2530,63 @@ if(/[?&]dbg=1/.test(location.search)){
   '\ncanvas '+(c?c.width+'x'+c.height+' rect '+[r.x|0,r.y|0,r.width|0,r.height|0].join(',')+' disp '+getComputedStyle(c).display+' vis '+getComputedStyle(c).visibility+' op '+getComputedStyle(c).opacity:'none')+
   '\nlast '+(typeof lastDrawn!=='undefined'?lastDrawn:'?')+' | dpr '+devicePixelRatio+' mem '+(navigator.deviceMemory||'?')+'\nsets '+JSON.stringify(S)+'\nerrs '+E.slice(-8).join(' / ')+'\n'+navigator.userAgent.slice(0,120); }catch(x){ d.textContent='dbg fail '+x.message; } },1000);
 }
+</script>
+<script>
+/* 예람쌤께 직접 묻기: 봇이 모르는 질문을 예람쌤 카톡으로 알리고, 답장을 봇 창에 보여 줌 */
+(function(){
+ const ASK_URL='https://yeram-ask.dpfkadpfka.workers.dev/';   // 알림 서버 주소(설정되면 기능이 켜짐)
+ const D='projects/yeram-ai-video/databases/(default)/documents', B='https://firestore.googleapis.com/v1/';
+ const e=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+ const ls={ get(k,d){ try{ return JSON.parse(localStorage.getItem(k))??d; }catch(_){ return d; } }, set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(_){} } };
+ let sid=ls.get('ask_sid',''); if(!sid){ sid=Math.random().toString(36).slice(2)+Date.now().toString(36); ls.set('ask_sid',sid); }
+ const rid=()=>Array.from(crypto.getRandomValues(new Uint8Array(15)),b=>'abcdefghijklmnopqrstuvwxyz0123456789'[b%36]).join('');
+ window.ASK={ offer(q,add,box){ if(!ASK_URL) return;
+   const d=document.createElement('div'); d.className='ch-m bot';
+   d.innerHTML='예람쌤께 이 질문을 직접 보내 드릴까요? 답이 오면 이 창에 보여 드려요.<div class="ch-ask"><input type="email" maxlength="100" placeholder="답을 메일로도 받으려면 메일 주소(선택)"><button type="button">예람쌤께 보내기</button></div>';
+   box.appendChild(d); box.scrollTop=box.scrollHeight;
+   const btn=d.querySelector('button'), em=d.querySelector('input');
+   btn.onclick=async()=>{ btn.disabled=true; btn.textContent='보내는 중…'; const id=rid();
+     const body={fields:{q:{stringValue:q.slice(0,500)},m:{stringValue:(em.value||'').trim().slice(0,100)},sid:{stringValue:sid},p:{stringValue:(location.hash.slice(1)||'home').slice(0,40)}}};
+     try{ const r=await fetch(B+D+':commit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({writes:[{update:{name:D+'/ask_q/'+id,...body},currentDocument:{exists:false},updateTransforms:[{fieldPath:'t',setToServerValue:'REQUEST_TIME'}]}]})});
+       if(!r.ok) throw 0;
+       fetch(ASK_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id})}).catch(()=>{});
+       const mine=ls.get('ask_mine',[]); mine.push({id,q:q.slice(0,120)}); ls.set('ask_mine',mine.slice(-20));
+       d.innerHTML='보냈어요! 예람쌤이 확인하고 답을 드리면 이 창에 떠요.'; poll();
+     }catch(_){ btn.disabled=false; btn.textContent='다시 보내기'; }
+   };
+ }};
+ // 받은 답 확인
+ const seen=()=>ls.get('ask_seen',{});
+ async function poll(){ if(!ASK_URL) return; const mine=ls.get('ask_mine',[]), sn=seen(); let any=false;
+   for(const x of mine){ if(sn[x.id]) continue;
+     try{ const r=await fetch(B+D+'/ask_a/'+x.id+'?t='+Date.now()); if(!r.ok) continue; const j=await r.json(); const a=j.fields&&j.fields.a&&j.fields.a.stringValue; if(!a) continue;
+       show(x,a); sn[x.id]=1; any=true; }catch(_){}
+   }
+   if(any) ls.set('ask_seen',sn);
+ }
+ function show(x,a){ const box=document.querySelector('#chat .ch-body')||document.querySelector('#chat [class*="body"]'); const btn=document.getElementById("askBtn");
+   if(box){ const d=document.createElement('div'); d.className='ch-m bot ans'; d.innerHTML='<b class="who">예람쌤 답변</b><em>질문: '+e(x.q)+'</em><br>'+e(a).replace(/\n/g,'<br>'); box.appendChild(d); box.scrollTop=box.scrollHeight; }
+   if(btn) btn.classList.add('has-ans'); }
+ document.addEventListener('click',ev=>{ if(ev.target.closest('#askBtn')) document.getElementById("askBtn")?.classList.remove('has-ans'); });
+ if(ASK_URL){ setTimeout(poll,3000); setInterval(()=>{ if(!document.hidden&&ls.get('ask_mine',[]).some(x=>!seen()[x.id])) poll(); },30000); }
+
+ // 관리자 답장 화면: ?reply=질문번호
+ const rq=new URLSearchParams(location.search).get('reply'); if(!rq) return;
+ const w=document.createElement('div'); w.className='rp-w'; w.innerHTML='<div class="rp-b"><h3>홈페이지 질문에 답하기</h3><p>불러오는 중…</p></div>'; document.body.appendChild(w);
+ const box=w.querySelector('.rp-b');
+ const closeW=()=>{ w.remove(); const u=new URL(location.href); u.searchParams.delete('reply'); history.replaceState(null,'',u); };
+ fbLoad().then(({Au,auth,F,db})=>{ Au.onAuthStateChanged(auth,async u=>{
+   if(!u||u.email!==ADMIN_EMAIL){ box.innerHTML='<h3>홈페이지 질문에 답하기</h3><p>관리자 로그인이 필요해요.</p><div class="rp-r"><button class="no" type="button">닫기</button><button class="go" type="button">구글로 로그인</button></div>';
+     box.querySelector('.no').onclick=closeW; box.querySelector('.go').onclick=()=>adminLogin(); return; }
+   try{ const qs=await F.getDoc(F.doc(db,'ask_q',rq)); if(!qs.exists()){ box.innerHTML='<h3>질문을 찾지 못했어요</h3><div class="rp-r"><button class="no" type="button">닫기</button></div>'; box.querySelector('.no').onclick=closeW; return; }
+     const q=qs.data(); const old=await F.getDoc(F.doc(db,'ask_a',rq));
+     box.innerHTML=`<h3>홈페이지 질문에 답하기</h3><div class="rp-q">${e(q.q)}</div><small>${q.m?'답받을 메일: '+e(q.m)+' · ':''}${q.t&&q.t.toDate?q.t.toDate().toLocaleString('ko-KR'):''}</small><textarea placeholder="방문자에게 보낼 답을 써 주세요">${old.exists()?e(old.data().a):''}</textarea><div class="rp-r"><button class="no" type="button">닫기</button><button class="go" type="button">답 보내기</button></div>`;
+     box.querySelector('.no').onclick=closeW;
+     box.querySelector('.go').onclick=async ev=>{ const b=ev.target, a=box.querySelector('textarea').value.trim(); if(!a) return; b.disabled=true; b.textContent='보내는 중…';
+       try{ await F.setDoc(F.doc(db,'ask_a',rq),{a:a.slice(0,2000),t:F.serverTimestamp()}); box.innerHTML='<h3>답을 보냈어요</h3><p>방문자가 홈페이지 봇 창을 열면 답이 보여요.'+(q.m?' 메일('+e(q.m)+')로도 따로 보내 주세요.':'')+'</p><div class="rp-r"><button class="no" type="button">닫기</button></div>'; box.querySelector('.no').onclick=closeW; }
+       catch(x){ b.disabled=false; b.textContent='다시 보내기'; alertBox('보내지 못했어요 ('+(x.code||x.message)+')'); } };
+   }catch(x){ box.innerHTML='<h3>불러오지 못했어요</h3><p>'+e(x.code||x.message)+'</p><div class="rp-r"><button class="no" type="button">닫기</button></div>'; box.querySelector('.no').onclick=closeW; }
+ }); }).catch(()=>{ box.innerHTML='<h3>잠시 후 다시 열어 주세요</h3><div class="rp-r"><button class="no" type="button">닫기</button></div>'; box.querySelector('.no').onclick=closeW; });
+})();
 </script>
 </html>
