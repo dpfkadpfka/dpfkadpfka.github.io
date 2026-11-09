@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
-<script>(function(){var B="1794241422";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
+<script>(function(){var B="1794241817";fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v&&j.v!==B){var k="yr_rl_"+j.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var u=new URL(location.href);u.searchParams.set("v",j.v);location.replace(u.toString())}}).catch(function(){})})();</script>
 <meta name="color-scheme" content="light only">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="초등교사 김예람(예람쌤) — AI 영상·교육 콘텐츠 제작 연수, 영상·웹앱 콘텐츠, 연수 교안과 수업 자료">
@@ -136,6 +136,7 @@ body.is-home .menu{visibility:hidden}
 .floor{position:absolute;left:50%;bottom:calc(15vh + 2px);width:min(22vh,30vw);height:2.2vh;border-radius:50%;transform:translateX(-50%);background:var(--pink);opacity:.28;filter:blur(7px);pointer-events:none;z-index:2}
 .char-wrap{position:absolute;left:50%;bottom:15vh;height:min(60vh,535px);transform:translateX(-50%);z-index:3}
 .char-anim{height:100%;transform-origin:50% 100%;position:relative}
+html body.vw-open #charSpr,html body.vw-open #sideCv,html body.vw-open #askBtn #sideCv,html body.vw-open .char-anim canvas{display:none!important}
 #charSpr{position:absolute;top:0;bottom:0;background-repeat:no-repeat;pointer-events:none}
 #charCanvas{height:100%;display:block;transition:filter 1.4s ease}
 
@@ -880,8 +881,8 @@ body.editing .page .cards .card:hover{transform:none!important}
 .prw-card.prw-ebs{grid-template-columns:1fr}
 @media (max-width:600px){.prw-card{grid-template-columns:1fr;padding:16px}.prw-a{height:74vh}.prw-new{display:none}}
 .pvw-fr{position:relative}
-.pvw-fr.ld::before{content:"자료를 불러오는 중…";position:absolute;inset:0;display:grid;place-items:center;font-size:14px;font-weight:700;color:var(--ink-soft);z-index:0}
-.pvw-fr.ld::after{content:"";position:absolute;left:50%;top:calc(50% - 44px);width:34px;height:34px;margin-left:-17px;border-radius:50%;border:3px solid #F3D3E0;border-top-color:var(--pink);animation:pv-spin .8s linear infinite}
+.pvw-fr.ld::before{content:"자료를 불러오는 중…";position:absolute;inset:0;display:grid;place-items:center;padding-top:76px;box-sizing:border-box;font-size:14px;font-weight:700;color:var(--ink-soft);z-index:0}
+.pvw-fr.ld::after{content:"";position:absolute;left:50%;top:calc(50% - 30px);width:34px;height:34px;margin-left:-17px;border-radius:50%;border:3px solid #F3D3E0;border-top-color:var(--pink);animation:pv-spin .8s linear infinite}
 .pvw-fr iframe{position:relative;z-index:1}.pvw-fr.ld iframe{opacity:0}
 @keyframes pv-spin{to{transform:rotate(360deg)}}
 .pvw-login{width:min(440px,100%)}
@@ -1806,7 +1807,7 @@ function introSpark(now){
 }
 function frame(now){
   requestAnimationFrame(frame);
-  if(mode==='loading'||!isHome()) return;
+  if(mode==='loading'||!isHome()||document.body.classList.contains('vw-open')) return;
   if(mode==='intro'){   // 바닥 구멍에서 쏙 올라오는 영상
     if(!ready('intro_pop')){ if(now-introStart>1200){ mode='live'; goIdle(now); } else draw('idle',0); return; }
     if(!introPop){ introPop=true; introStart=now; }
@@ -2027,7 +2028,7 @@ document.querySelectorAll('.menu a').forEach(a=>{
 });
 (function sideLoop(now){
   requestAnimationFrame(sideLoop);
-  if(!sideCur||isHome()||!META||!sc.getClientRects().length) return;
+  if(!sideCur||isHome()||!META||!sc.getClientRects().length||document.body.classList.contains('vw-open')) return;
   const dt=Math.min(.1,(now-sLast)/1000)*12; sLast=now;
   const S=n=>SETS[n]&&SETS[n].ready, cnt=n=>META.sets[n].count;
   if(sPh==='in'){ if(!S(sideCur)) return; sF=Math.min(cnt(sideCur)-1,sF+dt*1.6); if(sF>=cnt(sideCur)-1){ sPh='hold'; sUntil=now+2600; } drawSide(sideCur,sF); }
@@ -2268,7 +2269,7 @@ document.addEventListener('click',e=>{ const c=e.target.closest('#webapp .cards 
  const sel=['.gview','.pvw','.ytv','.wmodal','.prw'];
  let depth=0, fromPop=false;
  const els=()=>sel.map(q=>document.querySelector(q)).filter(Boolean);
- const mo=new MutationObserver(ms=>ms.forEach(m=>{ const el=m.target, open=!el.hidden, was=el._open||false; if(open===was) return; el._open=open;
+ const mo=new MutationObserver(ms=>ms.forEach(m=>{ const el=m.target, open=!el.hidden, was=el._open||false; document.body.classList.toggle('vw-open',els().some(x=>!x.hidden)); if(open===was) return; el._open=open;
    if(open){ depth++; history.pushState({modal:depth},''); }
    else { depth=Math.max(0,depth-1); if(!fromPop && history.state && history.state.modal) history.back(); }
  }));
